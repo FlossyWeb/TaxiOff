@@ -47,7 +47,7 @@
     <script src="facebook-js-sdk.js"></script>
     <script type="text/javascript" src="js/jquery.html5storage.min.js"></script>
     <script src="https://maps.google.com/maps/api/js?key=AIzaSyCvL4a4-LKLUXJrTwpJ4_UnkmtZSGgrVWg&sensor=false&libraries=places" type="text/javascript"></script>
-	<script type="text/javascript" src="js/jquery.geocomplete.min.js"></script>
+	<!-- <script type="text/javascript" src="js/jquery.geocomplete.min.js"></script> -->
 	<script type="text/javascript" src="ui/min/jquery.ui.map.full.min.js"></script>
     <script type="text/javascript">	
     //<![CDATA[
@@ -105,7 +105,7 @@
 			}, 1000);
 			scanner = cordova.require("cordova/plugin/BarcodeScanner");
 			try {
-				FB.init({ appId: "1488204401415966", nativeInterface: CDV.FB, useCachedDialogs: false });
+				FB.init({ appId: "1477112772546142", nativeInterface: CDV.FB, useCachedDialogs: false });
 				//document.getElementById('data').innerHTML = "";
 			} catch (e) {
 				alert(e);
@@ -225,7 +225,7 @@
 					$.localStorage.setItem('email', response.email);
 					$('#subName').val(response.name);
 					$('#subMail').val(response.email);
-					$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/login_fb.php", { email: response.email}, function(data) {
+					$.post("https://ssl14.ovh.net/~taxibleu/taxioffsrv/login_fb.php", { email: response.email}, function(data) {
 						$.localStorage.setItem('nom', data.nom);
 						$.localStorage.setItem('email', data.email);
 						$.localStorage.setItem('tel', data.tel);
@@ -251,7 +251,7 @@
 	function login() {
 		var id = $('#login').val();
 		var pwd = $('#pwd').val();
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/login_app.php", { id: id, pwd: pwd}, function(data) {
+		$.post("https://ssl14.ovh.net/~taxibleu/taxioffsrv/login_app.php", { id: id, pwd: pwd}, function(data) {
 			$.localStorage.setItem('nom', data.nom);
 			$.localStorage.setItem('email', data.email);
 			$.localStorage.setItem('tel', data.tel);
@@ -274,7 +274,7 @@
 		var tel = $('#subTel').val();
 		var email = $('#subMail').val();
 		$("#subReturns").empty();
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/register_app.php", { nom: nom, tel: tel, email: email}, function(data) {
+		$.post("https://ssl14.ovh.net/~taxibleu/taxioffsrv/register_app.php", { nom: nom, tel: tel, email: email}, function(data) {
 			$.localStorage.setItem('nom', data.nom);
 			$.localStorage.setItem('email', data.email);
 			$.localStorage.setItem('tel', data.tel);
@@ -310,7 +310,7 @@
 		var email = $('#accMail').val();
 		var pwd = $('#accPwd').val();
 		$("#accReturns").empty();
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/modmy_app.php", { nom: nom, tel: tel, newtel: newtel, email: email, pwd: pwd}, function(data) {
+		$.post("https://ssl14.ovh.net/~taxibleu/taxioffsrv/modmy_app.php", { nom: nom, tel: tel, newtel: newtel, email: email, pwd: pwd}, function(data) {
 			$.localStorage.setItem('nom', data.nom);
 			$.localStorage.setItem('email', data.email);
 			$.localStorage.setItem('tel', data.tel);
@@ -341,7 +341,7 @@
 	function forgottenPwd() {
 		var login = $('#forgotTel').val();
 		var mail = $('#forgotMail').val();
-		$.post("https://ssl14.ovh.net/~taxibleu/mytaxisrv/forget_app.php", { login: login, mail: mail}, function(data) {
+		$.post("https://ssl14.ovh.net/~taxibleu/taxioffsrv/forget_app.php", { login: login, mail: mail}, function(data) {
 			var display = '';
 			if (data.sent)
 			{
@@ -444,11 +444,12 @@
 	});
 	*/
 	$( '#infos' ).live( 'pagecreate',function(event){
-		
+		/*
 		$("#addressInput").geocomplete({
 		  map: "#map",
 		  location: "Montpellier, France"
 		});
+		*/
 		if(!app) locateMe();
 		
         var ok = setInterval( function () {
