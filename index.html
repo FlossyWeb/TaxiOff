@@ -56,7 +56,7 @@
     var infoWindow;
     var locationSelect;
 	var idcourse;
-	var dep;
+	var dep = '';
 	var time;
 	var endcourse; // Clears the timeout
 	var sec;
@@ -72,6 +72,7 @@
 	var email = $.localStorage.getItem('email');
 	var dontReg = false;
 	var mobileMap = { 'center': '43.609, 3.88', 'zoom': 12 };
+	var isPlaceChanged = false;
 
 	// Scanner
 	var scanner;
@@ -432,8 +433,9 @@
 		var rdvlng = '';
 		url = '';
 		num_req = idcourse;
+		var dep = $.sessionStorage.getItem('dep');
 		url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&howmany=' + howMany + '&dep='+dep+'&group=1&ack=0&db=1';
-		//url = url.replace(/'/g, "&rsquo;");
+		url = url.replace(/'/g, "&rsquo;");
 		url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
 		//alert(url);
 		$.post("https://ssl14.ovh.net/~taxibleu/appserver/bookings_app_share.php", url, function(data) {});
@@ -450,6 +452,44 @@
 		  location: "Montpellier, France"
 		});
 		*/
+		var input = document.getElementById('addressInput');
+		var options = {
+		  componentRestrictions: {country: 'fr'}
+		};
+		var autocomplete = new google.maps.places.Autocomplete(input, options);
+		// fired when an autocomplete option is selected or the input is submitted
+		google.maps.event.addListener(autocomplete, 'place_changed', function() {
+			//alert('Fired');
+			isPlaceChanged = true;
+			var place = autocomplete.getPlace();
+			var address = '';
+			var zip_code = '';
+			if (place.address_components) {
+				address = [
+					(place.address_components[0] && place.address_components[0].short_name || ''),
+					(place.address_components[1] && place.address_components[1].short_name || ''),
+					(place.address_components[2] && place.address_components[2].short_name || '')
+				].join(' ');
+				for (var i=0; i<place.address_components.length;i++)
+				{
+					for (var j=0;j<place.address_components[i].types.length;j++)
+					{
+						if (place.address_components[i].types[j] == "postal_code")
+						{
+							zip_code = place.address_components[i].long_name;
+							//alert(zip_code);
+							var dep = zip_code.substring(0, 2);
+							$.sessionStorage.setItem('dep', dep);
+						}
+					}
+				}
+			}
+		});
+        $("#addressInput").keydown(function () {
+			// Place is tiped into field and not chosen from the api responses
+            isPlaceChanged = false;
+        });
+
 		if(!app) locateMe();
 		
         var ok = setInterval( function () {
@@ -571,6 +611,22 @@
 		$("#rememberMe").popup("close");
 		$("#search-box").show("medium");
 		dontReg = true;
+	}
+	function checkZip(pageToGo) {
+		var dep = $.sessionStorage.getItem('dep');
+		//alert(dep);
+		if (isPlaceChanged || (dep != '')) {
+			$.mobile.pageContainer.pagecontainer("change", pageToGo, { transition: "slide", reverse: true} );
+		}
+		else {
+			//alert('No Zip Code Here !!');
+			$( "#setZip" ).popup( "open", { positionTo: "window" } );
+		}
+	}
+	function setZip() {
+		var zip = $('#zipDep').val();
+		$.sessionStorage.setItem('dep', zip);
+		$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide", reverse: true} );
 	}
 		
 	$( '#map_page' ).live( 'pagebeforeshow',function(event){
@@ -746,6 +802,7 @@
 		var rdvlng = center.lng();
 		url = '';
 		num_req = idcourse;
+		var dep = $.sessionStorage.getItem('dep');
 		i = 0; // We need to make any numreq unique on that one !!
 		//$.post("https://ssl14.ovh.net/~taxibleu/appserver/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
 		$.post('https://ssl14.ovh.net/~taxibleu/appserver/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, pass: 'true'}, function(xml){
@@ -768,7 +825,7 @@
 				});
 				//mapEvent.addBounds(latlng);
 				url = 'taxi=' + name + '&tel=' + address + '&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep='+dep+'&group=1&ack=0&db=1';
-				//url = url.replace(/'/g, "&rsquo;");
+				url = url.replace(/'/g, "&rsquo;");
 				url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
 				//$.post("https://ssl14.ovh.net/~taxibleu/appserver/diary_app_share.php", url, function(data) {});
 				$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
@@ -776,7 +833,8 @@
 			num_req = num_req+1;
 			i = parseInt(i,10)+1;
 			url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep='+dep+'&group=1&ack=0&db=1';
-			//url = url.replace(/'/g, "&rsquo;");
+			//alert(url);
+			url = url.replace(/'/g, "&rsquo;");
 			url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
 			// Sends Auction Request to TaxiMedia appserver
 			$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
@@ -803,6 +861,7 @@
 	
     function check_answer()
     {
+		var dep = $.sessionStorage.getItem('dep');
 		$.post("https://ssl14.ovh.net/~taxibleu/appserver/status.php?idcourse=" + idcourse + "dep=" + dep + "&check=1" , {}, function(data){ 
 			if (data != 0)
 			{
@@ -833,6 +892,7 @@
     function cancel(idcourse)
     {
 		//alert(idcourse);
+		var dep = $.sessionStorage.getItem('dep');
         $.post("https://ssl14.ovh.net/~taxibleu/appserver/diary.php?idcourse=" + idcourse + "&dep=" + dep +"&ack=1&db=1&cab_wont=1&del=1"); 
     }        
 	function stopCall()
@@ -947,8 +1007,12 @@
                 <input type="hidden" id="radiusSelect" value="100" />
                 <p>&nbsp;</p>
                 <div id="next-box"><input type="button" id="next" data-theme="a" value="Suivant"/></div>
+                <div id="search-box"><button onClick="checkZip('#map_page')" class="ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search" id="search">Commander un taxi</button></div>
+                <div id="book-box"><button onClick="checkZip('#book_page')" class="ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-clock" id="booking">R&eacute;server un taxi</button></div>
+                <!-- 
                 <div id="search-box"><a href="#map_page" class="ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search" id="search">Commander un taxi</a></div>
                 <div id="book-box"><a href="#book_page" class="ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-clock" id="booking">R&eacute;server un taxi</a></div>
+                -->
                 <div data-role="popup" data-theme="a" id="errorPop" data-dismissible="true">
 					<a href="#infos" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Fermer</a>
                     <div data-theme="a" data-role="header">
@@ -969,6 +1033,21 @@
                     </div>
                     <div class="ui-content" role="main">
                         <div id="regLinks"></div>
+                    </div>
+                </div>
+                <div data-role="popup" data-theme="a" id="setZip" data-dismissible="true">
+ 					<a href="#infos" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Fermer</a>
+                   <div data-theme="a" data-role="header">
+                        <p style="font-size:21px;text-align:center;"><b>
+                            D&eacute;partement
+                        </b></p>
+                    </div>
+                    <div class="ui-content" role="main">
+                    	<p>
+                            Veuillez saisir le num&eacute;ro du d&eacute;partement o&ugrave; vous vous trouvez :
+                            <input type="tel" id="zipDep" data-clear-btn="true" size="2"/>
+                        </p>
+                        <button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" onClick="setZip()">Envoyer</button>
                     </div>
                 </div>
             </div>
