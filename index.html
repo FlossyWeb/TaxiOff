@@ -239,6 +239,8 @@
 						//$("#loginReturns").empty().append(display);
 						if(data.pass)
 						{ // IDENTIFIED SO GETS IN...
+							$('#Accurate').val(data.nom);
+							$('#cellular').val(data.tel);
 							$.localStorage.setItem('registeredUser', 1);
 							$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 						}
