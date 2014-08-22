@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
-		id = "com.taxibleuservices.taxioff"
-		version = "1.1.2">
+		id = "com.taxibleuservices.mytaxi"
+		version = "1.1.3">
     
     <author href="http://flossyweb.com" email="contact@flossyweb.com">
         FRANCOIS-REGIS SIMON
     </author>
 
-	<name>Taxi Officiel</name>
+	<name>My Taxi</name>
 
 	<description>
 	   Réservez votre taxi simplement via votre mobile avec l'application Taxi Officiel.
 	</description>
 
-    <preference name="phonegap-version" value="3.3.0" />
+    <preference name="phonegap-version" value="3.5.0" />
     <preference name="orientation"      value="default" />
     <preference name="target-device"    value="universal" />
     <preference name="fullscreen"       value="false" />
