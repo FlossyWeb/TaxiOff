@@ -240,6 +240,9 @@
 						{ // IDENTIFIED SO GETS IN...
 							$('#Accurate').val(data.nom);
 							$('#cellular').val(data.tel);
+							$('#accName').val(data.nom);
+							$('#accTel').val(data.tel);
+							$('#accMail').val(data.email);
 							$.localStorage.setItem('registeredUser', 1);
 							$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 						}
@@ -699,7 +702,6 @@
 		$.sessionStorage.setItem('dep', dep);
 		$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide", reverse: true} );
 	}
-		
 	$('#map_page').live('pagecreate', function() {
         var getback = setTimeout( function () {
             $("#cancel").trigger('click');
@@ -1253,7 +1255,7 @@
             </center>
         </div>
         <div data-role="footer" id="footer_con" data-position="fixed">
-            <center><input type="image" onClick="fbLogin()" src="visuels/FBconnect.png" width="90%"/></center>
+            <center><input type="image" onClick="fbLogin()" src="visuels/FBconnect.png" width="90%" style="max-width:591px"/></center>
         </div>
     </div>
     <div data-role="page" data-theme="b" id="subscription" style="background: #000 url(visuels/bg.png) top left repeat-x;">
@@ -1271,7 +1273,7 @@
             </div>
         </div>
         <div data-role="footer" id="footer_sub" data-position="fixed">
-            <center><input type="image" onClick="fbLogin()" src="visuels/FBconnect.png" width="90%"/></center>
+            <center><input type="image" onClick="fbLogin()" src="visuels/FBconnect.png" width="90%" style="max-width:591px"/></center>
         </div>
     </div>
     <div data-role="page" data-theme="b" id="account" style="background: #000 url(visuels/bg.png) top left repeat-x;">
@@ -1292,7 +1294,7 @@
             </div>
         </div>
         <div data-role="footer" id="footer_sub" data-position="fixed">
-            <center><input type="image" onClick="fbLogin()" src="visuels/FBconnect.png" width="90%"/></center>
+            <center><input type="image" onClick="fbLogin()" src="visuels/FBconnect.png" width="90%" style="max-width:591px"/></center>
         </div>
     </div>
     <div data-role="page" data-theme="b" id="history" style="background: #000 url(visuels/bg.png) top left repeat-x;">
@@ -1306,9 +1308,9 @@
                 <img src="visuels/logo.png" width="60%" style="max-width:252px"/>
                 <p style="font-size:16px"><b>Historique des courses</b></p>
                 </center>
-                <div class="ui-grid-a">
-                    <div class="ui-block-a"><div class="ui-bar ui-bar-a"><p>Courses prises</p><div id="hist_cont"></div></div></div>
-                    <div class="ui-block-b"><div class="ui-bar ui-bar-b"><p>R&eacute;servations</p><div id="book_cont"></div></div></div>
+                <div class="responsive">
+                    <div class="ui-block-a"><div class="ui-body ui-body-a"><p>Courses prises</p><div id="hist_cont"></div></div></div>
+                    <div class="ui-block-b"><div class="ui-body ui-body-b"><p>R&eacute;servations</p><div id="book_cont"></div></div></div>
                 </div>
             </div>
         </div>
