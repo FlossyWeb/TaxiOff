@@ -294,6 +294,8 @@
 			{
 				//alert(data.subscribed+' '+data.telexist+' '+data.telvalid+' '+data.emailvalid);
 				$.localStorage.setItem('registeredUser', 1);
+				$('#Accurate').val(data.nom);
+				$('#cellular').val(data.tel);
 				$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 				//display = '<p><b>' + data.civil + ' ' + data.nom + ' ' + data.prenom + ' Voici les informations d&rsquo;identification qui vous permettront d&rsquo;acc&egrave;der &agrave; votre compte :<br><span style="color:#09F;">Identifiant = ' + data.tel + '<br>Mot de passe = ' + data.pwd + '</span><br>Vous les recevrez dans quelques instants &agrave; cet email : <span style="color:#09F;">' + data.email + '</span>, merci.<br></b></p>';
 			}
@@ -507,7 +509,7 @@
 		var rdvlng = '';
 		url = '';
 		num_req = idcourse;
-		var dep = $.sessionStorage.getItem('dep');
+		dep = $.sessionStorage.getItem('dep');
 		url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&howmany=' + howMany + '&dep='+dep+'&group=1&ack=0&db=1';
 		url = url.replace(/'/g, "&rsquo;");
 		url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
@@ -553,7 +555,7 @@
 							zip_code = place.address_components[i].long_name;
 							zip = zip_code;
 							//alert(zip_code);
-							var dep = zip_code.substring(0, 2);
+							dep = zip_code.substring(0, 2);
 							$.sessionStorage.setItem('dep', dep);
 						}
 					}
@@ -638,7 +640,7 @@
 						{
 							//alert(component.long_name);
 							zip = component.long_name;
-							var dep = zip.substring(0, 2);
+							dep = zip.substring(0, 2);
 							$.sessionStorage.setItem('dep', dep);
 						}
 					}
@@ -687,7 +689,7 @@
 		dontReg = true;
 	}
 	function checkZip(pageToGo) {
-		var dep = $.sessionStorage.getItem('dep');
+		dep = $.sessionStorage.getItem('dep');
 		if (isPlaceChanged || (dep != '') || (zip != '')) {
 			$.mobile.pageContainer.pagecontainer("change", pageToGo, { transition: "slide", reverse: true} );
 		}
@@ -698,12 +700,12 @@
 	}
 	function setZip() {
 		zip = $('#zipDep').val();
-		var dep = zip.substring(0, 2);
+		dep = zip.substring(0, 2);
 		$.sessionStorage.setItem('dep', dep);
 		$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide", reverse: true} );
 	}
 	$('#map_page').live('pagecreate', function() {
-        var getback = setTimeout( function () {
+        endcourse = setTimeout( function () {
             $("#cancel").trigger('click');
         }, 180000);
 		//$('#dblinks').empty();
@@ -763,8 +765,8 @@
 				if (stoper != 1) {$('#dblinks #' + index).trigger('click');}
 				if ((index > 5) || (stoper == 1)) {
 					// THIS ONE IS THE 0000 CAB AND LAST ONE SO...
-					clearInterval(time);
-                    clearTimeout(endcourse); // Clears the current timeout
+					clearInterval(time); // Clears the current Interval
+                    //clearTimeout(endcourse);
 					//alert('Aucun taxi ne prend la course !!');
 					//return false;
 				}
@@ -946,7 +948,7 @@
 		var rdvlng = center.lng();
 		url = '';
 		num_req = idcourse;
-		var dep = $.sessionStorage.getItem('dep');
+		dep = $.sessionStorage.getItem('dep');
 		i = 0; // We need to make any numreq unique on that one !!
 		//$.post("https://ssl14.ovh.net/~taxibleu/appserver/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
 		$.post('https://ssl14.ovh.net/~taxibleu/appserver/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
@@ -1005,7 +1007,7 @@
 	
     function check_answer()
     {
-		var dep = $.sessionStorage.getItem('dep');
+		dep = $.sessionStorage.getItem('dep');
 		$.post("https://ssl14.ovh.net/~taxibleu/appserver/status.php?idcourse=" + idcourse + "dep=" + dep + "&check=1" , {}, function(data){ 
 			if (data != 0)
 			{
@@ -1036,7 +1038,7 @@
     function cancel(idcourse)
     {
 		//alert(idcourse);
-		var dep = $.sessionStorage.getItem('dep');
+		dep = $.sessionStorage.getItem('dep');
         $.post("https://ssl14.ovh.net/~taxibleu/appserver/diary.php?idcourse=" + idcourse + "&dep=" + dep +"&ack=1&db=1&cab_wont=1&del=1"); 
     }        
 	function stopCall()
@@ -1046,14 +1048,21 @@
 		clearInterval(time);
 		clearTimeout(endcourse);
 		cancel(idcourse);
+		$('#map').gmap('destroy');
 		$( "#backPop" ).popup( "open", { positionTo: "window" } );
 		var wait2getBack = setTimeout( function () {
-			document.location.href='index.html';
-		}, 2000);
+			//document.location.href='index.html';
+			$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
+		}, 1000);
 	}
     function goback(flag)
     {
-        document.location.href=flag;
+		$('#dblinks').empty();	 
+		clearInterval(time);
+		clearTimeout(endcourse);
+		$('#map').gmap('destroy');
+        //document.location.href=flag;
+		$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
     }        
     function processMap()
     {
