@@ -826,7 +826,7 @@
 					//self.get('map').setZoom(12);
 					//self.get('map').setCenter(myPlace);
 					self.addMarker({'position': myPlace, 'bounds': true, 'icon': userIcon }).click(function() {
-						self.openInfoWindow({ 'content': address+' / Lieu de prise en charge' }, this);
+						self.openInfoWindow({ 'content': '<p style="color:#333;">'+address+' / Lieu de prise en charge</p>' }, this);
 					});
 					//var gcenter = myPlace.lat().toFixed(4) +", "+ myPlace.lng().toFixed(4);
 					//var circleCenter = new google.maps.LatLng(gcenter);
@@ -1057,7 +1057,7 @@
 				var distance = $(this).attr('distance');
 				i = $(this).attr('count');
 				num_req = num_req+1;
-				var latlng = new google.maps.LatLng(lat2, lng2);			
+				var latlng = new google.maps.LatLng(lat2, lng2);
 				var display_name = 'Taxi ' + name;
 				var cabIcon = 'visuels/cab_marker.png';
 				mapEvent.addMarker({ id: i ,'position': latlng, 'bounds': true, 'title': display_name, 'icon': cabIcon }).click(function() {
