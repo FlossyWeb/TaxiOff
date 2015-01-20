@@ -110,12 +110,14 @@
 				locateMe();
 			}, 1000);
 			scanner = cordova.require("cordova/plugin/BarcodeScanner");
+			/*
 			try {
 				FB.init({ appId: "1477112772546142", nativeInterface: CDV.FB, useCachedDialogs: false });
 				//document.getElementById('data').innerHTML = "";
 			} catch (e) {
 				navigator.notification.alert(e);
 			}
+			*/
 		}
 		// GESTION DES BOUTONS MATERIEL
 		// Bouton retour
@@ -220,9 +222,24 @@
 		window.plugins.contactNumberPicker.pick(successCallbackPick,failedCallbackPick);
 	}
 	function fbLogin() {
-		FB.login(function(response) {
-			if (response.status === 'connected') {
-				 FB.api('/me', function(response) {
+		/*
+         if (!app) {
+             facebookConnectPlugin.browserInit('1477112772546142');
+         }
+         facebookConnectPlugin.login(["email"], function(response) {
+             if (response.authResponse) {
+                 facebookConnectPlugin.api('/me', null,
+                     function(response) {
+                         alert('Good to see you, ' +
+                             response.email + response.name + '.');
+                     });
+
+             }
+         });
+		*/
+		facebookConnectPlugin.login(["email"], function(response) {
+			if (response.authResponse) {
+				facebookConnectPlugin.api('/me', null, function(response) {
 					//document.getElementById('data').innerHTML = "Good to see you, fr&egrave;re : " + response.name + "."+response.email + " - "+response.age_range + " - bDay = "+response.birthday + " - "+response.gender + " - "+response.work + " - "+response.website+ " - "+response.link + " - "+response.quotes;
 					$.localStorage.setItem('nom', response.name);
 					$.localStorage.setItem('email', response.email);
@@ -250,12 +267,12 @@
 							$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 						}
 					}, "json");
-				 });
+				});
 				//navigator.notification.alert('logged in');
 			} else {
 				navigator.notification.alert('ECHEC IDENTIFICATION');
 			}
-		},{ scope: "email" });
+		});
 	}
 	function dc() {
 		$.localStorage.setItem('registeredUser', 0);
