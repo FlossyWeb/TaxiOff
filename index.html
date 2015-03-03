@@ -691,15 +691,15 @@
 			$('.noAppHide').each(function () {
 				$(this).hide();
 			})
-			$('#date').datebox({
-				mode: "calbox",
-				afterToday: true
-			});
-			$('#when').datebox({
-				mode: "timebox",
-				overrideTimeOutput: "%k:%M"
-			});
 		}		
+		$('#date').datebox({
+			mode: "calbox",
+			afterToday: true
+		});
+		$('#when').datebox({
+			mode: "timebox",
+			overrideTimeOutput: "%k:%M"
+		});
         var ok = setInterval( function () {
             var name_filled = document.getElementById("Accurate").value;
             var cell_filled = document.getElementById("cellular").value;
