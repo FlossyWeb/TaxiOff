@@ -2,13 +2,13 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
 		id = "com.taxibleuservices.mytaxi"
-		version = "1.2.4">
+		version = "1.2.5">
     
     <author href="http://flossyweb.com" email="contact@flossyweb.com">
         FRANCOIS-REGIS SIMON
     </author>
 
-	<name>My Taxi</name>
+	<name>MonTaxi</name>
 
 	<description>
 	   Réservez votre taxi simplement via votre mobile avec l'application Taxi Officiel.
