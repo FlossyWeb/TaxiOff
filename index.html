@@ -103,7 +103,7 @@
 			//document.addEventListener("menubutton", onMenuKeyDown, false);
 			//document.addEventListener("pause", onPause, false);
 			StatusBar.overlaysWebView(false);
-			StatusBar.backgroundColorByName("lightGray");
+			StatusBar.backgroundColorByHexString("#E7B242");
 			if($.localStorage.getItem('registeredUser') != 1)
 			{
 				$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
