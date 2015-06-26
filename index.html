@@ -248,13 +248,12 @@
 	}
 	function fbLogin() {
          if (!app) { // WebApp only needs init
-			 alert("Called !!");
              facebookConnectPlugin.browserInit('349841341865550');
-			 alert("initialized !!");
+			 //alert("initialized !!");
          }
 		facebookConnectPlugin.login(["email"], function(response) {
 			if (response.authResponse) {
-			 alert("authResponse !!");
+			//alert("authResponse !!");
 				facebookConnectPlugin.api('/me', null, function(response) {
 					$.localStorage.setItem('nom', response.name);
 					$.localStorage.setItem('email', response.email);
