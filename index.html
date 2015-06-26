@@ -48,6 +48,7 @@
     <script src="sms.js"></script>
     <script src="cdv-plugin-fb-connect.js"></script>
     <script src="facebook-js-sdk.js"></script>
+    <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk.js"></script>
     <script type="text/javascript" src="js/jquery.html5storage.min.js"></script>
     <script type="text/javascript" src="js/jsimple-star-rating.min.js"></script>
     <script type="text/javascript" src="js/jqm-datebox-1.4.5.min.js"></script>
@@ -90,6 +91,7 @@
 	////////////////////////////////////////////////////////////
 	
 	// Checks App or Browser
+	//app = !!window.cordova
 	app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1 && document.URL.indexOf("localhost") != 7;
 	if ( app ) {
 		// PhoneGap application
@@ -245,8 +247,14 @@
 		window.plugins.contactNumberPicker.pick(successCallbackPick,failedCallbackPick);
 	}
 	function fbLogin() {
+         if (!app) { // WebApp only needs init
+			 alert("Called !!");
+             facebookConnectPlugin.browserInit('1477112772546142');
+			 alert("initialized !!");
+         }
 		facebookConnectPlugin.login(["email"], function(response) {
 			if (response.authResponse) {
+			 alert("authResponse !!");
 				facebookConnectPlugin.api('/me', null, function(response) {
 					$.localStorage.setItem('nom', response.name);
 					$.localStorage.setItem('email', response.email);
@@ -1280,6 +1288,7 @@
     </script>
     </head>
     <body style="margin:0px; padding:0px;">
+	<div id="fb-root"></div>
     <div data-role="panel" id="homepanel" data-position="right" data-display="reveal">
         <!-- panel content goes here -->
         <ul data-role="listview" data-inset="true" data-theme="c">
@@ -1479,7 +1488,7 @@
                     <button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-mail" onClick="forgottenPwd()">Envoyer</button>
                 </div>
                 <div id="fogotReturns"></div>
-            </div>
+           </div>
             </center>
         </div>
         <div data-role="footer" data-position="fixed" class="footer" style="background:none;" id="footer_con">
