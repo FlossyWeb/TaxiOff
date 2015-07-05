@@ -747,13 +747,17 @@
 			$('.noAppHide').each(function () {
 				$(this).hide();
 			})
+			$('#date').prop('type', 'text');
+			$('#when').prop('type', 'text');
 			$('#date').datebox({
 				mode: "calbox",
-				afterToday: true
+				afterToday: true,
+				useFocus: true
 			});
 			$('#when').datebox({
 				mode: "timebox",
-				overrideTimeOutput: "%k:%M"
+				overrideTimeOutput: "%k:%M",
+				useFocus: true
 			});
 		}		
         var ok = setInterval( function () {
@@ -1302,7 +1306,7 @@
     </div><!-- /panel -->
     <div data-role="page" data-theme="c" id="infos">
         <div data-role="header" data-position="fixed" class="header">
-			<table width="100%" border="0">
+			<table width="100%" border="0" class="header_cont">
 				<thead><tr><th width="50%"></th><th width="34%"></th><th width="16%"></th></tr></thead>
 				<tbody>
 				<tr><td>
@@ -1519,7 +1523,7 @@
     </div>
     <div data-role="page" data-theme="c" id="account">
         <div data-role="header" data-position="fixed" class="header">
-			<table width="100%" border="0">
+			<table width="100%" border="0" class="header_cont">
 				<thead><tr><th width="50%"></th><th width="34%"></th><th width="16%"></th></tr></thead>
 				<tbody>
 				<tr><td>
@@ -1552,7 +1556,7 @@
     </div>
     <div data-role="page" data-theme="c" id="history">
         <div data-role="header" data-position="fixed" class="header">
-			<table width="100%" border="0">
+			<table width="100%" border="0" class="header_cont">
 				<thead><tr><th width="50%"></th><th width="34%"></th><th width="16%"></th></tr></thead>
 				<tbody>
 				<tr><td>
@@ -1588,7 +1592,7 @@
     </div>
     <div data-role="page" data-theme="c" id="book_page">
         <div data-role="header" data-position="fixed" class="header">
-			<table width="100%" border="0">
+			<table width="100%" border="0" class="header_cont">
 				<thead><tr><th width="50%"></th><th width="34%"></th><th width="16%"></th></tr></thead>
 				<tbody>
 				<tr><td>
@@ -1627,7 +1631,7 @@
     </div>
     <div data-role="page" data-theme="c" id="rate_page">
         <div data-role="header" data-position="fixed" class="header">
-			<table width="100%" border="0">
+			<table width="100%" border="0" class="header_cont">
 				<thead><tr><th width="50%"></th><th width="14%"></th><th width="36%"></th></tr></thead>
 				<tbody>
 				<tr><td>
@@ -1662,7 +1666,7 @@
     </div>
 	<div data-role="page" data-theme="c" id="modbook">
         <div data-role="header" data-position="fixed" class="header">
-			<table width="100%" border="0">
+			<table width="100%" border="0" class="header_cont">
 				<thead><tr><th width="50%"></th><th width="14%"></th><th width="36%"></th></tr></thead>
 				<tbody>
 				<tr><td>
