@@ -28,7 +28,7 @@ body {
 }
 @media all and (orientation: landscape) { 
 	body {
-		background: url(../visuels/bg_land_HD.jpg) no-repeat center fixed; 
+		background: url(../visuels/bg_land_HD.jpg) no-repeat center fixed;
 		background-size: cover;
 		-moz-background-size: cover;
 		-o-background-size: cover;
