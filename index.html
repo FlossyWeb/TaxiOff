@@ -1295,6 +1295,7 @@
 				//$('#thanksResults').empty().append(data);
 				$('#answer').empty().append(data);
 				$( "#answerBox" ).popup( "open", { positionTo: "window" } );
+				/*
 				var badgeNumber = 1;
 				var toNotify = data.split("<", 1);
 				cordova.plugins.notification.local.schedule({
@@ -1305,6 +1306,7 @@
 					badge: badgeNumber,
 					data: { data:data }
 				});
+				*/
 				//return false;
 			}
 		}).done(function(data) {
