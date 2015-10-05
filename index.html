@@ -273,10 +273,10 @@
 		window.plugins.contactNumberPicker.pick(successCallbackPick,failedCallbackPick);
 	}
 	function fbLogin() {
-         //if (!app) { // WebApp only needs init
+         if (!app) { // WebApp only needs init
              facebookConnectPlugin.browserInit('349841341865550');
 			 //alert("initialized !!");
-         //}
+         }
 		facebookConnectPlugin.login(["email"], function(response) {
 			if (response.authResponse) {
 			//alert("authResponse !!");
@@ -1296,10 +1296,11 @@
 				$('#answer').empty().append(data);
 				$( "#answerBox" ).popup( "open", { positionTo: "window" } );
 				badgeNumber = 1;
+				var toNotify = data.split("<", 1);
 				cordova.plugins.notification.local.schedule({
 					id: 1,
 					title: "MonTaxi",
-					text: data,
+					text: toNotify,
 					led: "E7B242",
 					badge: badgeNumber,
 					data: { data:data }
