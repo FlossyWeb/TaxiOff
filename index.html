@@ -1225,8 +1225,9 @@
 		dep = $.sessionStorage.getItem('dep');
 		i = 0; // We need to make any numreq unique on that one !!
 		//$.post("https://www.mytaxiserver.com/appserver/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
+		alert('lat:'+ rdvlat+', lng:'+ rdvlng+', type: '+typecar+', howmany:'+ howMany+', cb:'+ cb+', group:'+ group+', dep:'+ dep+', zip:'+ zip);
 		$.post('https://www.mytaxiserver.com/appserver/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
-			navigator.notification.alert('IN');
+			alert('IN XML');
 			$(xml).find('marker').each(function(){
 				var name = $(this).attr('name');
 				var address = $(this).attr('address');
