@@ -1228,6 +1228,7 @@
 		alert('lat:'+ rdvlat+', lng:'+ rdvlng+', type: '+typecar+', howmany:'+ howMany+', cb:'+ cb+', group:'+ group+', dep:'+ dep+', zip:'+ zip);
 		$.post('https://www.mytaxiserver.com/appserver/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
 			alert('IN XML');
+			/*
 			$(xml).find('marker').each(function(){
 				var name = $(this).attr('name');
 				var address = $(this).attr('address');
@@ -1260,6 +1261,7 @@
 			// Sends Auction Request to TaxiMedia appserver
 			$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
 			//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
+			*/
 		}, "xml");
 		$.mobile.loading( "hide" );
 		$('#dblinks').append($('<input id="stop" type="hidden" value="0" />'));
