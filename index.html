@@ -1262,7 +1262,9 @@
 			$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
 			//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
 			*/
-		}, "xml");
+		}, "xml").fail(function (jqXHR, textStatus, errorThrown) {
+				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'MonTaxi Erreur', 'OK');
+		});
 		$.mobile.loading( "hide" );
 		$('#dblinks').append($('<input id="stop" type="hidden" value="0" />'));
 		deliver();
