@@ -26,8 +26,8 @@
 	<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
     <link type="text/css" rel="stylesheet" href="css/jqm-datebox-1.4.5.min.css" />
     <link type="text/css" rel="stylesheet" href="css/dcvpad.css" />
-	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript">
         $( document ).on( "mobileinit", function() {
             // Make your jQuery Mobile framework configuration changes here!
@@ -1262,7 +1262,7 @@
 			$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
 			//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
 			*/
-		}).fail(function (jqXHR, textStatus, errorThrown) {
+		}, "xml").fail(function (jqXHR, textStatus, errorThrown) {
 				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'MonTaxi Erreur', 'OK');
 		});
 		$.mobile.loading( "hide" );
