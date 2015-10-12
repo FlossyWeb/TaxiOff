@@ -46,6 +46,7 @@
     <script src="barcodescanner.js"></script>
     <script src="contactNumberPicker.js"></script>
     <script src="sms.js"></script>
+    <script src="PowerManagement.js"></script>
     <script src="cdv-plugin-fb-connect.js"></script>
     <script src="facebook-js-sdk.js"></script>
     <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk.js"></script>
@@ -108,6 +109,8 @@
 			//document.addEventListener("pause", onPause, false);
 			StatusBar.overlaysWebView(false);
 			StatusBar.backgroundColorByHexString("#E7B242");
+			// prevent device from sleeping
+			window.plugins.powerManagement.acquire();
 			if($.localStorage.getItem('registeredUser') != 1)
 			{
 				$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
