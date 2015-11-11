@@ -1131,6 +1131,7 @@
 				}
 			});
 			$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+				alert("First");
 				if(data.ok) {
 					var latlng = new google.maps.LatLng(data.lat, data.lng);
 					var display_name = 'Taxi ' + data.name;
@@ -1148,6 +1149,7 @@
 				}
 			}, "json");
 			var track = setInterval( function () {
+				alert("Others");
 				$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
 					var markerCab = self.get('markers')['cab'];
 					markerCab.setVisible(false);
