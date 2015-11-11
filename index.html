@@ -1131,7 +1131,6 @@
 				}
 			});
 			$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
-				alert("First");
 				if(data.ok) {
 					var latlng = new google.maps.LatLng(data.lat, data.lng);
 					var display_name = 'Taxi ' + data.name;
@@ -1147,7 +1146,10 @@
 					//document.location.href='index.html';
 					$.mobile.pageContainer.pagecontainer("change", "#history", { transition: "slide"} );
 				}
-			}, "json");
+			}, "json").fail(function (jqXHR, textStatus, errorThrown) {
+				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'MonTaxi Erreur', 'OK');
+			});
+			alert("After First");
 			var track = setInterval( function () {
 				alert("Others");
 				$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
