@@ -85,6 +85,7 @@
 	var zipChecked = false;
 	var badgeNumber = 1;
 	var toNotify;
+	var stopCheckAnswer=false;
 
 	// Scanner
 	var scanner;
@@ -986,6 +987,7 @@
 				led: "E7B242",
 				badge: badgeNumber
 			});
+			playAudio('sounds/ring.mp3');
         }, 180000);
 		//$('#dblinks').empty();
 		$('#map').gmap({'center': mobileMap.center, 'zoom': mobileMap.zoom, 'disableDefaultUI':false, 'mapTypeId': google.maps.MapTypeId.ROADMAP, 'callback': function() {
@@ -1303,35 +1305,38 @@
     function check_answer()
     {
 		dep = $.sessionStorage.getItem('dep');
-		$.post("https://www.mytaxiserver.com/appserver/status.php?idcourse=" + idcourse + "&dep=" + dep + "&check=1" , {}, function(data){ 
-			if (data != 0)
-			{
-				clearInterval(time);
-				clearTimeout(endcourse);
-				cancel(idcourse);
-				document.getElementById('stop').value = 1;
-				//var box = navigator.notification.alert(data);
-				//stopCall();
-				//var box = navigator.notification.alert(data);
-				//$('#thanksResults').empty().append(data);
-				$('#answer').empty().append(data);
-				$( "#answerBox" ).popup( "open", { positionTo: "window" } );
-				badgeNumber = 1;
-				toNotify = data.split("<", 1);
-				cordova.plugins.notification.local.schedule({
-					id: 1,
-					title: "MonTaxi",
-					text: toNotify,
-					led: "E7B242",
-					badge: badgeNumber,
-					data: { data:toNotify }
-				});
-				playAudio('sounds/ring.mp3');
-				//return false;
-			}
-		}).always(function(data) {
-			setTimeout('check_answer()', 2000);
-		});
+		if(!stopCheckAnswer) {
+			$.post("https://www.mytaxiserver.com/appserver/status.php?idcourse=" + idcourse + "&dep=" + dep + "&check=1" , {}, function(data){ 
+				if (data != 0)
+				{
+					clearInterval(time);
+					clearTimeout(endcourse);
+					cancel(idcourse);
+					document.getElementById('stop').value = 1;
+					//var box = navigator.notification.alert(data);
+					//stopCall();
+					//var box = navigator.notification.alert(data);
+					//$('#thanksResults').empty().append(data);
+					$('#answer').empty().append(data);
+					$( "#answerBox" ).popup( "open", { positionTo: "window" } );
+					badgeNumber = 1;
+					toNotify = data.split("<", 1);
+					cordova.plugins.notification.local.schedule({
+						id: 1,
+						title: "MonTaxi",
+						text: toNotify,
+						led: "E7B242",
+						badge: badgeNumber,
+						data: { data:toNotify }
+					});
+					playAudio('sounds/ring.mp3');
+					stopCheckAnswer=true;
+					//return false;
+				}
+			}).always(function(data) {
+				setTimeout('check_answer()', 2000);
+			});
+		}
     }
 
     function cancel(idcourse)
