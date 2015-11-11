@@ -1130,7 +1130,8 @@
 					else alert('ADRESSE RDV : '+address+' NON TROUVEE ');
 				}
 			});
-			$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+			//$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+			$.post('http://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
 				if(data.ok) {
 					var latlng = new google.maps.LatLng(data.lat, data.lng);
 					var display_name = 'Taxi ' + data.name;
@@ -1149,10 +1150,10 @@
 			}, "json").fail(function (jqXHR, textStatus, errorThrown) {
 				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'MonTaxi Erreur', 'OK');
 			});
-			alert("After First");
 			var track = setInterval( function () {
 				alert("Others");
-				$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+				//$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+				$.post('http://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
 					var markerCab = self.get('markers')['cab'];
 					markerCab.setVisible(false);
 					var latlng = new google.maps.LatLng(data.lat, data.lng);
