@@ -140,6 +140,10 @@
 			cordova.plugins.backgroundMode.configure({
 				text:'App toujours en fonction, nous vous informons des courses en cours...'
 			});
+			// Called when background mode has been activated or deactivated
+			cordova.plugins.backgroundMode.onactivate = function () {
+				playAudio('sounds/background.mp3');
+			}
 			cordova.plugins.notification.local.clearAll(function() {
 				//alert("All notifications cleared");
 			}, this);
@@ -1151,7 +1155,6 @@
 				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'MonTaxi Erreur', 'OK');
 			});
 			var track = setInterval( function () {
-				alert("Others");
 				//$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
 				$.post('http://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
 					var markerCab = self.get('markers')['cab'];
