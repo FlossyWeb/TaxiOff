@@ -149,6 +149,7 @@
 			// iOS fetch plugin
 			var Fetcher = window.plugins.backgroundFetch;
 			// Your background-fetch handler.
+			/*
 			var fetchCallback = function() {
 				// perform your ajax request to server here
 				dep = $.sessionStorage.getItem('dep');
@@ -178,8 +179,12 @@
 						Fetcher.finish();   // <-- N.B. You MUST call #finish so that native-side can signal completion of the background-thread to the os.
 					});
 				}
+				else {
+					Fetcher.finish();   // <-- N.B. You MUST call #finish so that native-side can signal completion of the background-thread to the os.
+				}
 			}
 			Fetcher.configure(fetchCallback);
+			*/
 			cordova.plugins.notification.local.clearAll(function() {
 				//alert("All notifications cleared");
 			}, this);
@@ -1028,6 +1033,7 @@
 				badge: badgeNumber
 			});
 			playAudio('sounds/ring.mp3');
+			Fetcher.finish();
         }, 180000);
 		//$('#dblinks').empty();
 		$('#map').gmap({'center': mobileMap.center, 'zoom': mobileMap.zoom, 'disableDefaultUI':false, 'mapTypeId': google.maps.MapTypeId.ROADMAP, 'callback': function() {
@@ -1375,6 +1381,7 @@
 					});
 					playAudio('sounds/ring.mp3');
 					stopCheckAnswer=true;
+					Fetcher.finish();
 					//return false;
 				}
 			}).always(function(data) {
