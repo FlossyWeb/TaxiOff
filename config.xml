@@ -61,7 +61,7 @@
 	<gap:plugin name="de.appplant.cordova.plugin.background-mode" version="0.6.4" />
 	<gap:config-file platform="ios" parent="UIBackgroundModes" overwrite="true">
 		<array>
-			<string>location, fetch</string>
+			<string>fetch</string>
 		</array>
 	</gap:config-file>
 	<!-- 
