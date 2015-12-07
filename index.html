@@ -951,9 +951,10 @@
 				if (data.go == "ok")
 				{
 					$("#openDep-box").show();
+					$("#search").text("Proposition automatique");
 				}
 			}, "json");
-		};
+		});
 		/*
 		{"type": "FeatureCollection", "version": "draft", "attribution": "BAN", 
 		"features": [{"type": "Feature"
@@ -2064,7 +2065,7 @@
 					<div id="openDep-box">
 						<button onClick="checkZip('#map_page_open')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search" id="searchOpen">Choisir un taxi</button>
 					</div>
-					<button onClick="checkZip('#map_page')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Proposition automatique</button>
+					<button onClick="checkZip('#map_page')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Commander un taxi</button>
 				</div>
                 <div id="book-box"><button onClick="booking()" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-clock" id="booking">R&eacute;server un taxi</button></div>
                 <div data-role="popup" data-theme="c" id="errorPop" data-dismissible="true">
