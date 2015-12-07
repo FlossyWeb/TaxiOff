@@ -869,7 +869,9 @@
 				overrideTimeOutput: "%k:%M",
 				useFocus: true
 			});
-		}		
+		}
+		// OpenData Areas Only... (#openDep-box)
+		$("#openDep-box").css("display", "none");
         var ok = setInterval( function () {
             var name_filled = document.getElementById("Accurate").value;
             var cell_filled = document.getElementById("cellular").value;
@@ -943,7 +945,15 @@
 				if(app) navigator.notification.alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.', alertDismissed, 'MonTaxi', 'OK');
 				else alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.');
 			}
-		}, "json");
+		}, "json").done(function() { 
+			// OpenData Areas Only... (#openDep-box)
+			$.post("https://www.mytaxiserver.com/appclient/open_areas.php", { insee: insee, zip: zip, dep: dep}, function(data) {
+				if (data.go == "ok")
+				{
+					$("#openDep-box").show();
+				}
+			}, "json");
+		};
 		/*
 		{"type": "FeatureCollection", "version": "draft", "attribution": "BAN", 
 		"features": [{"type": "Feature"
@@ -2051,7 +2061,9 @@
                 <p>&nbsp;</p>
                 <div id="next-box"><button id="next" class="ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-next">* Champs obligatoires</button></div>
                 <div id="search-box">
-					<button onClick="checkZip('#map_page_open')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search" id="searchOpen">Choisir un taxi</button>
+					<div id="openDep-box">
+						<button onClick="checkZip('#map_page_open')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search" id="searchOpen">Choisir un taxi</button>
+					</div>
 					<button onClick="checkZip('#map_page')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Proposition automatique</button>
 				</div>
                 <div id="book-box"><button onClick="booking()" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-clock" id="booking">R&eacute;server un taxi</button></div>
