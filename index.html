@@ -774,9 +774,9 @@
 			else alert('Afin de modifier la réservation, vous devez renseigner une date de RDV !!');
 		}
 	}
-	function delCmd(id)
+	function delCmd(id, deldep)
 	{
-		$.post("https://www.mytaxiserver.com/appserver/bookings_app_mod.php", {idcourse: id, del: 1, db: 1}, function(data) {
+		$.post("https://www.mytaxiserver.com/appserver/bookings_app_mod.php", {idcourse: id, dep: deldep, del: 1, db: 1}, function(data) {
 			if(!data.ok) {
 				if(app) navigator.notification.alert('Vous ne pouvez pas annuler cette réservation !!', alertDismissed, 'MonTaxi', 'OK');
 				else alert('Vous ne pouvez modifier la réservation !!');
@@ -855,7 +855,7 @@
 			locateMe();
 			$('.noAppHide').each(function () {
 				$(this).hide();
-			})
+			});
 			$('#date').prop('type', 'text');
 			$('#when').prop('type', 'text');
 			$('#date').datebox({
@@ -1763,6 +1763,7 @@
 						data: { data:toNotify }
 					});
 					playAudio('sounds/ring.mp3');
+					//stopCheckAnswer=true;
 					//return false;
 				}
 			}, "json").always(function(data) {
