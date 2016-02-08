@@ -1573,9 +1573,9 @@
 				//$('#infoCont').append($('<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-check cabs" id="' + i + '" onClick="sendJobOpen(\''+ url +'\')">Choisir</button>'));
 			});
 			if(!openAvail) {
-				if(app) var alertNone = navigator.notification.alert("Erreur: L'incident n'a pas été déclaré.", alertDismissed, 'Mon Appli Taxi', 'OK');
-				else var alertNone = alert("Erreur: L'incident n'a pas été déclaré.");
-				if(alertNone) $.mobile.pageContainer.pagecontainer("change", "#map_page_open", { transition: "slide"} );
+				if(app) var alertNone = navigator.notification.alert("Aucun taxis trouvé à proximité dans ce mode.\nVous allez être redirigé vers le script de recherche automatique.", alertDismissed, 'Mon Appli Taxi', 'OK');
+				else var alertNone = alert("Aucun taxis trouvé à proximité dans ce mode.\nVous allez être redirigé vers le script de recherche automatique.");
+				$.mobile.pageContainer.pagecontainer("change", "#map_page_open", { transition: "slide"} );
 			}
 		}, "xml").done(function() { $.mobile.loading( "hide" ); });
 		setTimeout( function () {
