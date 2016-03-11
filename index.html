@@ -118,8 +118,10 @@
 			StatusBar.backgroundColorByHexString("#E7B242");
 			// prevent device from sleeping
 			window.plugins.powerManagement.acquire();
-			if($.localStorage.getItem('registeredUser') != 1)
+			if(($.localStorage.getItem('registeredUser') != 1) && ($.localStorage.getItem('registeredUser') != 'OK'))
+			//if($.localStorage.getItem('registeredUser') != 1)
 			{
+				//navigator.notification.alert("Valeur du Registre: "+$.localStorage.getItem('registeredUser'), alertDismissed, 'Mon Appli Taxi', 'OK');
 				$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
 			}
 			else {
@@ -127,7 +129,7 @@
 					if (data.banned == 1)
 					{
 						$.mobile.pageContainer.pagecontainer("change", "#subscription", { transition: "slide"} );
-						var displayThis = '<p style="color:red;"><b>Votre compte &agrave; &eacute;t&eacute; banni pour cause d&rsquo;utilisation abusive, d&eacute;sol&eacute;.<br>Vous pouvez nous contacter pour toute r&eacute;clamation: </b></p><center><a href="mailto:info@taximedia.fr" class="ui-btn ui-btn-icon-left ui-icon-mail ui-btn-inline">Courriel</a><a href="tel:0413598022" class="ui-btn ui-btn-icon-left ui-icon-phone ui-btn-inline">T&eacute;l&eacute;phone</a></center>';
+						var displayThis = '<p style="color:red;"><b>Votre compte &agrave; &eacute;t&eacute; banni pour cause d&rsquo;utilisation abusive, d&eacute;sol&eacute;.<br>Vous pouvez nous contacter pour toute r&eacute;clamation: </b></p><center><a href="mailto:info@taximedia.fr" class="ui-btn ui-btn-icon-left ui-icon-mail ui-btn-inline">Courriel</a><a href="tel:0491034263" class="ui-btn ui-btn-icon-left ui-icon-phone ui-btn-inline">T&eacute;l&eacute;phone</a></center>';
 						$("#subReturns").empty().append(displayThis);
 					}
 				}, "json");
@@ -139,15 +141,15 @@
 				locateMe();
 			}, 1000);
 			scanner = cordova.require("cordova/plugin/BarcodeScanner");
-			/*
 			// For Android => Enable background mode
 			cordova.plugins.backgroundMode.enable();
 			cordova.plugins.backgroundMode.configure({
 				text:'App toujours en fonction, nous vous informons des courses en cours...'
 			});
-			*/
+			/*
 			// For iOS => backgroundtask
 			backgroundtask.start(bgFunctionToRun);
+			*/
 			cordova.plugins.notification.local.clearAll(function() {
 				//alert("All notifications cleared");
 			}, this);
@@ -333,7 +335,7 @@
 							$('#accName').val(data.nom);
 							$('#accTel').val(data.tel);
 							$('#accMail').val(data.email);
-							$.localStorage.setItem('registeredUser', 1);
+							$.localStorage.setItem('registeredUser', 'OK');
 							$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 						}
 					}, "json");
@@ -344,7 +346,7 @@
 		});
 	}
 	function dc() {
-		$.localStorage.setItem('registeredUser', 0);
+		$.localStorage.setItem('registeredUser', 'KO');
 		$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
 	}
 	function login() {
@@ -369,7 +371,7 @@
 			{ // IDENTIFIED SO GETS IN...
 				$('#Accurate').val(data.nom);
 				$('#cellular').val(data.tel);
-				$.localStorage.setItem('registeredUser', 1);
+				$.localStorage.setItem('registeredUser', 'OK');
 				$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 			}
 		}, "json");
@@ -392,7 +394,7 @@
 			if (data.subscribed === true)
 			{
 				//navigator.notification.alert(data.subscribed+' '+data.telexist+' '+data.telvalid+' '+data.emailvalid);
-				$.localStorage.setItem('registeredUser', 1);
+				$.localStorage.setItem('registeredUser', 'OK');
 				$('#Accurate').val(data.nom);
 				$('#cellular').val(data.tel);
 				$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
@@ -472,6 +474,11 @@
 	function alertDismissed()
 	{
 		// Do Nothing...
+	}
+	function openSomeUrl(url)
+	{
+		//window.plugins.childBrowser.showWebPage('http://www.taximedia.fr/redir.php', { showLocationBar: true });
+		window.open(url,'_blank','location=false,enableViewportScale=yes,closebuttoncaption=Fermer');
 	}
 	$(document).on( 'pagecreate', function() {
 		$( "body>[data-role='panel']" ).panel().enhanceWithin();
@@ -840,7 +847,7 @@
             isPlaceChanged = false;
         });
 		if(!app) {
-			if($.localStorage.getItem('registeredUser') != 1)
+			if(($.localStorage.getItem('registeredUser') != 1) && ($.localStorage.getItem('registeredUser') != 'OK'))
 			{
 				$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
 			}
@@ -849,7 +856,7 @@
 					if (data.banned == 1)
 					{
 						$.mobile.pageContainer.pagecontainer("change", "#subscription", { transition: "slide"} );
-						var displayThis = '<p style="color:red;"><b>Votre compte &agrave; &eacute;t&eacute; banni pour cause d&rsquo;utilisation abusive, d&eacute;sol&eacute;.<br>Vous pouvez nous contacter pour toute r&eacute;clamation: </b></p><center><a href="mailto:info@taximedia.fr" class="ui-btn ui-btn-icon-left ui-icon-mail ui-btn-inline">Courriel</a><a href="tel:0413598022" class="ui-btn ui-btn-icon-left ui-icon-phone ui-btn-inline">T&eacute;l&eacute;phone</a></center>';
+						var displayThis = '<p style="color:red;"><b>Votre compte &agrave; &eacute;t&eacute; banni pour cause d&rsquo;utilisation abusive, d&eacute;sol&eacute;.<br>Vous pouvez nous contacter pour toute r&eacute;clamation: </b></p><center><a href="mailto:info@taximedia.fr" class="ui-btn ui-btn-icon-left ui-icon-mail ui-btn-inline">Courriel</a><a href="tel:0491034263" class="ui-btn ui-btn-icon-left ui-icon-phone ui-btn-inline">T&eacute;l&eacute;phone</a></center>';
 						$("#subReturns").empty().append(displayThis);
 					}
 				}, "json");
@@ -1729,7 +1736,7 @@
 			hail_id = data.hail_id;
 			//taxi_phone_number = data.taxi_phone_number;
 		}, "json").done(function() { 
-			setTimeout('check_answer_open()', 500);
+			if(hail_id!="") setTimeout('check_answer_open()', 500);
 			//check_answer_open();
 			$.mobile.loading( "hide" );
 		}).fail(function() { 
@@ -1923,7 +1930,7 @@
     }
 	function callIncident(irdv, ihail, iop, icell, istatus)
 	{ // callIncident(\''.$rdv.'\', \''.$hail_id.'\', \''.$operator.'\', \''.$cell.'\', \''.$status.'\')
-		$.post("https://www.mytaxiserver.com/appserver/open_incident.php" , { rdvpoint: irdv, hail_id: ihail, operator: iop, cell: icell, status: istatus, db: 'true'}, function(data){ 
+		$.post("https://www.mytaxiserver.com/appserver/open_incident.php" , { rdvpoint: irdv, hail_id: ihail, operator: iop, cell: icell, status: istatus, db: 'true', dep: dep}, function(data){ 
 			if (data.ok)
 			{
 				var number = data.taxi_phone_number;
@@ -2216,7 +2223,9 @@
                     <button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-mail" onClick="forgottenPwd()">Envoyer</button>
                 </div>
                 <div id="fogotReturns"></div>
-           </div>
+				<p>&nbsp;</p>
+                <p><a href="#" onClick="openSomeUrl('https://goo.gl/Bz4yK0')">Le.Taxi &ccedil;a marche comment? &Ccedil;a change quoi ?</a></p>
+			</div>
             </center>
         </div>
         <div data-role="footer" data-position="fixed" class="footer" style="background:none;" id="footer_con">
@@ -2239,6 +2248,8 @@
                 </center>
                 <div id="data"></div>
                 <div id="subReturns"></div>
+				<p>&nbsp;</p>
+                <p><a href="#" onClick="openSomeUrl('https://goo.gl/Bz4yK0')">Le.Taxi &ccedil;a marche comment? &Ccedil;a change quoi ?</a></p>
             </div>
         </div>
         <div data-role="footer" class="footer" style="background:none;" data-position="fixed" id="footer_sub">
