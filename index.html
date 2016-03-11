@@ -300,10 +300,9 @@
 		window.plugins.contactNumberPicker.pick(successCallbackPick,failedCallbackPick);
 	}
 	function fbLogin() {
-         if (!app) { // WebApp only needs init
-             facebookConnectPlugin.browserInit('349841341865550');
-			 //alert("initialized !!");
-         }
+		if (!app) { // WebApp only needs init
+			facebookConnectPlugin.browserInit('349841341865550');
+		}
 		facebookConnectPlugin.login(["email"], function(response) {
 			if (response.authResponse) {
 			//alert("authResponse !!");
