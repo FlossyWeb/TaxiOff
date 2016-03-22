@@ -640,9 +640,22 @@
 			var typecar = document.getElementById("CarType").value;
 			var cb = document.getElementById("Pay").value;
 			var group = document.getElementById("group").value;
-			var payment = "Non";
-			if(cb == 1) {
-				payment = "Oui";
+			switch (cb) {
+				case '0':
+					var payment = "Non";
+					cb = 0;
+				  break;
+				case '1':
+					var payment = "Oui";
+					cb = 1;
+				  break;
+				case '2':
+					var payment = "Oui (AMEX)";
+					cb = 1;
+				  break;
+				default:
+					var payment = "Non";
+					cb = 0;
 			}
 			var coms = document.getElementById("coms").value.replace(/'/g, "&rsquo;");
 			var comments1 = '<ul><li>Nom du client : ' + room + '</li><li>Paiement CB : ' + payment + '</li><li>Nombre de passagers : ' + howMany + '</li><li>Type de vehicule : ' + typecar + '</li>';
@@ -914,6 +927,24 @@
 			//$.mobile.silentScroll($(this).next('div').offset().top);
 		});
 		
+		$('#Pmr').change(function(){
+			// special_need_vehicle needs the opendata...
+			if ($(this).val()=='special_need_vehicle') {
+				$('#tm-box').hide();
+				if(app) navigator.notification.alert('Afin d\'obtenir un transport pour personne à mobilité réduite (TPMR), vous devez "choisir un taxi" (la "Proposition automatique" est donc désactivée).', alertDismissed, 'Mon Appli Taxi', 'OK');
+				else alert('Afin d\'obtenir un transport pour personne à mobilité réduite (TPMR), vous devez "choisir un taxi" (la "Proposition automatique" est donc désactivée).');
+			}
+			else	$('#tm-box').show();
+		});
+		$('#Pet').change(function(){
+			// pet_accepted needs the opendata...
+			if ($(this).val()=='pet_accepted') {
+				$('#tm-box').hide();
+				if(app) navigator.notification.alert('Si vous désirez embarquer un animal, vous devez "choisir un taxi" (la "Proposition automatique" est donc désactivée).', alertDismissed, 'Mon Appli Taxi', 'OK');
+				else alert('Si vous désirez embarquer un animal, vous devez "choisir un taxi" (la "Proposition automatique" est donc désactivée).');
+			}
+			else	$('#tm-box').show();
+		});
 		$('#regLinks').append('<fieldset data-role="controlgroup"><legend>Derni&egrave;res informations saisies:</legend>');
 		for(n=1;n<4;n++) {
 			if(($.localStorage.getItem('regName'+n) != null) && ($.localStorage.getItem('regCell'+n) != null)) {
@@ -1481,6 +1512,8 @@
 		var howMany = document.getElementById("howMany").value;
 		var typecar = document.getElementById("CarType").value;
 		var cb = document.getElementById("Pay").value;
+		var pmr = document.getElementById("Pmr").value;
+		var pet = document.getElementById("Pet").value;
 		var group = document.getElementById("group").value;
 		var payment = "Non";
 		if(cb == 1) {
@@ -1536,7 +1569,7 @@
 		//i = 0; // We need to make any numreq unique on that one !!
 		var openAvail = false;
 		//$.post('https://www.mytaxiserver.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
-		$.post('http://www.mytaxiserver.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
+		$.post('http://www.mytaxiserver.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, pmr: pmr, pet: pet, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
 			//navigator.notification.alert('IN');
 			$(xml).find('marker').each(function(){
 				var cabid = $(this).attr('cabid');
@@ -1621,9 +1654,22 @@
 		var typecar = document.getElementById("CarType").value;
 		var cb = document.getElementById("Pay").value;
 		var group = document.getElementById("group").value;
-		var payment = "Non";
-		if(cb == 1) {
-			payment = "Oui";
+		switch (cb) {
+			case '0':
+				var payment = "Non";
+				cb = 0;
+			  break;
+			case '1':
+				var payment = "Oui";
+				cb = 1;
+			  break;
+			case '2':
+				var payment = "Oui (AMEX)";
+				cb = 1;
+			  break;
+			default:
+				var payment = "Non";
+				cb = 0;
 		}
 		var coms = document.getElementById("coms").value.replace(/'/g, "&rsquo;");
 		var comments1 = '<ul><li>Nom du client : ' + room + '</li><li>Paiement CB : ' + payment + '</li><li>Nombre de passagers : ' + howMany + '</li><li>Type de vehicule : ' + typecar + '</li>';
@@ -1753,7 +1799,7 @@
 			answerBoxOpenPoped=1;
 		}
 		if(!stopCheckAnswer) {
-			$.post("https://www.mytaxiserver.com/appserver/open_status_json.php?hail_id=" + hail_id + "&dep=" + dep + "&check=1" , {}, function(data){ 
+			$.post("http://www.mytaxiserver.com/appserver/open_status_json.php?hail_id=" + hail_id + "&dep=" + dep + "&check=1" , {}, function(data){ 
 				if (data.display != 0)
 				{
 					//clearInterval(time);
@@ -1825,7 +1871,7 @@
     {
 		dep = $.sessionStorage.getItem('dep');
 		if(!stopCheckAnswer) {
-			$.post("https://www.mytaxiserver.com/appserver/status.php?idcourse=" + idcourse + "&dep=" + dep + "&check=1" , {}, function(data){ 
+			$.post("http://www.mytaxiserver.com/appserver/status.php?idcourse=" + idcourse + "&dep=" + dep + "&check=1" , {}, function(data){ 
 				if (data != 0)
 				{
 					clearInterval(time);
@@ -2063,10 +2109,21 @@
                     </select>
                     -->
                     <select id="Pay"> 
-                        <option value="0" selected>CB</option>
-                        <option value="0">Non</option>
-                        <option value="1">Oui</option>
+                        <option value="" selected>CB / AMEX</option>
+                        <option value="0">Aucun</option>
+                        <option value="1">CB</option>
+                        <option value="2">AMEX</option>
                     </select>
+				   <select id="Pmr"> 
+						<option value="" selected>TPMR</option>
+						<option value="special_need_vehicle">OUI</option>
+						<option value="">NON</option>
+					</select>
+					<select id="Pet"> 
+						<option value="" selected>Animaux</option>
+						<option value="pet_accepted">OUI</option>
+						<option value="">NON</option>
+					</select>
                     <textarea id="coms" placeholder="Commentaires"></textarea>
                 </div>
                 <p class="expends"><b>Infos Resa</b><br><img src="visuels/dots.png" width="100%" style="max-width:1200px;"/></p>
@@ -2086,7 +2143,9 @@
 					<div id="openDep-box">
 						<button onClick="checkZip('#map_page_open')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search" id="searchOpen">Choisir un taxi</button>
 					</div>
-					<button onClick="checkZip('#map_page')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Commander un taxi</button>
+					<div id="tm-box">
+						<button onClick="checkZip('#map_page')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Commander un taxi</button>
+					</div>
 				</div>
                 <div id="book-box"><button onClick="booking()" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-clock" id="booking">R&eacute;server un taxi</button></div>
                 <div data-role="popup" data-theme="c" id="errorPop" data-dismissible="true">
