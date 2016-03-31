@@ -314,7 +314,7 @@
 		facebookConnectPlugin.login(["email"], function(response) {
 			if (response.authResponse) {
 			//alert("authResponse !!");
-				facebookConnectPlugin.api('/me', null, function(response) {
+				facebookConnectPlugin.api('/me?fields=id,name,username,emails,first_name,last_name', null, function(response) {
 					alert(JSON.stringify(response));
 					$.localStorage.setItem('nom', response.name);
 					$.localStorage.setItem('email', response.email);
