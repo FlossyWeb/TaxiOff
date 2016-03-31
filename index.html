@@ -315,6 +315,7 @@
 			if (response.authResponse) {
 			//alert("authResponse !!");
 				facebookConnectPlugin.api('/me', null, function(response) {
+					alert(JSON.stringify(response));
 					$.localStorage.setItem('nom', response.name);
 					$.localStorage.setItem('email', response.email);
 					$('#subName').val(response.name);
@@ -391,6 +392,7 @@
 		}, "json");
 	}
 	function subscribe() {
+		$.mobile.loading( "show" );
 		nom = $('#subName').val();
 		tel = $('#subTel').val();
 		email = $('#subMail').val();
@@ -441,9 +443,12 @@
 				}
 			}
 			$("#subReturns").empty().append(display);
-		}, "json");
+		}, "json").always(function(data) {
+			$.mobile.loading( "hide" );
+		});
 	}
 	function accountMod() {
+		$.mobile.loading( "show" );
 		nom = $('#accName').val();
 		newtel = $('#accTel').val();
 		email = $('#accMail').val();
@@ -491,12 +496,15 @@
 				}
 			}
 			$("#accReturns").empty().append(display);
-		}, "json");
+		}, "json").always(function(data) {
+			$.mobile.loading( "hide" );
+		});
 	}
 	function reSendText() {
-		$.post("https://www.mytaxiserver.com/taxioffsrv/sendtext.php", { tel: $('smsTel').val(), kinda: 'user'}, function(data) {
+		$.mobile.loading( "show" );
+		$.post("https://www.mytaxiserver.com/taxioffsrv/sendtext.php", { tel: $('#smsTel').val(), kinda: 'user'}, function(data) {
 			if (data.valid_check=='KO') {
-				if (data.result=='1') {
+				if (data.sms=='1') {
 					if(app) navigator.notification.alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.');
 				}
@@ -520,9 +528,13 @@
 				if(app) navigator.notification.alert("Ce numéro de téléphone fourni n'est pas valide: nous attendons 10 chiffres sans espaces et commençant par 06 ou 07.", alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert("Ce numéro de téléphone fourni n'est pas valide: nous attendons 10 chiffres sans espaces et commençant par 06 ou 07.");
 			}
-		}, "json");
+		}, "json").always(function(data) {
+			$('#reSendTextForm').slideToggle();
+			$.mobile.loading( "hide" );
+		});
 	}
 	function forgottenPwd() {
+		$.mobile.loading( "show" );
 		var login = $('#forgotTel').val();
 		var mail = $('#forgotMail').val();
 		$.post("https://www.mytaxiserver.com/taxioffsrv/forget_app.php", { login: login, mail: mail}, function(data) {
@@ -538,7 +550,10 @@
 				display += '<p style="color:red;"><b>Nous ne pouvons divulguer vos informations personnelles car l&rsquo;identifiant ou l&rsquo;adresse mail fourni ne figure pas dans notre base de donn&eacute;e.</b></p>' + data.tel + ' - ' + data.email;
 			}
 			$("#fogotReturns").empty().append(display);
-		}, "json");
+		}, "json").always(function(data) {
+			$('#forgotForm').slideToggle();
+			$.mobile.loading( "hide" );
+		});
 	}
 	function alertDismissed()
 	{
@@ -555,6 +570,9 @@
 	$( '#connect' ).live( 'pagecreate',function(event){
 		$('#displayForgot').click(function (){
 			$('#forgotForm').slideToggle();
+		});
+		$('#displayReSendText').click(function (){
+			$('#reSendTextForm').slideToggle();
 		});
 		$('#forgotTel').val(tel);
 		$('#smsTel').val(tel);
@@ -936,7 +954,7 @@
 				$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
 			}
 			else {
-				$.post("https://www.mytaxiserver.com/taxioffsrv/blacklist.php", { userid: operator}, function(data) {
+				$.post("https://www.mytaxiserver.com/taxioffsrv/blacklist.php", { userid: operator, tel: tel}, function(data) {
 					if (data.banned == 1)
 					{
 						$.mobile.pageContainer.pagecontainer("change", "#subscription", { transition: "slide"} );
@@ -2372,7 +2390,7 @@
 			</div>
             </center>
         </div>
-        <div data-role="footer" data-position="fixed" class="footer" style="background:none;" id="footer_con">
+        <div data-role="footer" data-position="fixed" data-fullscreen="true" class="footer" style="background:none;" id="footer_con">
             <center><input type="image" onClick="fbLogin()" src="visuels/FBconnect.png" width="90%" style="max-width:591px"/></center>
         </div>
     </div>
