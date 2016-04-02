@@ -307,15 +307,14 @@
 		window.plugins.contactNumberPicker.pick(successCallbackPick,failedCallbackPick);
 	}
 	function fbLogin() {
-	alert('IN');
 		if (!app) { // WebApp only needs init
 			facebookConnectPlugin.browserInit('349841341865550', 'v2.5');
 		}
-		facebookConnectPlugin.login(["public_profile,email"], function(response) {
+		facebookConnectPlugin.login(["email"], function(response) {
 			if (response.authResponse) {
-			alert("authResponse !!");
+			//alert("authResponse !!");
 				facebookConnectPlugin.api('/me?fields=id,name,email,first_name,last_name', null, function(response) {
-					alert(JSON.stringify(response));
+					//alert(JSON.stringify(response));
 					$.localStorage.setItem('nom', response.name);
 					$.localStorage.setItem('email', response.email);
 					$('#subName').val(response.name);
@@ -2670,6 +2669,6 @@
             </center>
         </div>
     </div>
-    <!-- <script src="facebook-js-sdk.js"></script> -->
+    <script src="facebook-js-sdk.js"></script>
 	</body>
 </html>
