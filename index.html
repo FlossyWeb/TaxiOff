@@ -47,7 +47,7 @@
     <script src="contactNumberPicker.js"></script>
     <script src="sms.js"></script>
     <script src="PowerManagement.js"></script>
-    <script src="cdv-plugin-fb-connect.js"></script>
+    <!-- <script src="cdv-plugin-fb-connect.js"></script> -->
     <script type="text/javascript" src="js/jquery.html5storage.min.js"></script>
     <script type="text/javascript" src="js/jsimple-star-rating.min.js"></script>
     <script type="text/javascript" src="js/jqm-datebox-1.4.5.min.js"></script>
@@ -313,7 +313,7 @@
 		facebookConnectPlugin.login(["public_profile,email"], function(response) {
 			if (response.authResponse) {
 			alert("authResponse !!");
-				facebookConnectPlugin.api('/me?fields=id,name,email,first_name,last_name', null, function(response) {
+				facebookConnectPlugin.api('/me', null, function(response) {
 					alert(JSON.stringify(response));
 					$.localStorage.setItem('nom', response.name);
 					$.localStorage.setItem('email', response.email);
