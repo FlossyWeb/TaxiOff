@@ -175,16 +175,16 @@ if (!window.cordova) {
             var e = document.createElement('script');
             e.src = document.location.protocol + '//connect.facebook.net/en_US/sdk.js';
             e.async = true;
-            //console.log(e);
+            //console.log(e.src);
             document.getElementById('fb-root').appendChild(e);
 			//document.getElementById('fb-root').appendChild('WFT !!');
 			//$('#fb-root').append('WFT !!');
-			if (!window.FB) {
+			//if (!window.FB) {
 				// Probably not on server, use the sample sdk
-				e.src = 'phonegap/plugin/facebookConnectPlugin/fbsdk.js';
-				document.getElementById('fb-root').appendChild(e);
-				console.log("Attempt local load: ", e);
-			}
+				//e.src = 'phonegap/plugin/facebookConnectPlugin/fbsdk.js';
+				//document.getElementById('fb-root').appendChild(e);
+				//console.log("Attempt local load: ", e);
+			//}
         }
     }());
 
