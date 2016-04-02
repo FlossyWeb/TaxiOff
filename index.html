@@ -566,7 +566,6 @@
 	}
 	$(document).on( 'pagecreate', function() {
 		$( "body>[data-role='panel']" ).panel().enhanceWithin();
-		if(!app) $('body').append('<script src="facebook-js-sdk.js"></script>');
 	});
 	$( '#connect' ).live( 'pagecreate',function(event){
 		$('#displayForgot').click(function (){
@@ -2671,5 +2670,6 @@
             </center>
         </div>
     </div>
+    <!-- <script src="facebook-js-sdk.js"></script> -->
 	</body>
 </html>
