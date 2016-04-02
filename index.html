@@ -133,6 +133,7 @@
 						$("#subReturns").empty().append(displayThis);
 					}
 					if(data.phone_ok != 'OK') {
+					alert(data.phone_ok);
 						$.localStorage.setItem('registeredUser', 'KO');
 						$.localStorage.setItem('firstConnexionVar', 'YES');
 						$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
