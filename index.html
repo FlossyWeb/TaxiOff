@@ -125,7 +125,7 @@
 				$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
 			}
 			else {
-				$.post("https://www.mytaxiserver.com/taxioffsrv/blacklist.php", { userid: operator}, function(data) {
+				$.post("https://www.mytaxiserver.com/taxioffsrv/blacklist.php", { userid: operator, tel: tel}, function(data) {
 					if (data.banned == 1)
 					{
 						$.mobile.pageContainer.pagecontainer("change", "#subscription", { transition: "slide"} );
@@ -133,7 +133,6 @@
 						$("#subReturns").empty().append(displayThis);
 					}
 					if(data.phone_ok != 'OK') {
-					alert(data.phone_ok);
 						$.localStorage.setItem('registeredUser', 'KO');
 						$.localStorage.setItem('firstConnexionVar', 'YES');
 						$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
