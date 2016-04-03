@@ -419,8 +419,8 @@
 					else alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.');
 				}
 				else {
-					if(app) navigator.notification.alert("Pour une raison technique ou parce que votre numéro de téléphone a générer trop d'envois de sms, nous ne pôuvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr", alertDismissed, 'Mon Appli Taxi', 'OK');
-					else alert("Pour une raison technique ou parce que votre numéro de téléphone a générer trop d'envois de sms, nous ne pôuvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr");
+					if(app) navigator.notification.alert("Pour une raison technique ou parce que votre numéro de téléphone a généré trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr", alertDismissed, 'Mon Appli Taxi', 'OK');
+					else alert("Pour une raison technique ou parce que votre numéro de téléphone a généré trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr");
 				}
 				$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
 				//display = '<p><b>' + data.civil + ' ' + data.nom + ' ' + data.prenom + ' Voici les informations d&rsquo;identification qui vous permettront d&rsquo;acc&egrave;der &agrave; votre compte :<br><span style="color:#09F;">Identifiant = ' + data.tel + '<br>Mot de passe = ' + data.pwd + '</span><br>Vous les recevrez dans quelques instants &agrave; cet email : <span style="color:#09F;">' + data.email + '</span>, merci.<br></b></p>';
@@ -454,24 +454,24 @@
 		pwd = $('#accPwd').val();
 		$("#accReturns").empty();
 		$.post("https://www.mytaxiserver.com/taxioffsrv/modmy_app.php", { nom: nom, tel: tel, newtel: newtel, email: email, pwd: pwd, operator: operator}, function(data) {
-			$.localStorage.setItem('nom', data.nom);
-			$.localStorage.setItem('email', data.email);
-			$.localStorage.setItem('tel', data.tel);
-			// Refresh Script Vars
-			nom = data.nom;
-			tel = data.tel;
-			email = data.email;
-			if (data.modmy == 1)
+			if (data.modmy == '1')
 			{
+				$.localStorage.setItem('nom', data.nom);
+				$.localStorage.setItem('email', data.email);
+				$.localStorage.setItem('tel', data.tel);
+				// Refresh Script Vars
+				nom = data.nom;
+				tel = data.tel;
+				email = data.email;
 				display = '<p style="color:green;"><b>Vous avez bien modifi&eacute; votre compte.</b></p><br>';
 				if(data.check_again == 'YES') {
 					if(data.sms=='1') {
-						if(app) navigator.notification.alert('Vous avez bien modifié votre compte. Afin de re-vérifier votre numéro de mobile vous allez recevoir vos nouveau identifiants par sms et devrez vous reconnectez avec, nous vous remercions pour votre inscription.', alertDismissed, 'Mon Appli Taxi', 'OK');
-						else alert('Vous avez bien modifié votre compte. Afin de re-vérifier votre numéro de mobile vous allez recevoir vos nouveau identifiants par sms et devrez vous reconnectez avec, nous vous remercions pour votre inscription.');
+						if(app) navigator.notification.alert('Vous avez bien modifié votre compte. Afin de re-vérifier votre numéro de mobile vous allez recevoir vos nouveaux identifiants par sms et devrez vous reconnectez avec, nous vous remercions pour votre inscription.', alertDismissed, 'Mon Appli Taxi', 'OK');
+						else alert('Vous avez bien modifié votre compte. Afin de re-vérifier votre numéro de mobile vous allez recevoir vos nouveaux identifiants par sms et devrez vous reconnectez avec, nous vous remercions pour votre inscription.');
 					}
 					else {
-						if(app) navigator.notification.alert("Vous avez bien modifié votre compte. Mais pour une raison technique ou parce que votre nouveau numéro de téléphone a générer trop d'envois de sms, nous ne pôuvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr", alertDismissed, 'Mon Appli Taxi', 'OK');
-						else alert("Vous avez bien modifié votre compte. Mais pour une raison technique ou parce que votre nouveau numéro de téléphone a générer trop d'envois de sms, nous ne pôuvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr");
+						if(app) navigator.notification.alert("Vous avez bien modifié votre compte. Mais pour une raison technique ou parce que votre nouveau numéro de téléphone a générer trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr", alertDismissed, 'Mon Appli Taxi', 'OK');
+						else alert("Vous avez bien modifié votre compte. Mais pour une raison technique ou parce que votre nouveau numéro de téléphone a générer trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr");
 					}
 					$.localStorage.setItem('registeredUser', 'KO');
 					$.localStorage.setItem('firstConnexionVar', 'YES');
@@ -489,9 +489,13 @@
 				{
 					display += '<p style="color:red;"><b>L&rsquo;email fourni n&rsquo;est pas valide.</b></p>';
 				}
-				if ((data.telvalid == 1) && (data.emailvalid == 1))
+				if (data.verif=='' && data.modmy == '0')
 				{
 					display += '<p style="color:red;"><b>Le t&eacute;l&eacute;phone renseign&eacute; n&rsquo;est associ&eacute; &agrave; aucun compte.</b></p>';
+				}
+				if (data.verif==-1)
+				{
+					display += '<p style="color:red;"><b>Le t&eacute;l&eacute;phone renseign&eacute; est d&eacute;j&agrave; associ&eacute; &agrave; un autre compte. Veuillez nous contacter via contact@taximedia.fr</b></p>';
 				}
 			}
 			$("#accReturns").empty().append(display);
@@ -2127,10 +2131,11 @@
     <div data-role="panel" id="homepanel" data-position="right" data-display="reveal">
         <!-- panel content goes here -->
         <ul data-role="listview" data-inset="true" data-theme="c">
-          <li><a href="#infos" class="ui-btn ui-btn-icon-left ui-icon-home"><b>Commander</b></a></li>
-          <li><a href="#history" class="ui-btn ui-btn-icon-left ui-icon-bars"><b>Historique</b></a></li>
-          <li><a href="#account" class="ui-btn ui-btn-icon-left ui-icon-user"><b>Mon compte</b></a></li>
-          <li><a href="#" onClick="Share()" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
+          <li><a href="#infos" class="ui-btn ui-btn-icon-left ui-icon-home" data-transition="slide"><b>Commander</b></a></li>
+          <li><a href="#history" class="ui-btn ui-btn-icon-left ui-icon-bars" data-transition="slide"><b>Historique</b></a></li>
+          <li><a href="#account" class="ui-btn ui-btn-icon-left ui-icon-user" data-transition="slide"><b>Mon compte</b></a></li>
+          <!-- <li><a href="#" onClick="Share()" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li> -->
+		  <li><a href="#" onclick="window.plugins.socialsharing.share('Téléchargez Mon Appli Taxi en suivant ce lien : ', null, null, 'http://www.taximedia.fr/stores.php?app=taxioff')" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
           <li><a href="#" onClick="goScan()" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-camera noAppHide"><b>Scanner un code</b></a></li>
         </ul>
         <button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power" onClick="dc()">D&eacute;connexion</button>
