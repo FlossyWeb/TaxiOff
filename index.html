@@ -1058,6 +1058,41 @@
 		}
 		$('#regLinks').append('</fieldset>');
 	});
+	$( '#prices' ).live( 'pagecreate',function(event){
+		var input = document.getElementById('addressInputPrices');
+		var input2 = document.getElementById('DestAddressPrices');
+		var options = {
+		  componentRestrictions: {country: 'fr'}
+		};
+		var autocomplete = new google.maps.places.Autocomplete(input, options);
+		// fired when an autocomplete option is selected or the input is submitted
+		google.maps.event.addListener(autocomplete, 'place_changed', function() {
+			//navigator.notification.alert('Fired');
+			var place = autocomplete.getPlace();
+			var address = '';
+			if (place.address_components) {
+				address = [
+					(place.address_components[0] && place.address_components[0].short_name || ''),
+					(place.address_components[1] && place.address_components[1].short_name || ''),
+					(place.address_components[2] && place.address_components[2].short_name || '')
+				].join(' ');
+			}
+		});
+		var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+		// fired when an autocomplete option is selected or the input is submitted
+		google.maps.event.addListener(autocomplete2, 'place_changed', function() {
+			//navigator.notification.alert('Fired');
+			var place = autocomplete.getPlace();
+			var address = '';
+			if (place.address_components) {
+				address = [
+					(place.address_components[0] && place.address_components[0].short_name || ''),
+					(place.address_components[1] && place.address_components[1].short_name || ''),
+					(place.address_components[2] && place.address_components[2].short_name || '')
+				].join(' ');
+			}
+		});
+	});
 	function locateMe() {
 		if (navigator.userAgent.toLowerCase().match(/android/)) {
 			navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:false, maximumAge:0});
@@ -1077,6 +1112,7 @@
 				// Reverse geocoding is OK...
 				$('#addressInput').val(data.features[0].properties.label);
 				$('#addressInput2').val(data.features[0].properties.label);
+				$('#addressInputPrices').val(data.features[0].properties.label);
 				insee = data.features[0].properties.citycode;
 				zip = data.features[0].properties.postcode;
 				dep = zip.substring(0, 2);
@@ -1888,7 +1924,6 @@
 			//check_answer_open();
 			$.mobile.loading( "hide" );
 		}).fail(function() { 
-			alert('Erreur !')
 			if(app) navigator.notification.alert("Erreur: La demande n'a pas été envoyée.", alertDismissed, 'Mon Appli Taxi', 'OK');
 			else alert("Erreur: La demande n'a pas été envoyée.");
 		});
@@ -2098,6 +2133,40 @@
 			}
 		}, "json");
 	}
+	function getPrices()
+	{
+		var rdvPrices = $('#addressInputPrices').val();
+		var destPrices = $('#DestAddressPrices').val();
+		var rdvPricesLng;
+		var rdvPricesLat;
+		var destPricesLng;
+		var destPricesLat;
+		if (rdvPrices!='' && destPrices!='') {
+			// Using http://adresse.data.gouv.fr
+			//http://api-adresse.data.gouv.fr/search/?q=8 bd du port&type=street
+			$.get('http://api-adresse.data.gouv.fr/search/', {q: rdvPrices, type: ''}, function(data) {
+				rdvPricesLng = data.features[0].geometry.coordinates[0];
+				rdvPricesLat = data.features[0].geometry.coordinates[1];
+			}, "json").done(function(data) { 
+				$.get('http://api-adresse.data.gouv.fr/search/', {q: destPrices, type: ''}, function(data) {
+					destPricesLng = data.features[0].geometry.coordinates[0];
+					destPricesLat = data.features[0].geometry.coordinates[1];
+				}, "json").done(function(data) { 
+					var devUrl = 'lat=' + rdvPricesLat + '&lng=' + rdvPricesLng + '&lat2=' + destPricesLat + '&lng2=' + destPricesLng + '&dep=' + dep+ '&app=1';
+					//alert(devUrl);
+					$.post("http://www.mytaxiserver.com/appserver/calcdev.php", devUrl, function(data) { 
+						$('#pricesCont').empty().append(data);
+						//$('#pricesPopCont').empty().append(data);
+						//$( "#pricesPop" ).popup( "open", { positionTo: "window" } );
+					});
+				});
+			});
+		}
+		else {
+			if(app) navigator.notification.alert("Vous devez rensigner les adresses de départ et d'arrivée.", alertDismissed, 'Mon Appli Taxi', 'OK');
+			else alert("Vous devez rensigner les adresses de départ et d'arrivée.");
+		}
+	}
     function refreshApp()
     {
 		document.location.href='index.html';
@@ -2137,6 +2206,7 @@
           <li><a href="#infos" class="ui-btn ui-btn-icon-left ui-icon-home" data-transition="slide"><b>Commander</b></a></li>
           <li><a href="#history" class="ui-btn ui-btn-icon-left ui-icon-bars" data-transition="slide"><b>Historique</b></a></li>
           <li><a href="#account" class="ui-btn ui-btn-icon-left ui-icon-user" data-transition="slide"><b>Mon compte</b></a></li>
+          <li><a href="#prices" class="ui-btn ui-btn-icon-left ui-icon-user" data-transition="slide"><b>Tarification</b></a></li>
           <!-- 
 		  <li><a href="#" onClick="Share()" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
 		  <li><a href="#" onclick="window.plugins.socialsharing.share('Téléchargez Mon Appli Taxi sur taximedia.fr', null, 'http://www.taximedia.fr/icon_300.png', 'http://www.taximedia.fr/stores.php?app=taxioff')" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
@@ -2676,6 +2746,61 @@
                 <input type="hidden" id="modDep" size="2" value=""/>
 				<div id="resmod"></div>
                 <button onClick="bookingMod()" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-clock" id="bookingMod">Modifier la r&eacute;servation</button>
+            </div>
+            </center>
+        </div>
+    </div>
+    <div data-role="page" data-theme="c"  id="prices">
+        <div data-role="header" data-position="fixed" class="header">
+			<table width="100%" border="0" class="header_cont">
+				<thead><tr><th width="50%"></th><th width="34%"></th><th width="16%"></th></tr></thead>
+				<tbody>
+				<tr><td>
+					<img src="visuels/header.png" width="100%" style="max-width:512px;"/>
+				</td><td>
+					<p>&nbsp;</p>
+				</td><td align="center">
+					<a href="#homepanel" id="panel_poper" data-role="none" style="width:90%;">
+						<img src="visuels/ico_menu.png" width="100%" style="max-width:175px;"/>
+					</a>
+				</td></tr>
+				</tbody>
+			</table>
+		</div>
+        <div class="ui-content" role="main">
+            <center>
+            <div style="margin-top:1em; display:block;">
+                <table width="100%" border="0">
+                	<thead><tr><th width="90%"></th><th width="10%"></th></tr></thead>
+                    <tbody>
+                	<tr><td>
+                        <input type="text" id="addressInputPrices" data-clear-btn="true" size="40" placeholder="Adresse RDV" width="90%" style="min-height:3em;"/>
+                    </td><td align="center">
+						<img src="visuels/ico_geolocalisation.png" width="100%" class="cursor" onClick="locateMe()" style="max-width:40px;"/>
+                        <!-- <button onClick="locateMe()" class="ui-btn ui-btn-c ui-icon-location ui-shadow-icon ui-btn-icon-notext ui-corner-all"></button> -->
+                    </td></tr>
+                	<tr><td>
+                        <input type="text" id="DestAddressPrices" data-clear-btn="true" class="mustHave" size="32" placeholder="Destination *" style="min-height:3em;"/>
+                    </td><td align="center">
+						&nbsp;
+                    </td></tr>
+                    </tbody>
+                </table>
+                <button id="validPrices" onClick="getPrices()" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check">Obtenir une estimation</button>
+				<div id="pricesCont" class="transpcont rounded shadow"></div>
+				<!-- 
+                <div data-role="popup" data-theme="c" id="pricesPop" data-dismissible="true">
+ 					<a href="#prices" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Fermer</a>
+                   <div data-theme="c" data-role="header">
+                        <p style="font-size:21px;text-align:center;"><b>
+                            Tarification
+                        </b></p>
+                    </div>
+                    <div class="ui-content" role="main">
+						<div id="pricesPopCont"></div>
+                    </div>
+                </div>
+				-->
             </div>
             </center>
         </div>
