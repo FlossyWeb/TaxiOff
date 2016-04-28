@@ -828,6 +828,25 @@
 		}
 	}
 	$( '#book_page' ).live( 'pagecreate',function(event){
+		// NYC-WIFI Animations
+		var wc = 1;
+		var opacAnim= false;
+		var minusAnim= false;
+		setInterval( function () {
+			if (wc>3) {
+				minusAnim = !minusAnim;
+			}
+			if (minusAnim) wc--;
+			else wc++;
+			if (wc==0) {
+				wc=1;
+				minusAnim = !minusAnim;
+				opacAnim = !opacAnim;
+			}
+			var imgPath = "visuels/wifi-"+wc+".png";
+			if (opacAnim) $('#animBook #wifiSteps').animate({ opacity: 0 }, 500, function () { $(this).attr("src", imgPath)}).animate({ opacity: 1 }, 500);
+			else $('#animBook #wifiSteps').attr("src", imgPath);
+        }, 1000);
 	});
 	function modCmd(recidcourse, recrdv, reccomments, reccell, recwhen, recdep)
 	{		
@@ -994,7 +1013,7 @@
 			});
 		}
 		// OpenData Areas Only... (#openDep-box)
-		$("#openDep-box").css("display", "none");
+		//$("#openDep-box").css("display", "none");
         var ok = setInterval( function () {
             var name_filled = document.getElementById("Accurate").value;
             var cell_filled = document.getElementById("cellular").value;
@@ -1029,7 +1048,7 @@
 			$(this).next('div').slideToggle('slow');
 			//$.mobile.silentScroll($(this).next('div').offset().top);
 		});
-		
+		/*
 		$('#Pmr').change(function(){
 			// special_need_vehicle needs the opendata...
 			if ($(this).val()=='special_need_vehicle') {
@@ -1048,6 +1067,7 @@
 			}
 			else	$('#tm-box').show();
 		});
+		*/
 		$('#regLinks').append('<fieldset data-role="controlgroup"><legend>Derni&egrave;res informations saisies:</legend>');
 		for(n=1;n<4;n++) {
 			if(($.localStorage.getItem('regName'+n) != null) && ($.localStorage.getItem('regCell'+n) != null)) {
@@ -1123,6 +1143,7 @@
 				else alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.');
 			}
 		}, "json").done(function() { 
+			/*
 			// OpenData Areas Only... (#openDep-box)
 			$.post("https://www.mytaxiserver.com/appclient/open_areas.php", { insee: insee, zip: zip, dep: dep}, function(data) {
 				if (data.go == "ok")
@@ -1131,6 +1152,7 @@
 					$("#search").text("Proposition automatique");
 				}
 			}, "json");
+			*/
 		});
 		/*
 		{"type": "FeatureCollection", "version": "draft", "attribution": "BAN", 
@@ -1333,7 +1355,49 @@
 				playAudio('sounds/ring.mp3');
 			}
         }, 180000);
+		// NYC-WIFI Animations
+		var wc = 1;
+		var elapsed = 180;
+		var opacAnim= false;
+		var minusAnim= false;
+		setInterval( function () {
+			elapsed--;
+			if (wc>3) {
+				minusAnim = !minusAnim;
+			}
+			if (minusAnim) wc--;
+			else wc++;
+			if (wc==0) {
+				wc=1;
+				minusAnim = !minusAnim;
+				opacAnim = !opacAnim;
+			}
+			var imgPath = "visuels/wifi-"+wc+".png";
+			if (opacAnim) $('#animSearch #wifiSteps').animate({ opacity: 0 }, 500, function () { $(this).attr("src", imgPath)}).animate({ opacity: 1 }, 500);
+			else $('#animSearch #wifiSteps').attr("src", imgPath);
+			$('.elapsed').text(elapsed);
+        }, 1000);
+		$.mobile.loading( "show" );
+		var  address = $('#addressInput').val();
+		$.get('http://api-adresse.data.gouv.fr/search/', {q: address, type: ''}, function(data) {
+		}, "json").done(function(data) { 
+			if(data.features[0].properties.label!='baninfo') {
+				// Geocoding is OK...
+				insee = data.features[0].properties.citycode;
+				zip = data.features[0].properties.postcode;
+				dep = zip.substring(0, 2);
+				$.sessionStorage.setItem('dep', dep);
+				searchLocationsNearNoMap(data.features[0].geometry.coordinates[1], data.features[0].geometry.coordinates[0]);
+			}
+			else {
+				if(app) navigator.notification.alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.', alertDismissed, 'Mon Appli Taxi', 'OK');
+				else alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.');
+			}
+		}).always(function(data) { 
+			$.mobile.loading( "hide" );
+		});
 		//$('#dblinks').empty();
+		/*
 		$('#map').gmap({'center': mobileMap.center, 'zoom': mobileMap.zoom, 'disableDefaultUI':false, 'mapTypeId': google.maps.MapTypeId.ROADMAP, 'callback': function() {
 		//$('#map').gmap({'callback': function() {
 			var self = this;
@@ -1388,7 +1452,7 @@
 				}
 			});
 		}}); 
-		
+		*/
         // Auto Click and deliver courses to cabs
         $('#deliver').click(function () {
                                  
@@ -1411,12 +1475,13 @@
 			}, 10000);
         });
 	});
-	
+	/*
 	$('#map_page').live('pageshow', function() {
 		//demo.add('basic_map', function() { $('#map').gmap('refresh'); }).load('basic_map');
 		//$('#map').gmap("option", "center", mobileMap.center);
 		$('#map').gmap('refresh');
 	});
+	*/
 	////////////////////////////////////////////////////////////
 	
 	function followOpenCab(hailToFollow, frdv)
@@ -1777,6 +1842,118 @@
 		}*/
 	}// ENDS FUNCTION
 
+	function searchLocationsNearNoMap(centerLat, centerLng) {
+		var myDate = new Date();
+		idcourse = myDate.getTime();
+		//$('#dblinks').append($('<input id="idcourse" type="hidden" value="' + idcourse + '"/>'));
+		//var radius = document.getElementById('radiusSelect').value;
+		var rdvpoint = document.getElementById("addressInput").value;
+		var room = document.getElementById("Accurate").value;
+		operator = $.localStorage.getItem('operator');
+		var hostname = document.getElementById("hostname").value;
+		var howMany = document.getElementById("howMany").value;
+		var typecar = document.getElementById("CarType").value;
+		var cb = document.getElementById("Pay").value;
+		var group = document.getElementById("group").value;
+		switch (cb) {
+			case '0':
+				var payment = "Non";
+				cb = 0;
+			  break;
+			case '1':
+				var payment = "Oui";
+				cb = 1;
+			  break;
+			case '2':
+				var payment = "Oui (AMEX)";
+				cb = 1;
+			  break;
+			default:
+				var payment = "Non";
+				cb = 0;
+		}
+		var coms = document.getElementById("coms").value.replace(/'/g, "&rsquo;");
+		var comments1 = '<ul><li>Nom du client : ' + room + '</li><li>Paiement CB : ' + payment + '</li><li>Nombre de passagers : ' + howMany + '</li><li>Type de vehicule : ' + typecar + '</li>';
+		if (coms != '') {
+			var comments2 = '<li>' + coms + '</li></ul>';
+		}
+		else {
+			var comments2 = '</ul>';
+		}
+		var comments = comments1+comments2;
+		var dest = document.getElementById("DestAddress").value;
+		var cell = document.getElementById("cellular").value;
+		var when = document.getElementById("when").value;
+		var date = document.getElementById("date").value;
+		//var medic = document.getElementById("medic").value;
+		if (!dontReg) {
+			for(n=1;n<4;n++) {
+				if(($.localStorage.getItem('regName'+n) == null) && ($.localStorage.getItem('regCell'+n) == null)) {
+					var regName = $.localStorage.setItem('regName'+n, $('#Accurate').val());
+					var regCell = $.localStorage.setItem('regCell'+n, cell);
+					var regLast = $.localStorage.setItem('regLast', n);
+					var writen = true;
+					break;
+				}
+			}
+			if(!writen) {
+				var regLast = $.localStorage.getItem('regLast');
+				switch (regLast) {
+					case '1':
+						var entry = 2;
+					  break;
+					case '2':
+						var entry = 3;
+					  break;
+					case '3':
+						var entry = 1;
+					  break;
+					default:
+				}
+				var regName = $.localStorage.setItem('regName'+entry, $('#Accurate').val());
+				var regCell = $.localStorage.setItem('regCell'+entry, cell);
+			}
+		}
+		var rdvlat = centerLat;
+		var rdvlng = centerLng;
+		url = '';
+		num_req = idcourse;
+		dep = $.sessionStorage.getItem('dep');
+		i = 0; // We need to make any numreq unique on that one !!
+		//$.post("https://www.mytaxiserver.com/appserver/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
+		$.post('http://www.mytaxiserver.com/appserver/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, insee: insee, pass: 'true'}, function(xml){
+			$(xml).find('marker').each(function(){
+				var name = $(this).attr('name');
+				var address = $(this).attr('address');
+				var lat2 = $(this).attr('lat');
+				var lng2 = $(this).attr('lng');
+				var timestamp = $(this).attr('timestamp');
+				var distance = $(this).attr('distance');
+				i = $(this).attr('count');
+				num_req = num_req+1;
+				url = 'taxi=' + name + '&tel=' + address + '&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep='+dep+'&group=1&ack=0&db=1';
+				url = url.replace(/'/g, "&rsquo;");
+				url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
+				//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
+				$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
+			});
+			num_req = num_req+1;
+			i = parseInt(i,10)+1;
+			url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + cell + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep='+dep+'&group=1&ack=0&db=1';
+			//navigator.notification.alert(url);
+			url = url.replace(/'/g, "&rsquo;");
+			url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
+			// Sends Auction Request to TaxiMedia appserver
+			$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
+			//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
+		}, "xml").fail(function (jqXHR, textStatus, errorThrown) {
+				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'Mon Appli Taxi Erreur', 'OK');
+		});
+		$.mobile.loading( "hide" );
+		$('#dblinks').append($('<input id="stop" type="hidden" value="0" />'));
+		deliver();
+	}// ENDS FUNCTION
+	
 	function searchLocationsNear(center, mapEvent) {
 		//clearLocations();
 		//navigator.notification.alert('In searchLocationsNear');
@@ -2206,7 +2383,7 @@
           <li><a href="#infos" class="ui-btn ui-btn-icon-left ui-icon-home" data-transition="slide"><b>Commander</b></a></li>
           <li><a href="#history" class="ui-btn ui-btn-icon-left ui-icon-bars" data-transition="slide"><b>Historique</b></a></li>
           <li><a href="#account" class="ui-btn ui-btn-icon-left ui-icon-user" data-transition="slide"><b>Mon compte</b></a></li>
-          <li><a href="#prices" class="ui-btn ui-btn-icon-left ui-icon-user" data-transition="slide"><b>Tarification</b></a></li>
+          <li><a href="#prices" class="ui-btn ui-btn-icon-left ui-icon-info" data-transition="slide"><b>Tarification</b></a></li>
           <!-- 
 		  <li><a href="#" onClick="Share()" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
 		  <li><a href="#" onclick="window.plugins.socialsharing.share('Téléchargez Mon Appli Taxi sur taximedia.fr', null, 'http://www.taximedia.fr/icon_300.png', 'http://www.taximedia.fr/stores.php?app=taxioff')" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
@@ -2320,9 +2497,11 @@
 					<div id="openDep-box">
 						<button onClick="checkZip('#map_page_open')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search" id="searchOpen">Choisir un taxi</button>
 					</div>
+					<!-- 
 					<div id="tm-box">
 						<button onClick="checkZip('#map_page')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Commander un taxi</button>
 					</div>
+					-->
 				</div>
                 <div id="book-box"><button onClick="booking()" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-clock" id="booking">R&eacute;server un taxi</button></div>
                 <div data-role="popup" data-theme="c" id="errorPop" data-dismissible="true">
@@ -2403,7 +2582,19 @@
         </div>
     </div>
     <div data-role="page" data-theme="c" id="map_page">
-        <div class="ui-content" role="main" id="map">
+        <!-- <div class="ui-content" role="main" id="map"> -->
+        <div class="ui-content" role="main" id="no-map">
+			<div id="animSearch" class="nyc">
+				<p><b>
+				<br>
+				D&eacute;sol&eacute; nous n&rsquo;avons pas trouv&eacute; de taxi disponible dans la zone de maraude &eacute;lectronique r&eacute;glement&eacute;e dans laquelle vous vous trouvez et qui vous permettait de b&eacute;n&eacute;ficier d&rsquo;un service sans frais d&rsquo;approche.<br><br>
+				Nous recherchons hors de celle-ci, le taxi disponible le plus proche de vous! Des frais d&rsquo;approches peuvent s&rsquo;appliquer, n&rsquo;h&eacute;sitez pas &agrave; les v&eacute;rifier en appelant le chauffeur.
+				<br><br>
+				Veuillez patienter pendant la recherche... <span class="elapsed" style="color:#FC0;"></span> Secondes restantes.
+				<br><br><br>
+				</b></p>
+				<img src="visuels/wifi-1.png" width="84%" id="wifiSteps" class="wifiSteps"/>
+			</div>
 			<div data-role="popup" data-theme="c" id="answerBox" data-dismissible="false" data-position-to="window" data-overlay-theme="b">
 				<div data-theme="c" data-role="header">
 					<h1>
@@ -2437,8 +2628,7 @@
 				<div id="dblinks">
 				</div>
 			</div>
-			<p>Veuillez patienter pendant la recherche et ne pas quitter l&rsquo;app SVP
-			<button type="button" class="cancel ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete" id="cancel" onClick="stopCall()" value=""> Retour / Annulation </button></p>
+			<p><button type="button" class="cancel ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete" id="cancel" onClick="stopCall()" value=""> Retour / Annulation </button></p>
         </div>
     </div>
     <div data-role="page" data-theme="c" id="connect">
@@ -2585,12 +2775,13 @@
 			</table>
 		</div>
         <div class="ui-content" role="main">
-            <div class="ui-bar-b ui-corner-all ui-shadow" style="padding:1em; display:block;">
-            	<center>
-                <p><b><br><br>Votre demande a &eacute;t&eacute; prise en compte, votre taxi prendra contact avec vous par t&eacute;l&eacute;phone ou sms.<br><br>Toute l&rsquo;&eacute;quipe Mon Appli Taxi vous remercie.</b></p>
-                <button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-back" onClick="goback('index.html')">Retour</button>
-                </center>
-            </div>
+			<div id="animBook" class="nyc">
+				<p class="bottomText"><b>
+					<br><br>Votre demande a &eacute;t&eacute; prise en compte, votre taxi prendra contact avec vous par t&eacute;l&eacute;phone ou sms.<br><br>Toute l&rsquo;&eacute;quipe Mon Appli Taxi vous remercie.
+					<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-back" onClick="goback('index.html')">Retour</button>
+				</b></p>
+				<img src="visuels/wifi-1.png" width="84%" id="wifiSteps" class="wifiSteps"/>
+			</div>
         </div>
     </div>
     <div data-role="page" data-theme="c" id="follow_open">
