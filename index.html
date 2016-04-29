@@ -2445,7 +2445,7 @@
                     </tbody>
                 </table>
                 <!-- <p style="font-size:small;"><em>*</em> Ces informations sont obligatoires</p> -->
-                <p class="expends"><b>D&eacute;tails</b><br><img src="visuels/dots.png" width="100%" style="max-width:1200px;"/></p>
+                <p class="expends"><b>Des d&eacute;tails ?</b><br><img src="visuels/dots.png" width="100%" style="max-width:1200px;"/></p>
                 <div id="details">
                     <label for="howMany">Nombre de passagers :</label>
                     <input name="howMany" id="howMany" min="1" max="8" value="1" data-theme="c" data-show-value="true" data-popup-enabled="true" type="range">
@@ -2480,7 +2480,7 @@
 					</select>
                     <textarea id="coms" placeholder="Commentaires"></textarea>
                 </div>
-                <p class="expends"><b>Infos Resa</b><br><img src="visuels/dots.png" width="100%" style="max-width:1200px;"/></p>
+                <p class="expends"><b>Pour plus tard ?</b><br><img src="visuels/dots.png" width="100%" style="max-width:1200px;"/></p>
                 <div id="book">
                     <p id="datelabel"><b>Date et heure du RDV si r&eacute;servation :</b></p>
                     <span style="display:inline-block;width: 48%;">
@@ -2496,6 +2496,7 @@
                 <div id="search-box">
 					<div id="openDep-box">
 						<button onClick="checkZip('#map_page_open')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search" id="searchOpen">Choisir un taxi</button>
+						<p><a href="#" onClick="openSomeUrl('http://le.taxi/')">La maraude &eacute;lectronique avec Le.Taxi &ccedil;a change quoi ?</a></p>
 					</div>
 					<!-- 
 					<div id="tm-box">
@@ -2577,7 +2578,7 @@
 			</div>
         </div>
         <div data-role="footer" id="footer_map_open" data-position="fixed" data-fullscreen="true">
-			<p>Veuillez S&eacute;lectionner un des taxis ci-dessus et le choisir
+			<p>Veuillez S&eacute;lectionner un des taxis ci-dessus pour le choisir
 			<button type="button" class="cancel ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete" id="cancel" onClick="stopCallOpen()" value=""> Retour / Annulation </button></p>
         </div>
     </div>
@@ -2593,7 +2594,7 @@
 				Veuillez patienter pendant la recherche... <span class="elapsed" style="color:#FC0;"></span> Secondes restantes.
 				<br><br><br>
 				</b></p>
-				<img src="visuels/wifi-1.png" width="84%" id="wifiSteps" class="wifiSteps"/>
+				<img src="visuels/wifi-1.png" width="64%" id="wifiSteps" class="wifiSteps"/>
 			</div>
 			<div data-role="popup" data-theme="c" id="answerBox" data-dismissible="false" data-position-to="window" data-overlay-theme="b">
 				<div data-theme="c" data-role="header">
@@ -2758,7 +2759,7 @@
         </div>
     </div>
     <div data-role="page" data-theme="c" id="book_page">
-        <div data-role="header" data-position="fixed" class="header">
+        <div data-role="header" data-position="fixed" class="header headerBook">
 			<table width="100%" border="0" class="header_cont">
 				<thead><tr><th width="50%"></th><th width="34%"></th><th width="16%"></th></tr></thead>
 				<tbody>
@@ -2780,7 +2781,7 @@
 					<br><br>Votre demande a &eacute;t&eacute; prise en compte, votre taxi prendra contact avec vous par t&eacute;l&eacute;phone ou sms.<br><br>Toute l&rsquo;&eacute;quipe Mon Appli Taxi vous remercie.
 					<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-back" onClick="goback('index.html')">Retour</button>
 				</b></p>
-				<img src="visuels/wifi-1.png" width="84%" id="wifiSteps" class="wifiSteps"/>
+				<img src="visuels/wifi-1.png" width="64%" id="wifiSteps" class="wifiSteps"/>
 			</div>
         </div>
     </div>

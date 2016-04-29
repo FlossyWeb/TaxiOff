@@ -270,3 +270,11 @@ input[type=text], input[type=tel], input[type=date], input[type=time] {
 		z-index: 1000;
 	}
 }
+.headerBook {
+	display: none;
+}
+@media all and (min-height: 800px) and (orientation: landscape) {
+	.headerBook {
+		display: block;
+	}
+}
