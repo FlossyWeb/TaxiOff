@@ -254,12 +254,6 @@ input[type=text], input[type=tel], input[type=date], input[type=time] {
 	bottom: 26%;
 	right: 0;
 }
-.headerBook {
-	z-index: 9999;
-	position: absolute;
-	top: 0;
-	left:0;
-}
 @media all and (orientation: landscape) { 
 	.nyc {
 		background: url(../visuels/taxi-bg-ny.jpg) no-repeat center fixed; 
@@ -274,5 +268,17 @@ input[type=text], input[type=tel], input[type=date], input[type=time] {
 		bottom: 6%;
 		left: 6%; right: 94%;
 		z-index: 1000;
+	}
+}
+.headerBook {
+	display: none;
+	z-index: 9999;
+	position: absolute;
+	top: 0;
+	left:0;
+}
+@media all and (min-height: 800px) and (orientation: landscape) , all and (orientation: portrait) {
+	.headerBook {
+		display: table;
 	}
 }

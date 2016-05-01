@@ -920,6 +920,7 @@
 			else {
 				if(app) navigator.notification.alert('La réservation à bien été annulée !!', alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert('La réservation à bien été annulée !!');
+				refreshHist();
 			}
 		}, "json");
 	}
@@ -2759,7 +2760,7 @@
         </div>
     </div>
     <div data-role="page" data-theme="c" id="book_page">
-		<!-- 
+		<!--
         <div data-role="header" data-position="fixed" class="header headerBook">
 		</div>
 		-->
