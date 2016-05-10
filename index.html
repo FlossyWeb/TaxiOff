@@ -148,6 +148,7 @@
 				locateMe();
 			}, 1000);
 			scanner = cordova.require("cordova/plugin/BarcodeScanner");
+			/*
 			// For Android => Enable background mode
 			cordova.plugins.backgroundMode.enable();
 			cordova.plugins.backgroundMode.setDefaults({
@@ -158,8 +159,9 @@
 			//cordova.plugins.backgroundMode.configure({
 			//	title:'App toujours en fonction (3 MINUTES MAX), nous vous informons des courses en cours...'
 			//});
+			*/
 			// For iOS => backgroundtask
-			//backgroundtask.start(bgFunctionToRun);
+			backgroundtask.start(bgFunctionToRun);
 			cordova.plugins.notification.local.clearAll(function() {
 				//alert("All notifications cleared");
 			}, this);
@@ -2872,7 +2874,7 @@
                 </div>
 				<div id="leComRateCont">
 					<!-- <textarea id="leComRate" class="leComRate" maxlength="512" placeholder="Commentaires"></textarea> -->
-					<select id="leComRate" class="leComRate"> 
+					<select id="leComRate" class="leComRate"><!-- 'ko', 'payment', 'courtesy', 'route', 'cleanliness', 'late', 'no_credit_card', 'bad_itinerary', 'dirty_taxi' -->
 						<option value="" selected>Raisons possibles</option>
 						<option value="ko">Refus de service</option>
 						<option value="payment">Probl&egrave;me de paiement (moyen de paiement, rendu de monnaie...)</option>
