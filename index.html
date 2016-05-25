@@ -1120,10 +1120,10 @@
 		if (navigator.geolocation)
 		{
 			if (navigator.userAgent.toLowerCase().match(/android/)) {
-				navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:true, maximumAge:0, timeout: 24000});
+				navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:true, maximumAge:0, timeout: 9000});
 			}
 			else {
-				navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:true, maximumAge:0, timeout: 24000});
+				navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:true, maximumAge:0, timeout: 9000});
 			}
 		}
 		else {
@@ -1853,8 +1853,8 @@
 					$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 				}
 				else {
-					if(app) navigator.notification.alert("Aucun taxis trouvé à proximité dans ce mode.\nVous allez être redirigé vers le script de recherche automatique.", alertDismissed, 'Mon Appli Taxi', 'OK');
-					else alert("Aucun taxis trouvé à proximité dans ce mode.\nVous allez être redirigé vers le script de recherche automatique.");
+					if(app) navigator.notification.alert("Aucun taxi trouvé dans la zone réglementée sans frais d'approche.\nVous allez être redirigé.", alertDismissed, 'Mon Appli Taxi', 'OK');
+					else alert("Aucun taxi trouvé dans la zone réglementée sans frais d'approche.\nVous allez être redirigé.");
 					idcourse=''; // reset idcourse
 					$('#map_open').gmap('destroy');
 					setTimeout( function () {
@@ -2629,10 +2629,9 @@
 			<div id="animSearch" class="nyc">
 				<p><b>
 				<br>
-				D&eacute;sol&eacute; nous n&rsquo;avons pas trouv&eacute; de taxi disponible dans la zone de maraude &eacute;lectronique r&eacute;glement&eacute;e dans laquelle vous vous trouvez et qui vous permettait de b&eacute;n&eacute;ficier d&rsquo;un service sans frais d&rsquo;approche.<br><br>
-				Nous recherchons hors de celle-ci, le taxi disponible le plus proche de vous! Des frais d&rsquo;approches peuvent s&rsquo;appliquer, n&rsquo;h&eacute;sitez pas &agrave; les v&eacute;rifier en appelant le chauffeur.
-				<br><br>
-				Veuillez patienter pendant la recherche... <span class="elapsed" style="color:#FC0;"></span> Secondes restantes.
+				Nous recherchons le taxi disponible le plus proche de vous! Des frais d&rsquo;approches peuvent s&rsquo;appliquer, n&rsquo;h&eacute;sitez pas &agrave; les v&eacute;rifier avec le chauffeur.
+				<br>
+				Veuillez patienter pendant la recherche: <span class="elapsed" style="color:#FC0;"></span> Secondes restantes.
 				<br><br><br>
 				</b></p>
 				<img src="visuels/wifi-1.png" width="64%" id="wifiSteps" class="wifiSteps"/>
