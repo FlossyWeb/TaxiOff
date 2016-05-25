@@ -1118,10 +1118,10 @@
 	});
 	function locateMe() {
 		if (navigator.userAgent.toLowerCase().match(/android/)) {
-			navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:true, maximumAge:0, timeout: 6000});
+			navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:true, maximumAge:'infinity', timeout: 30000});
 		}
 		else {
-			navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:true, maximumAge:0, timeout: 6000});
+			navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:true, maximumAge:'infinity', timeout: 30000});
 		}
 	}
 	function codeLatLng(position) {
@@ -1227,12 +1227,16 @@
 			  x.innerHTML="<strong>Erreur de G&eacute;olocalisation, red&eacute;marrage du smartphone n&eacute;c&eacute;ssaire.</strong>"
 			  geoAlert="Erreur de Géolocalisation, libre à vous d'activer le service de géolocalisation pour cette app dans les réglages.";
 		}
+		if(app) navigator.notification.alert(geoAlert, alertDismissed, 'Mon Appli Taxi', 'OK');
+		else alert(geoAlert);
+		/*
 		// Fall back to no options and try again for Android to work.
 		navigator.geolocation.getCurrentPosition(codeLatLng, function(){
 			//$( "#errorPop" ).popup( "open", { positionTo: "window" } );
 			if(app) navigator.notification.alert(geoAlert, alertDismissed, 'Mon Appli Taxi', 'OK');
 			else alert(geoAlert);
-		},{enableHighAccuracy:true, maximumAge:0, timeout: 6000});
+		});
+		*/
 	}
 	function Fillin(Name, Cell)
 	{
@@ -1247,18 +1251,23 @@
 		$('#search').prop('disabled', true).addClass('ui-disabled'); // Prevents from multitap
 		$('#searchOpen').prop('disabled', true).addClass('ui-disabled'); // Prevents from multitap
 		dep = $.sessionStorage.getItem('dep');
-		if (isPlaceChanged || (dep != '') || (zip != '')) {
-			$.mobile.pageContainer.pagecontainer("change", pageToGo, { transition: "slide", reverse: true} );
-			$('#search').prop('disabled', false).removeClass('ui-disabled'); // Button is back
-			$('#searchOpen').prop('disabled', false).removeClass('ui-disabled'); // Button is back
+		var isAddr = document.getElementById("addressInput").value;
+		if(isAddr!='') {
+			if (isPlaceChanged || (dep != '') || (zip != '')) {
+				$.mobile.pageContainer.pagecontainer("change", pageToGo, { transition: "slide", reverse: true} );
+			}
+			else {
+				//navigator.notification.alert('No Zip Code Here !!');
+				$("#setZipBtn").attr("title", pageToGo); // Remembering pageToGo for setZip function, changing onClick attr is bad practice.
+				$( "#setZip" ).popup( "open", { positionTo: "window" } );
+			}
 		}
 		else {
-			//navigator.notification.alert('No Zip Code Here !!');
-			$("#setZipBtn").attr("title", pageToGo); // Remembering pageToGo for setZip function, changing onClick attr is bad practice.
-			$( "#setZip" ).popup( "open", { positionTo: "window" } );
-			$('#search').prop('disabled', false).removeClass('ui-disabled'); // Button is back
-			$('#searchOpen').prop('disabled', false).removeClass('ui-disabled'); // Button is back
+			if(app) navigator.notification.alert('Veuillez renseigner une adresse ou attendre la fin de la géolocalisation SVP...', alertDismissed, 'Mon Appli Taxi', 'OK');
+			else alert('Veuillez renseigner une adresse ou attendre la fin de la géolocalisation SVP...');
 		}
+		$('#search').prop('disabled', false).removeClass('ui-disabled'); // Button is back
+		$('#searchOpen').prop('disabled', false).removeClass('ui-disabled'); // Button is back
 	}
 	function setZip() {
 		zip = $('#zipDep').val();
