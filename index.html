@@ -151,6 +151,7 @@
 				locateMe();
 			}, 1000);
 			scanner = cordova.require("cordova/plugin/BarcodeScanner");
+			/*
 			// For Android => Enable background mode
 			cordova.plugins.backgroundMode.enable();
 			cordova.plugins.backgroundMode.setDefaults({
@@ -158,11 +159,12 @@
 				ticker: 'App toujours en fonction (3 MINUTES MAX)',
 				text:   'Nous vous informons des courses en cours...'
 			});
+			*/
 			//cordova.plugins.backgroundMode.configure({
 			//	title:'App toujours en fonction (3 MINUTES MAX), nous vous informons des courses en cours...'
 			//});
 			// For iOS => backgroundtask
-			//backgroundtask.start(bgFunctionToRun);
+			backgroundtask.start(bgFunctionToRun);
 			cordova.plugins.notification.local.clearAll(function() {
 				//alert("All notifications cleared");
 			}, this);
@@ -1598,7 +1600,6 @@
 						//infoCont = '<p style="color:#333;"><b>Votre taxi joignable au: <a data-ajax="false" href="tel:' + data.address + '" class="ui-btn ui-btn-c ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">' + data.address + '</a></b></p>';
 						self.openInfoWindow({ 'content':  infoCont}, this);
 					});
-					/*
 					var markerYou = self.get('markers')['you'];
 					markerYou.setVisible(false);
 					navigator.geolocation.getCurrentPosition(function(position, status) {
@@ -1611,7 +1612,6 @@
 							self.openInfoWindow({ 'content':  '<p style="color:#09F;"><b>Vous &Ecirc;tes ici</b></p>' }, this);
 						});
 					}, showError,{enableHighAccuracy:true, maximumAge:0});
-					*/
 				}, "json");
 			}, 10000);
 		}});
@@ -1709,7 +1709,6 @@
 						infoCont = '<p style="color:#333;"><b>taxi n&deg; ' + data.name + ' - ' + data.address+ ' &agrave; ' + data.timestamp+ '</b></p>';
 						self.openInfoWindow({ 'content':  infoCont}, this);
 					});
-					/*
 					var markerYou = self.get('markers')['you'];
 					markerYou.setVisible(false);
 					navigator.geolocation.getCurrentPosition(function(position, status) {
@@ -1720,7 +1719,6 @@
 							self.openInfoWindow({ 'content':  '<p style="color:#09F;"><b>Vous &Ecirc;tes ici</b></p>' }, this);
 						});
 					}, showError,{enableHighAccuracy:true, maximumAge:0});
-					*/
 				}, "json");
 			}, 10000); 
 		}});
