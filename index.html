@@ -1598,6 +1598,7 @@
 						//infoCont = '<p style="color:#333;"><b>Votre taxi joignable au: <a data-ajax="false" href="tel:' + data.address + '" class="ui-btn ui-btn-c ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">' + data.address + '</a></b></p>';
 						self.openInfoWindow({ 'content':  infoCont}, this);
 					});
+					/*
 					var markerYou = self.get('markers')['you'];
 					markerYou.setVisible(false);
 					navigator.geolocation.getCurrentPosition(function(position, status) {
@@ -1610,6 +1611,7 @@
 							self.openInfoWindow({ 'content':  '<p style="color:#09F;"><b>Vous &Ecirc;tes ici</b></p>' }, this);
 						});
 					}, showError,{enableHighAccuracy:true, maximumAge:0});
+					*/
 				}, "json");
 			}, 10000);
 		}});
@@ -1707,6 +1709,7 @@
 						infoCont = '<p style="color:#333;"><b>taxi n&deg; ' + data.name + ' - ' + data.address+ ' &agrave; ' + data.timestamp+ '</b></p>';
 						self.openInfoWindow({ 'content':  infoCont}, this);
 					});
+					/*
 					var markerYou = self.get('markers')['you'];
 					markerYou.setVisible(false);
 					navigator.geolocation.getCurrentPosition(function(position, status) {
@@ -1717,6 +1720,7 @@
 							self.openInfoWindow({ 'content':  '<p style="color:#09F;"><b>Vous &Ecirc;tes ici</b></p>' }, this);
 						});
 					}, showError,{enableHighAccuracy:true, maximumAge:0});
+					*/
 				}, "json");
 			}, 10000); 
 		}});
