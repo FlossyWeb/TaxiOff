@@ -2,7 +2,7 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
 		id = "com.taxibleuservices.mytaxi"
-		version = "1.4.6">
+		version = "1.4.7">
     
     <author href="http://flossyweb.com" email="contact@flossyweb.com">
         FRANCOIS-REGIS SIMON
@@ -59,7 +59,7 @@
 	<gap:plugin name="cordova-plugin-x-socialsharing" version="5.0.11" source="npm" />
 	<gap:plugin name="com.phonegap.plugins.barcodescanner" />
 	<gap:plugin name="cordova-plugin-contact-number-picker" source="npm" />
-	<!-- <gap:plugin name="cordova-sms-plugin" source="npm" /> -->
+	<gap:plugin name="cordova-sms-plugin" source="npm" version="0.1.10" />
 	<gap:plugin name="com.simplec.plugins.powermanagement" version="0.4.0" />
 	<gap:plugin name="cordova-plugin-background-mode" source="npm" version="0.6.5" />
 	<!-- 
