@@ -1336,7 +1336,7 @@
 					//self.get('map').setZoom(12);
 					//self.get('map').setCenter(myPlace);
 					self.addMarker({'position': myPlace, 'bounds': true, 'icon': userIcon }).click(function() {
-						self.openInfoWindow({ 'content': '<p style="color:#333;">Vous &ecirc;tes ici:<br>'+address+'</p>' }, this);
+						self.openInfoWindow({ 'content': '<p style="color:#333;"><b>Vous &ecirc;tes ici:<br>'+address+'</b></p>' }, this);
 					});
 					//var gcenter = myPlace.lat().toFixed(4) +", "+ myPlace.lng().toFixed(4);
 					//var circleCenter = new google.maps.LatLng(gcenter);
