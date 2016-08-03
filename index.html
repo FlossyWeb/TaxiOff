@@ -2223,7 +2223,6 @@
 	
     function sendJobOpen(url)
     {
-		clearInterval(refreshOpenMarkers);
 		$.mobile.loading( "show" );
 		$('.cabs').prop('disabled', true).addClass('ui-disabled'); // Prevents from multitap
 		$('.confButtons').hide('fast');
@@ -2231,14 +2230,17 @@
 		$('#answerOpen').empty().append('<p><b>Veuillez patienter pendant que nous traitons votre demande aupr&egrave;s du chauffeur ...<button type="button" class="cancel ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete" id="cancel" onClick="stopCallOpen()" value=""> Retour / Annulation </button></b></p>');
 		$.post("http://www.mytaxiserver.com/appserver/open_diary_app_share.php", url, function(data) {
 			hail_id = data.hail_id;
+			clearInterval(refreshOpenMarkers);
 			//taxi_phone_number = data.taxi_phone_number;
 		}, "json").done(function() { 
-			if(hail_id!="") setTimeout('check_answer_open()', 500);
+			if(hail_id!="") setTimeout('check_answer_open()', 1000);
 			//check_answer_open();
+		}).always(function(data) {
 			$.mobile.loading( "hide" );
 		}).fail(function() { 
-			if(app) navigator.notification.alert("Erreur: La demande n'a pas été envoyée.", alertDismissed, 'Mon Appli Taxi', 'OK');
-			else alert("Erreur: La demande n'a pas été envoyée.");
+			if(app) navigator.notification.alert("Erreur: La demande n'a pas été envoyée, vous allez devoir recommencer, veuillez nous pardonner ce contretemps.", alertDismissed, 'Mon Appli Taxi', 'OK');
+			else alert("Erreur: La demande n'a pas été envoyée, vous allez devoir recommencer, veuillez nous pardonner ce contretemps.");
+			document.location.href='index.html';
 		});
     }
 	
@@ -2378,7 +2380,7 @@
 					notifyOnce = true;
 				}
 			}).always(function(data) {
-				setTimeout('check_answer()', 1000);
+				setTimeout('check_answer()', 2000);
 			});
 		}
     }
