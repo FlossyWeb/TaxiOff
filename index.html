@@ -96,8 +96,6 @@
 	var countMarkerCab;
 	var notifyOnce = true;
 	
-	// Scanner
-	var scanner;
 	// Detect wether it is an App or WebApp
 	var app;
 	// Lecteur audio
@@ -151,7 +149,6 @@
 			setTimeout(function() { 
 				locateMe();
 			}, 1000);
-			scanner = cordova.require("cordova/plugin/BarcodeScanner");
 			/*
 			// For Android => Enable background mode
 			cordova.plugins.backgroundMode.enable();
@@ -259,7 +256,7 @@
 	}
 	function goScan ()
 	{
-		scanner.scan(
+		cordova.plugins.barcodeScanner.scan(
 			scanSuccess, 
 			function (error) {
 				navigator.notification.alert("Scan Erreur: " + error);
