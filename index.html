@@ -146,7 +146,11 @@
 			if((navigator.network.connection.type == Connection.NONE) || !window.jQuery){
 				$("body").empty().append('<img src="no_network.png" width="'+screen.width+'" height="'+screen.height+'" onClick="window.location.reload()" />');
 			}
-			locateMe();
+			//locateMe();
+			setTimeout(function() { 
+				//locateMe();
+				$('#locateMeBtn').trigger('click');
+			}, 1000);
 			// For Android => Enable background mode
 			cordova.plugins.backgroundMode.enable();
 			cordova.plugins.backgroundMode.setDefaults({
@@ -2597,7 +2601,7 @@
                 	<tr><td>
                         <input type="text" id="addressInput" data-clear-btn="true" size="40" placeholder="Adresse RDV" width="90%" style="min-height:3em;"/>
                     </td><td align="center">
-						<img src="visuels/ico_geolocalisation.png" width="100%" class="cursor" onClick="locateMe()" style="max-width:40px;"/>
+						<img src="visuels/ico_geolocalisation.png" id="locateMeBtn" width="100%" class="cursor" onClick="locateMe()" style="max-width:40px;"/>
                         <!-- <button onClick="locateMe()" class="ui-btn ui-btn-c ui-icon-location ui-shadow-icon ui-btn-icon-notext ui-corner-all"></button> -->
                     </td></tr>
                 <input type="hidden" id="DestAddress" size="10" value="DESTINATION"/>
@@ -2611,7 +2615,7 @@
                         <input type="tel" id="cellular" data-clear-btn="true" class="mustHave" size="20" placeholder="Tel *" style="min-height:3em;"/>
                     </td><td align="center">
                         <a href="#rememberMe" data-rel="popup" data-position-to="window">
-							<img src="visuels/ico_favori.png" width="100%" class="cursor" onClick="locateMe()" style="max-width:50px;"/>
+							<img src="visuels/ico_favori.png" width="100%" class="cursor" style="max-width:50px;"/>
 						</a>
                     </td></tr>
                     </tbody>
