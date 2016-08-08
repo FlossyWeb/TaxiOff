@@ -1124,7 +1124,6 @@
 	function locateMe() {
 		if (navigator.geolocation)
 		{
-			navigator.notification.alert("In navigator.geolocation", alertDismissed, 'Mon Appli Taxi', 'OK');
 			if (navigator.userAgent.toLowerCase().match(/android/)) {
 				navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:false, maximumAge:0, timeout: 9000});
 			}
@@ -1138,7 +1137,6 @@
 		}
 	}
 	function codeLatLng(position) {
-		navigator.notification.alert("In codeLatLng", alertDismissed, 'Mon Appli Taxi', 'OK');
 		// Using http://adresse.data.gouv.fr
 		lat = position.coords.latitude;
 		lng = position.coords.longitude;
