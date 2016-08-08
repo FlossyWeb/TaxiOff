@@ -46,7 +46,7 @@
     <script src="barcodescanner.js"></script>
     <script src="contactNumberPicker.js"></script>
     <script src="sms.js"></script>
-    <script src="PowerManagement.js"></script>
+    <!-- <script src="PowerManagement.js"></script> -->
     <script src="cdv-plugin-fb-connect.js"></script>
     <script type="text/javascript" src="js/jquery.html5storage.min.js"></script>
     <script type="text/javascript" src="js/jsimple-star-rating.min.js"></script>
@@ -119,7 +119,7 @@
 			StatusBar.overlaysWebView(false);
 			StatusBar.backgroundColorByHexString("#E7B242");
 			// prevent device from sleeping
-			window.plugins.powerManagement.acquire();
+			window.powermanagement.acquire();
 			//if($.localStorage.getItem('registeredUser') != 1)
 			if(($.localStorage.getItem('registeredUser') != 1) && ($.localStorage.getItem('registeredUser') != 'OK'))
 			{
@@ -146,11 +146,13 @@
 			if((navigator.network.connection.type == Connection.NONE) || !window.jQuery){
 				$("body").empty().append('<img src="no_network.png" width="'+screen.width+'" height="'+screen.height+'" onClick="window.location.reload()" />');
 			}
-			//locateMe();
+			locateMe();
+			/*
 			setTimeout(function() { 
 				//locateMe();
 				$('#locateMeBtn').trigger('click');
 			}, 1000);
+			*/
 			// For Android => Enable background mode
 			cordova.plugins.backgroundMode.enable();
 			cordova.plugins.backgroundMode.setDefaults({
@@ -1122,6 +1124,7 @@
 	function locateMe() {
 		if (navigator.geolocation)
 		{
+			navigator.notification.alert("In navigator.geolocation", alertDismissed, 'Mon Appli Taxi', 'OK');
 			if (navigator.userAgent.toLowerCase().match(/android/)) {
 				navigator.geolocation.getCurrentPosition(codeLatLng, showError,{enableHighAccuracy:false, maximumAge:0, timeout: 9000});
 			}
@@ -1135,6 +1138,7 @@
 		}
 	}
 	function codeLatLng(position) {
+		navigator.notification.alert("In codeLatLng", alertDismissed, 'Mon Appli Taxi', 'OK');
 		// Using http://adresse.data.gouv.fr
 		lat = position.coords.latitude;
 		lng = position.coords.longitude;
