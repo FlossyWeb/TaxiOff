@@ -152,6 +152,7 @@
 				//locateMe();
 				$('#locateMeBtn').trigger('click');
 			}, 1000);
+			*/
 			// For Android => Enable background mode
 			cordova.plugins.backgroundMode.enable();
 			cordova.plugins.backgroundMode.setDefaults({
@@ -159,12 +160,11 @@
 				ticker: 'App toujours en fonction (3 MINUTES MAX)',
 				text:   'Nous vous informons des courses en cours...'
 			});
-			*/
 			//cordova.plugins.backgroundMode.configure({
 			//	title:'App toujours en fonction (3 MINUTES MAX), nous vous informons des courses en cours...'
 			//});
 			// For iOS => backgroundtask
-			backgroundtask.start(bgFunctionToRun);
+			//backgroundtask.start(bgFunctionToRun);
 			cordova.plugins.notification.local.clearAll(function() {
 				//alert("All notifications cleared");
 			}, this);
