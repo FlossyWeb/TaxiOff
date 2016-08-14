@@ -152,7 +152,6 @@
 				//locateMe();
 				$('#locateMeBtn').trigger('click');
 			}, 1000);
-			*/
 			// For Android => Enable background mode
 			cordova.plugins.backgroundMode.enable();
 			cordova.plugins.backgroundMode.setDefaults({
@@ -160,11 +159,12 @@
 				ticker: 'App toujours en fonction (3 MINUTES MAX)',
 				text:   'Nous vous informons des courses en cours...'
 			});
+			*/
 			//cordova.plugins.backgroundMode.configure({
 			//	title:'App toujours en fonction (3 MINUTES MAX), nous vous informons des courses en cours...'
 			//});
 			// For iOS => backgroundtask
-			//backgroundtask.start(bgFunctionToRun);
+			backgroundtask.start(bgFunctionToRun);
 			cordova.plugins.notification.local.clearAll(function() {
 				//alert("All notifications cleared");
 			}, this);
@@ -1959,7 +1959,7 @@
 					}
 				}
 			}, "xml").done(function() { $.mobile.loading( "hide" ); });
-		}, 30000); 
+		}, 30000);
 		/*
 		if(openAvail) {
 			setTimeout( function () {
@@ -2337,6 +2337,7 @@
 	
     function check_answer()
     {
+		clearInterval(refreshOpenMarkers);
 		dep = $.sessionStorage.getItem('dep');
 		if(!stopCheckAnswer) {
 			$.ajax({
@@ -2352,7 +2353,6 @@
 					clearInterval(time);
 					clearTimeout(endcourse);
 					cancel(idcourse);
-					clearInterval(refreshOpenMarkers);
 					document.getElementById('stop').value = 1;
 					//var box = navigator.notification.alert(data);
 					//stopCall();
