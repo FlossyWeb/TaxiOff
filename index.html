@@ -44,7 +44,6 @@
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="phonegap.js"></script>
     <script src="barcodescanner.js"></script>
-    <script src="contactNumberPicker.js"></script>
     <script src="sms.js"></script>
     <!-- <script src="PowerManagement.js"></script> -->
     <script src="cdv-plugin-fb-connect.js"></script>
@@ -295,24 +294,20 @@
 	}
 	function getContact()
 	{
-		var successCallbackPick = function(result){
-			setTimeout(function(){
-				//navigator.notification.alert(result.name + " " + result.phoneNumber);
-				var nameContact = result.name;
-				var number = result.phoneNumber;
-				var currentName = $('#Accurate').val();
-				$('#Accurate').val(nameContact);
-				$('#cellular').val(number);
-				$("#next-box").hide("fast");
-				$("#search-box").show("medium");
-			},500);
-		};
-		var failedCallbackPick = function(result){
-			setTimeout(function(){
-				//navigator.notification.alert(result);
-			},500);
-		}
-		window.plugins.contactNumberPicker.pick(successCallbackPick,failedCallbackPick);
+		window.plugins.ContactPicker.chooseContact(function(contactInfo) {
+			/*
+			//to get all phones numbers 
+			for (var i = 0; i < contactInfo.phones.length; i++) {
+				 alert(contactInfo.phones[i]);
+			};
+			alert(contactInfo.displayName + " " + contactInfo.selectedPhone + " " + contactInfo.phones[0] + " " + contactInfo.email);
+			*/
+			var currentName = $('#Accurate').val();
+			$('#Accurate').val(contactInfo.displayName);
+			$('#cellular').val(contactInfo.selectedPhone);
+			$("#next-box").hide("fast");
+			$("#search-box").show("medium");
+		});
 	}
 	function fbLogin() {
 		if (!app) { // WebApp only needs init

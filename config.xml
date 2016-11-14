@@ -58,7 +58,7 @@
 	</plugin>
 	<plugin name="cordova-plugin-x-socialsharing" spec="5.0.11" source="npm" />
 	<plugin name="cordova-sms-plugin" source="npm" spec="0.1.10" />
-	<plugin name="cordova-plugin-contact-number-picker" source="npm" />
+	<plugin name="com-badrit-contactpicker" source="npm" />
 	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
 	<plugin name="cordova-plugin-powermanagement" source="npm" />
 	<plugin name="cordova-plugin-background-task" source="npm" />
