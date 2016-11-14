@@ -300,11 +300,11 @@
 			for (var i = 0; i < contactInfo.phones.length; i++) {
 				 alert(contactInfo.phones[i]);
 			};
-			alert(contactInfo.displayName + " " + contactInfo.selectedPhone + " " + contactInfo.phones[0] + " " + contactInfo.email);
 			*/
+			alert(contactInfo.displayName + " " + contactInfo.selectedPhone + " " + contactInfo.phones[0] + " " + contactInfo.email);
 			var currentName = $('#Accurate').val();
 			$('#Accurate').val(contactInfo.displayName);
-			$('#cellular').val(contactInfo.selectedPhone);
+			$('#cellular').val(contactInfo.phones[0]);
 			$("#next-box").hide("fast");
 			$("#search-box").show("medium");
 		});
