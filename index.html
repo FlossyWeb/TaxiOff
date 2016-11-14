@@ -79,6 +79,7 @@
 	var tel = $.localStorage.getItem('tel');
 	var email = $.localStorage.getItem('email');
 	var operator = $.localStorage.getItem('operator');
+	var AppSharePrompted = $.localStorage.getItem('AppSharePrompted');
 	var dontReg = false;
 	var mobileMap = { 'center': '47.2, 2.5', 'zoom': 6 };
 	var isPlaceChanged = true; // Assuming geolocation will get zip unless address is tipped at last
@@ -1017,6 +1018,14 @@
 				useFocus: true
 			});
 		}
+		else {
+			setTimeout(function() {
+				if(getRandomInt(1, 10) == 6 && $.localStorage.getItem('AppSharePrompted') != 'DONE') {
+					$( "#pleaseShare" ).popup( "open", { positionTo: "window" } );
+					$.localStorage.setItem('AppSharePrompted', 'DONE');
+				}
+			}, 1000);
+		}
 		// OpenData Areas Only... (#openDep-box)
 		//$("#openDep-box").css("display", "none");
         var ok = setInterval( function () {
@@ -1130,6 +1139,13 @@
 			}
 		});
 	});
+	function getRandomInt(min, max) {
+		/*
+		* Returns a random integer between min (inclusive) and max (inclusive)
+		* Using Math.round() will give you a non-uniform distribution!
+		*/
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
 	function locateMe() {
 		if (navigator.geolocation)
 		{
@@ -2774,6 +2790,21 @@
                             <input type="tel" id="zipDep" data-clear-btn="true" size="5"/>
                         </p>
                         <button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" id="setZipBtn" title="" onClick="setZip()">Envoyer</button>
+                    </div>
+                </div>
+                <div data-role="popup" data-theme="c" id="pleaseShare" data-dismissible="true">
+ 					<a href="#infos" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Fermer</a>
+                   <div data-theme="c" data-role="header">
+                        <p style="font-size:21px;text-align:center;"><b>
+                            Partager l&rsquo;app
+                        </b></p>
+                    </div>
+                    <div class="ui-content" role="main">
+                    	<p>
+                            Si cela ne vous ennuie pas, pourquoi ne pas prendre un instant pour partager l&rsquo;app avec des amis.
+                        </p>
+                        <a href="#" onclick="window.plugins.socialsharing.share('Téléchargez Mon Appli Taxi sur taximedia.fr', null, null, 'http://www.taximedia.fr/stores.php?app=taxioff')" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-mail noAppHide">Oui je partage</a>
+						<a href="#infos" data-rel="back" class="ui-btn ui-btn-icon-left ui-corner-all ui-shadow ui-btn-b ui-icon-delete">Non, merci</a>
                     </div>
                 </div>
             </div>
