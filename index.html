@@ -197,9 +197,10 @@
 			};
 			// BackgroundGeolocation is highly configurable. See platform specific configuration options 
 			backgroundGeolocation.configure(geoCallbackFn, geoFailureFn, {
-				desiredAccuracy: 10,
+				desiredAccuracy: 0,
 				stationaryRadius: 10,
-				distanceFilter: 10,
+				distanceFilter: 1,
+				activityType: 'Fitness',
 				startForeground: true,
 				// Android only section 
 				notificationTitle: 'Mon Appli Taxi',
