@@ -197,9 +197,9 @@
 			};
 			// BackgroundGeolocation is highly configurable. See platform specific configuration options 
 			backgroundGeolocation.configure(geoCallbackFn, geoFailureFn, {
-				desiredAccuracy: 0,
+				desiredAccuracy: 10,
 				stationaryRadius: 10,
-				distanceFilter: 1,
+				distanceFilter: 10,
 				activityType: 'Fitness',
 				startForeground: true,
 				// Android only section 
