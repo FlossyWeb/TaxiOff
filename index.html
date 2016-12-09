@@ -94,6 +94,8 @@
 	var refreshOpenMarkers;
 	var markerCab;
 	var countMarkerCab;
+	var markerMe;
+	var myNewPlace;
 	var notifyOnce = true;
 	var track;
 	
@@ -1399,7 +1401,7 @@
 					self.get('map').panTo(myPlace);
 					//self.get('map').setZoom(12);
 					//self.get('map').setCenter(myPlace);
-					self.addMarker({'position': myPlace, 'bounds': true, 'icon': userIcon }).click(function() {
+					self.addMarker({id: 'Me', 'position': myPlace, 'bounds': true, 'icon': userIcon }).click(function() {
 						self.openInfoWindow({ 'content': '<p style="color:#333;"><b>Vous &ecirc;tes ici:<br>'+address+'</b></p>' }, this);
 					});
 					//var gcenter = myPlace.lat().toFixed(4) +", "+ myPlace.lng().toFixed(4);
@@ -1409,8 +1411,8 @@
 						'fillColor': "#008595", 
 						'fillOpacity': 0.25, 
 						'center': myPlace, 
-						'radius': 2000, 
-						'clickable': false 
+						'radius': 1000, 
+						'clickable': true 
 					});
 					
 					//searchLocationsNearOpen(myPlace, self);
@@ -1981,6 +1983,24 @@
 				markerCab = mapEvent.get('markers')[k];
 				markerCab.setVisible(false);
 			}
+			markerMe = mapEvent.get('markers')['Me'];
+			markerMe.setVisible(false);
+			rdvpoint = document.getElementById("addressInput").value;
+			rdvlat = lat;
+			rdvlng = lng;
+			myNewPlace = new google.maps.LatLng(lat, lng);
+			mapEvent.get('map').panTo(myNewPlace);
+			mapEvent.addMarker({id: 'Me', 'position': myNewPlace, 'bounds': true, 'icon': 'visuels/client_loc_icon.png' }).click(function() {
+				mapEvent.openInfoWindow({ 'content': '<p style="color:#333;"><b>Vous &ecirc;tes ici:<br>'+address+'</b></p>' }, this);
+			});
+			mapEvent.addShape('Circle', {
+				'strokeWeight': 0, 
+				'fillColor': "#008595", 
+				'fillOpacity': 0.25, 
+				'center': myNewPlace, 
+				'radius': 1000, 
+				'clickable': true 
+			});
 			$.post('http://www.mytaxiserver.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, pmr: pmr, pet: pet, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
 				//navigator.notification.alert('IN');
 				$(xml).find('marker').each(function(){
