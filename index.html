@@ -1436,7 +1436,7 @@
 	$('#map_page').live('pagecreate', function() {
         endcourse = setTimeout( function () {
 			if(!stopCheckAnswer) {
-				$("#cancel").trigger('click');
+				$("#footer_map #cancel").trigger('click');
 				badgeNumber = 1;
 				cordova.plugins.notification.local.schedule({
 					id: 1,
@@ -1993,6 +1993,7 @@
 			mapEvent.addMarker({id: 'Me', 'position': myNewPlace, 'bounds': true, 'icon': 'visuels/client_loc_icon.png' }).click(function() {
 				mapEvent.openInfoWindow({ 'content': '<p style="color:#333;"><b>Vous &ecirc;tes ici:<br>'+address+'</b></p>' }, this);
 			});
+			/*
 			mapEvent.addShape('Circle', {
 				'strokeWeight': 0, 
 				'fillColor': "#008595", 
@@ -2001,6 +2002,7 @@
 				'radius': 1000, 
 				'clickable': true 
 			});
+			*/
 			$.post('http://www.mytaxiserver.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, pmr: pmr, pet: pet, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
 				//navigator.notification.alert('IN');
 				$(xml).find('marker').each(function(){
@@ -2487,7 +2489,6 @@
 					document.getElementById('stop').value = 1;
 					//var box = navigator.notification.alert(data);
 					//stopCall();
-					//var box = navigator.notification.alert(data);
 					//$('#thanksResults').empty().append(data);
 					$('#answer').empty().append(data);
 					$( "#answerBox" ).popup( "open", { positionTo: "window" } );
