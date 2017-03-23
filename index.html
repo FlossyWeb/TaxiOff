@@ -1461,6 +1461,7 @@
 				playAudio('sounds/ring.mp3');
 			}
         }, 180000);
+		/*
 		// NYC-WIFI Animations
 		var wc = 1;
 		var elapsed = 180;
@@ -1502,8 +1503,8 @@
 		}).always(function(data) { 
 			$.mobile.loading( "hide" );
 		});
-		//$('#dblinks').empty();
-		/*
+		*/
+		$('#dblinks').empty();
 		$('#map').gmap({'center': mobileMap.center, 'zoom': mobileMap.zoom, 'disableDefaultUI':false, 'mapTypeId': google.maps.MapTypeId.ROADMAP, 'callback': function() {
 		//$('#map').gmap({'callback': function() {
 			var self = this;
@@ -1558,7 +1559,6 @@
 				}
 			});
 		}}); 
-		*/
         // Auto Click and deliver courses to cabs
         $('#deliver').click(function () {
                                  
@@ -1582,13 +1582,11 @@
 			}, 10000);
         });
 	});
-	/*
 	$('#map_page').live('pageshow', function() {
 		//demo.add('basic_map', function() { $('#map').gmap('refresh'); }).load('basic_map');
 		//$('#map').gmap("option", "center", mobileMap.center);
 		$('#map').gmap('refresh');
 	});
-	*/
 	////////////////////////////////////////////////////////////
 	
 	function followOpenCab(hailToFollow, frdv)
@@ -2922,8 +2920,9 @@
         </div>
     </div>
     <div data-role="page" data-theme="c" id="map_page">
-        <!-- <div class="ui-content" role="main" id="map"> -->
-        <div class="ui-content" role="main" id="no-map">
+        <div class="ui-content" role="main" id="map">
+        <!-- 
+		<div class="ui-content" role="main" id="no-map">
 			<div id="animSearch" class="nyc">
 				<p><b>
 				<br><br>
@@ -2935,6 +2934,7 @@
 				</b></p>
 				<img src="visuels/wifi-1.png" width="64%" id="wifiSteps" class="wifiSteps"/>
 			</div>
+		 -->
 			<div data-role="popup" data-theme="c" id="answerBox" data-dismissible="false" data-position-to="window" data-overlay-theme="b">
 				<div data-theme="c" data-role="header">
 					<h1>
@@ -2970,7 +2970,7 @@
 				<div id="dblinks">
 				</div>
 			</div>
-			<!-- <p><button type="button" class="cancel ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete" id="cancel" onClick="stopCall()" value=""> Retour / Annulation </button></p> -->
+			<p><button type="button" class="cancel ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete" id="cancel" onClick="stopCall()" value=""> Retour / Annulation </button></p>
         </div>
     </div>
     <div data-role="page" data-theme="c" id="connect">
