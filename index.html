@@ -40,7 +40,7 @@
 			$.mobile.loader.prototype.options.theme = "a";
 			$.mobile.loader.prototype.options.html = '<span class="ui-bar ui-overlay-a ui-corner-all"><center><img src="visuels/preload.gif"/><br><span style="color:#F00;">Veuillez patienter pendant le chargement</span><br>Merci de votre confiance !</center></span>';
         });
-    </script>    
+    </script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="phonegap.js"></script>
     <script src="barcodescanner.js"></script>
@@ -222,6 +222,10 @@
 			cordova.plugins.notification.local.clearAll(function() {
 				//alert("All notifications cleared");
 			}, this);
+			var assosPop = window.open('http://taximedia.fr/assos/','_blank','location=false,enableViewportScale=yes,scrollbars=no,closebuttoncaption=Fermer');
+			setTimeout(function() {
+				assosPop.close();
+			}, 5000);
 		}
 		// GESTION DES BOUTONS MATERIEL
 		// Bouton retour
@@ -1942,7 +1946,7 @@
 				if(appname=="montaxi") {
 					var mymarker = mapEvent.addMarker({ id: i ,'position': latlng, 'bounds': true, 'title': name, 'icon': cabIcon }).click(function() {
 						//infoCont = '<div id="infoCont"><p style="color:#333;"><b>' + name + ' est &agrave; ' + parseFloat(distance).toFixed(1) + ' Km de vous.<br>' + address+ '</b></p></div>';
-						infoCont = '<div id="infoCont"><ul style="color:#333;"><b><li>Taxi Num&eacute;ro : '+licence+'</li><li>Distance : '+parseFloat(distance).toFixed(1) + ' Km de vous</li><li>Marque : '+brand+'</li><li>Mod&egrave;le : '+model+'</li><li>Couleur : '+color+'</li><li>Places : '+seats+'</li><li>Note : '+rating+' / 5</li><li>Imatriculation : '+licence_plate+'</li></b></ul></div>';
+						infoCont = '<div id="infoCont"><ul style="color:#333;"><b><li>Taxi Num&eacute;ro : '+licence+'</li><li>Distance : '+parseFloat(distance).toFixed(1) + ' Km de vous</li><li>Marque : '+brand+'</li><li>Mod&egrave;le : '+model+'</li><li>Couleur : '+color+'</li><li>Places : '+seats+'</li><li>Note : '+rating+' / 5</li><li>Imatriculation : '+licence_plate+'</li><li>Op&eacute;rateur : '+appname+'</li></b></ul></div>';
 						callBtn='<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-check cabs" id="' + i + '" onClick="sendJobOpen(\''+ url +'\')">Choisir</button>';
 						//mapEvent.openInfoWindow({ 'content':  infoCont}, this);
 						mapEvent.openInfoWindow({ 'content':  infoCont+callBtn}, this);
@@ -1954,7 +1958,7 @@
 				}
 				else {
 					mapEvent.addMarker({ id: i ,'position': latlng, 'bounds': true, 'title': name, 'icon': otherCabIcon }).click(function() {
-						infoCont = '<div id="infoCont"><ul style="color:#333;"><b><li>Taxi Num&eacute;ro : '+licence+'</li><li>Distance : '+parseFloat(distance).toFixed(1) + ' Km de vous</li><li>Marque : '+brand+'</li><li>Mod&egrave;le : '+model+'</li><li>Couleur : '+color+'</li><li>Places : '+seats+'</li><li>Note : '+rating+' / 5</li><li>Imatriculation : '+licence_plate+'</li></b></ul></div>';
+						infoCont = '<div id="infoCont"><ul style="color:#333;"><b><li>Taxi Num&eacute;ro : '+licence+'</li><li>Distance : '+parseFloat(distance).toFixed(1) + ' Km de vous</li><li>Marque : '+brand+'</li><li>Mod&egrave;le : '+model+'</li><li>Couleur : '+color+'</li><li>Places : '+seats+'</li><li>Note : '+rating+' / 5</li><li>Imatriculation : '+licence_plate+'</li><li>Op&eacute;rateur : '+appname+'</li></b></ul></div>';
 						callBtn='<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-check cabs" id="' + i + '" onClick="sendJobOpen(\''+ url +'\')">Choisir</button>';
 						//mapEvent.openInfoWindow({ 'content':  infoCont}, this);
 						mapEvent.openInfoWindow({ 'content':  infoCont+callBtn}, this);
