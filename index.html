@@ -704,12 +704,14 @@
 	});
 	$( '#assos' ).live( 'pagecreate',function(event){
 		$.mobile.loading( "show" );
-		$.post("https://www.mytaxiserver.com/appclient/in_app_calls.php", { assos: 'true', pass: pass }, function(data){
-			$("assos_cont").empty().append(data);
-		}).always(function() { $.mobile.loading( "hide" ); });
-		$('.expendsAs').click(function () {
-			$(this).next('div').slideToggle('slow');
-			//$.mobile.silentScroll($(this).next('div').offset().top);
+		$.post("https://www.mytaxiserver.com/appclient/in_app_calls.php", { assos: 'true', pass: 1 }, function(data){
+			$("#assos_cont").empty().append(data);
+		}).always(function() { 
+			$.mobile.loading( "hide" );
+			$('.expendsAs').click(function () {
+				$(this).next('div').slideToggle('slow');
+				//$.mobile.silentScroll($(this).next('div').offset().top);
+			});
 		});
 	});
 	function rateCab(rtaxi, ridcourse, rdep, rtel)
