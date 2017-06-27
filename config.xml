@@ -56,13 +56,13 @@
 	<plugin name="cordova-open" source="npm" spec="1.0.12" />
 	<!-- 
 	<plugin name="phonegap-facebook-plugin" spec="0.12.0" source="npm">
-	<plugin name="cordova-plugin-facebook4" source="npm">
 	<plugin name="com.phonegap.plugins.facebookconnect" spec="0.9.0">
 	<plugin name="cordova-plugin-facebook4" source="npm">
+	-->
+    <plugin name="cordova-plugin-facebook4" spec="https://github.com/jeduan/cordova-plugin-facebook4" source="git" />  
 		<param name="APP_ID" value="1477112772546142" />
 		<param name="APP_NAME" value="myTaxi" />
 	</plugin>
-	-->
 	<plugin name="cordova-plugin-x-socialsharing" source="npm" />
 	<plugin name="cordova-sms-plugin" source="npm" spec="0.1.11" />
 	<plugin name="com-badrit-contactpicker" source="npm" />
