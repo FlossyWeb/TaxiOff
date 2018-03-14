@@ -41,7 +41,6 @@
 	<plugin name="cordova-plugin-splashscreen" source="npm" />
 	<plugin name="cordova-plugin-vibration" source="npm" />
 	<plugin name="cordova-plugin-inappbrowser" source="npm" />
-	<plugin name="cordova-plugin-device-orientation" source="npm" />
 	<plugin name="cordova-plugin-camera" source="npm" >
         <variable name="CAMERA_USAGE_DESCRIPTION" value="CELA VOUS PERMETTRA DE SCANNER DES QR CODES." />  
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="To attach a photo to your items/check-outs/reservations, we need access to your Photo Library." />
