@@ -70,8 +70,8 @@
 	<plugin name="phonegap-facebook-plugin" spec="0.12.0" source="npm">
 	<plugin name="com.phonegap.plugins.facebookconnect" spec="0.9.0">
     <plugin name="cordova-plugin-facebook4" spec="https://github.com/jeduan/cordova-plugin-facebook4" source="git" >  
-    <plugin name="cordova-android-support-gradle-release" spec="https://github.com/dpa99c/cordova-android-support-gradle-release" source="git" />  
 	-->
+    <plugin name="cordova-android-support-gradle-release" spec="https://github.com/dpa99c/cordova-android-support-gradle-release" source="git" />  
 	<plugin name="cordova-plugin-facebook4" source="npm">
 		<param name="APP_ID" value="1477112772546142" />
 		<param name="APP_NAME" value="myTaxi" />
@@ -84,9 +84,9 @@
 	<plugin name="cordova-plugin-mauron85-background-geolocation" spec="2.3.3" source="npm">
 		<variable name="ALWAYS_USAGE_DESCRIPTION" value="CELA PERMETTRA AUX TAXIS DE CONNAITRE VOTRE POSITION." />
 	</plugin>
-	<plugin name="cordova-plugin-background-task" source="npm" />
-	<!-- 
 	<plugin name="cordova-plugin-background-mode" source="npm" spec="0.7.2" />
+	<!-- 
+	<plugin name="cordova-plugin-background-task" source="npm" />
 	<plugin name="cordova-plugin-mauron85-background-geolocation" spec="2.2.5" source="npm">
 	<plugin name="de.appplant.cordova.plugin.local-notification" spec="0.8.4" source="npm" />
 	<plugin name="de.appplant.cordova.plugin.local-notification-ios9-fix" spec="0.8.2" />
