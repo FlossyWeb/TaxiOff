@@ -155,7 +155,7 @@
 				$("body").empty().append('<img src="no_network.png" width="'+screen.width+'" height="'+screen.height+'" onClick="window.location.reload()" />');
 			}
 			openPdf = cordova.plugins.disusered.open;
-			
+			/*
 			// For Android => Enable background mode
 			cordova.plugins.backgroundMode.enable();
 			cordova.plugins.backgroundMode.setDefaults({
@@ -166,9 +166,9 @@
 			//cordova.plugins.backgroundMode.configure({
 			//	title:'App toujours en fonction (3 MINUTES MAX), nous vous informons des courses en cours...'
 			//});
-			
+			*/
 			// For iOS => backgroundtask
-			//backgroundtask.start(bgFunctionToRun);
+			backgroundtask.start(bgFunctionToRun);
 			// Efficient and batterie saving geolocation...
 			var geoCallbackFn = function(location) {
 				//alert('[js] BackgroundGeolocation callback:  ' + location.latitude + ',' + location.longitude);
