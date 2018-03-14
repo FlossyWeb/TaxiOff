@@ -5,8 +5,11 @@
     <meta http-equiv="CONTENT-LANGUAGE" content="French">
     <title>Mon Appli Taxi by TaxiMedia</title>
     <link rel="apple-touch-icon" href="visuels/idev.favicon.png"/>
+	<meta name="viewport" content="initial-scale=1, width=device-width, height=device-height, viewport-fit=cover">
+    <!-- 
+	<meta name="viewport" content="width=device-width, height=device-height, user-scalable=yes, initial-scale=1"/> 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
-    <!-- <meta name="viewport" content="width=device-width, height=device-height, user-scalable=yes, initial-scale=1"/> -->
+	-->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="apple-touch-startup-image" href="visuels/startup_image.png" />
     <!-- iPhone -->
@@ -480,8 +483,12 @@
 				$('#cellular').val(data.tel);
 				$('#login').val(data.tel);
 				if(data.sms=='1') {
+					/*
 					if(app) navigator.notification.alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.');
+					*/
+					if(app) navigator.notification.alert('Afin de vérifier votre compte vous allez recevoir vos identifiants par mail, nous vous remercions pour votre inscription.', alertDismissed, 'Mon Appli Taxi', 'OK');
+					else alert('Afin de vérifier votre compte vous allez recevoir vos identifiants par mail, nous vous remercions pour votre inscription.');					
 				}
 				else {
 					if(app) navigator.notification.alert("Pour une raison technique ou parce que votre numéro de téléphone a généré trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr", alertDismissed, 'Mon Appli Taxi', 'OK');
@@ -2654,18 +2661,22 @@
 		var rdvPricesLat;
 		var destPricesLng;
 		var destPricesLat;
+		var zipPrices;
+		var depPrices;
 		if (rdvPrices!='' && destPrices!='') {
 			// Using https://adresse.data.gouv.fr
 			//https://api-adresse.data.gouv.fr/search/?q=8 bd du port&type=street
 			$.get('https://api-adresse.data.gouv.fr/search/', {q: rdvPrices, type: ''}, function(data) {
 				rdvPricesLng = data.features[0].geometry.coordinates[0];
 				rdvPricesLat = data.features[0].geometry.coordinates[1];
+				zipPrices = data.features[0].properties.postcode;
+				depPrices = zipPrices.substring(0, 2);
 			}, "json").done(function(data) { 
 				$.get('https://api-adresse.data.gouv.fr/search/', {q: destPrices, type: ''}, function(data) {
 					destPricesLng = data.features[0].geometry.coordinates[0];
 					destPricesLat = data.features[0].geometry.coordinates[1];
 				}, "json").done(function(data) { 
-					var devUrl = 'lat=' + rdvPricesLat + '&lng=' + rdvPricesLng + '&lat2=' + destPricesLat + '&lng2=' + destPricesLng + '&rdv=' + rdvPrices + '&dest=' + destPrices + '&dep=' + dep+ '&app=1';
+					var devUrl = 'lat=' + rdvPricesLat + '&lng=' + rdvPricesLng + '&lat2=' + destPricesLat + '&lng2=' + destPricesLng + '&rdv=' + rdvPrices + '&dest=' + destPrices + '&dep=' + depPrices+ '&app=1';
 					//alert(devUrl);
 					$.post("https://www.mytaxiserver.com/appserver/calcdev.php", devUrl, function(data) { 
 						$('#pricesCont').empty().append(data+'<button onClick="checkZip(\'#map_page_open\')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Commander maintenant</button>');
