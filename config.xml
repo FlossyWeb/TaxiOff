@@ -20,6 +20,7 @@
     <preference name="phonegap-version" value="cli-8.0.0" />
 	<!-- Using old pgb builder --> 
 	<!-- <preference name='pgb-builder-version' value='1' /> -->
+	<preference name='pgb-builder-version' value='1' />
     <preference name="orientation"      value="default" />
     <preference name="target-device"    value="universal" />
     <preference name="fullscreen"       value="false" />
@@ -45,7 +46,7 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value="CELA VOUS PERMETTRA DE SCANNER DES QR CODES." />  
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="To attach a photo to your items/check-outs/reservations, we need access to your Photo Library." />
 	</plugin>
-	<plugin name="cordova-plugin-geolocation" source="npm">
+	<plugin name="cordova-plugin-geolocation" source="npm" version="2.4.3">
 		<variable name="GEOLOCATION_USAGE_DESCRIPTION" value="CELA PERMETTRA AUX TAXIS DE CONNAITRE VOTRE POSITION." />  
     </plugin>
 	<!-- 
@@ -69,12 +70,11 @@
     <plugin name="cordova-android-support-gradle-release" spec="https://github.com/dpa99c/cordova-android-support-gradle-release" source="git" />  
 	<plugin name="cordova-plugin-facebook4" source="npm" spec="1.9.1">
 	<plugin name="cordova-plugin-facebook4" spec="https://github.com/jeduan/cordova-plugin-facebook4" source="git">
-	<plugin name="cordova-plugin-facebook4" source="npm" spec="1.7.4">
+	-->
+	<plugin name="cordova-plugin-facebook4" source="npm">
 		<param name="APP_ID" value="1477112772546142" />
 		<param name="APP_NAME" value="myTaxi" />
 	</plugin>
-	-->
-    <plugin name="cordova-android-support-gradle-release" spec="https://github.com/dpa99c/cordova-android-support-gradle-release" source="git" />  
 	<plugin name="cordova-plugin-x-socialsharing" source="npm" />
 	<plugin name="cordova-sms-plugin" source="npm" spec="0.1.11" />
 	<plugin name="com-badrit-contactpicker" source="npm" />
