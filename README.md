@@ -1,1 +1,1 @@
-TaxiOff app by Choa.
+ChauffeurVTC client app by Choa.
