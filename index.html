@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
-<head>
-    <meta charset="utf-8">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="CONTENT-LANGUAGE" content="French">
-    <title>ChauffeursVTC.com App Clients</title>
+    <title>Mon Appli Taxi by TaxiMedia</title>
     <link rel="apple-touch-icon" href="visuels/idev.favicon.png"/>
 	<meta name="viewport" content="initial-scale=1, width=device-width, height=device-height, viewport-fit=cover">
     <!-- 
@@ -26,7 +25,7 @@
             and (-webkit-device-pixel-ratio: 2)"
             href="visuels/startup_image_i5.png">
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
-	<link rel="stylesheet" href="css/themes/chauffeurs-vtc.min.css" />
+	<link rel="stylesheet" href="css/themes/monTaxiPart.min.css" />
 	<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
     <link type="text/css" rel="stylesheet" href="css/jqm-datebox-1.4.5.min.css" />
     <link type="text/css" rel="stylesheet" href="css/dcvpad.css" />
@@ -132,15 +131,15 @@
 			//if($.localStorage.getItem('registeredUser') != 1)
 			if(($.localStorage.getItem('registeredUser') != 1) && ($.localStorage.getItem('registeredUser') != 'OK'))
 			{
-				//navigator.notification.alert("Valeur du Registre: "+$.localStorage.getItem('registeredUser'), alertDismissed, 'ChauffeursVTC', 'OK');
+				//navigator.notification.alert("Valeur du Registre: "+$.localStorage.getItem('registeredUser'), alertDismissed, 'Mon Appli Taxi', 'OK');
 				$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
 			}
 			else {
-				$.post("https://www.chauffeursvtc.com/taxioffsrv/blacklist.php", { userid: operator, tel: tel}, function(data) {
+				$.post("https://www.mytaxiserver.com/taxioffsrv/blacklist.php", { userid: operator, tel: tel}, function(data) {
 					if (data.banned == 1)
 					{
 						$.mobile.pageContainer.pagecontainer("change", "#subscription", { transition: "slide"} );
-						var displayThis = '<p style="color:red;"><b>Votre compte &agrave; &eacute;t&eacute; banni pour cause d&rsquo;utilisation abusive, d&eacute;sol&eacute;.<br>Vous pouvez nous contacter pour toute r&eacute;clamation: </b></p><center><a href="mailto:contact@chauffeursvtc.com" class="ui-btn ui-btn-icon-left ui-icon-mail ui-shadow-icon ui-corner-all">Courriel</a><a href="tel:0491034263" class="ui-btn ui-btn-icon-left ui-icon-phone ui-btn-inline">T&eacute;l&eacute;phone</a></center>';
+						var displayThis = '<p style="color:red;"><b>Votre compte &agrave; &eacute;t&eacute; banni pour cause d&rsquo;utilisation abusive, d&eacute;sol&eacute;.<br>Vous pouvez nous contacter pour toute r&eacute;clamation: </b></p><center><a href="mailto:info@taximedia.fr" class="ui-btn ui-btn-icon-left ui-icon-mail ui-shadow-icon ui-corner-all">Courriel</a><a href="tel:0491034263" class="ui-btn ui-btn-icon-left ui-icon-phone ui-btn-inline">T&eacute;l&eacute;phone</a></center>';
 						$("#subReturns").empty().append(displayThis);
 					}
 					if(data.phone_ok != 'OK') {
@@ -198,9 +197,9 @@
 				backgroundGeolocation.finish();
 			};
 			var geoFailureFn = function(error) {
-				//if(app) navigator.notification.alert('BackgroundGeolocation error', alertDismissed, 'ChauffeursVTC', 'OK');
+				//if(app) navigator.notification.alert('BackgroundGeolocation error', alertDismissed, 'Mon Appli Taxi', 'OK');
 				//else alert('BackgroundGeolocation error');
-				navigator.notification.confirm('Erreur de Géolocalisation, voulez-vous aller dans les réglages afin d\'activer le service de géolocalisation pour cette app ?', 'ChauffeursVTC', function() {
+				navigator.notification.confirm('Erreur de Géolocalisation, voulez-vous aller dans les réglages afin d\'activer le service de géolocalisation pour cette app ?', 'Mon Appli Taxi', function() {
 					backgroundGeolocation.showAppSettings();
 				});
 			};
@@ -212,7 +211,7 @@
 				activityType: 'Fitness',
 				startForeground: true,
 				// Android only section 
-				notificationTitle: 'ChauffeursVTC',
+				notificationTitle: 'Mon Appli Taxi',
 				notificationText: 'Suivi de votre position',
 				notificationIconColor: '#FEDD1E',
 				locationProvider: backgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
@@ -226,7 +225,7 @@
 			cordova.plugins.notification.local.clearAll(function() {
 				//alert("All notifications cleared");
 			}, this);
-			var assosPop = window.open('http://chauffeursvtc.com/assos/','_blank','location=false,enableViewportScale=yes,scrollbars=no,closebuttoncaption=Fermer');
+			var assosPop = window.open('http://taximedia.fr/assos/','_blank','location=false,enableViewportScale=yes,scrollbars=no,closebuttoncaption=Fermer');
 			setTimeout(function() {
 				assosPop.close();
 			}, 5000);
@@ -234,7 +233,7 @@
 		// GESTION DES BOUTONS MATERIEL
 		// Bouton retour
 		function onBackKeyDown() {
-			navigator.notification.alert("Veuillez ne pas quitter ChauffeursVTC pendant la recheche de Véhicules disponibles", alertDismissed, 'ChauffeursVTC', 'OK');
+			navigator.notification.alert("Veuillez ne pas quitter Mon Appli Taxi pendant la recheche de taxi disponibles", alertDismissed, 'Mon Appli Taxi', 'OK');
 		}
 		function onResume() {
 			setTimeout(function() {
@@ -343,7 +342,7 @@
 	{
 		window.plugins.ContactPicker.chooseContact(function(contactInfo) {
 			var number = contactInfo.phones[0];
-			var message = "Téléchargez l'app ChauffeursVTC en suivant ce lien : https://www.chauffeursvtc.com/stores.php?app=cvclient";
+			var message = "Téléchargez l'app Mon Appli Taxi en suivant ce lien : https://www.taximedia.fr/stores.php?app=taxioff";
 			var intent = ""; //leave empty for sending sms using default intent
 			var success = function () {
 				//navigator.notification.alert('Message sent successfully');
@@ -377,7 +376,7 @@
 	}
 	function fbLogin() {
 		if (!app) { // WebApp only needs init
-			facebookConnectPlugin.browserInit('1953417441629593', 'v3.2');
+			facebookConnectPlugin.browserInit('349841341865550', 'v2.5');
 		}
 		facebookConnectPlugin.login(["email"], function(response) {
 			if (response.authResponse) {
@@ -388,7 +387,7 @@
 					$.localStorage.setItem('email', response.email);
 					$('#subName').val(response.name);
 					$('#subMail').val(response.email);
-					$.post("https://www.chauffeursvtc.com/taxioffsrv/login_fb.php", { email: response.email, first: $.localStorage.getItem('firstConnexionVar')}, function(data) {
+					$.post("https://www.mytaxiserver.com/taxioffsrv/login_fb.php", { email: response.email, first: $.localStorage.getItem('firstConnexionVar')}, function(data) {
 						$.localStorage.setItem('nom', data.nom);
 						$.localStorage.setItem('email', data.email);
 						$.localStorage.setItem('tel', data.tel);
@@ -416,14 +415,14 @@
 								$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 							}
 							else {
-								if(app) navigator.notification.alert('Vous ne pouvez acceder à ce service car le numéro de téléphone fourni n\'a pas été validé, vous devez vous connecter au moins une fois avec les identifiants reçus par sms.', alertDismissed, 'ChauffeursVTC', 'OK');
+								if(app) navigator.notification.alert('Vous ne pouvez acceder à ce service car le numéro de téléphone fourni n\'a pas été validé, vous devez vous connecter au moins une fois avec les identifiants reçus par sms.', alertDismissed, 'Mon Appli Taxi', 'OK');
 								else alert('Vous ne pouvez acceder à ce service car le numéro de téléphone fourni n\'a pas été validé, vous devez vous connecter au moins une fois avec les identifiants reçus par sms.');
 							}
 						}
 					}, "json");
 				});
 			} else {
-				navigator.notification.alert('ECHEC IDENTIFICATION', alertDismissed, 'ChauffeursVTC', 'OK');
+				navigator.notification.alert('ECHEC IDENTIFICATION', alertDismissed, 'Mon Appli Taxi', 'OK');
 			}
 		});
 	}
@@ -434,7 +433,7 @@
 	function login() {
 		var id = $('#login').val();
 		var pwd = $('#pwd').val();
-		$.post("https://www.chauffeursvtc.com/taxioffsrv/login_app.php", { id: id, pwd: pwd, first: $.localStorage.getItem('firstConnexionVar')}, function(data) {
+		$.post("https://www.mytaxiserver.com/taxioffsrv/login_app.php", { id: id, pwd: pwd, first: $.localStorage.getItem('firstConnexionVar')}, function(data) {
 			$.localStorage.setItem('nom', data.nom);
 			$.localStorage.setItem('email', data.email);
 			$.localStorage.setItem('tel', data.tel);
@@ -465,7 +464,7 @@
 		tel = $('#subTel').val();
 		email = $('#subMail').val();
 		$("#subReturns").empty();
-		$.post("https://www.chauffeursvtc.com/taxioffsrv/register_app.php", { nom: nom, tel: tel, email: email}, function(data) {
+		$.post("https://www.mytaxiserver.com/taxioffsrv/register_app.php", { nom: nom, tel: tel, email: email}, function(data) {
 			$.localStorage.setItem('nom', data.nom);
 			$.localStorage.setItem('email', data.email);
 			$.localStorage.setItem('tel', data.tel);
@@ -485,15 +484,15 @@
 				$('#login').val(data.tel);
 				if(data.sms=='1') {
 					/*
-					if(app) navigator.notification.alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.', alertDismissed, 'ChauffeursVTC', 'OK');
+					if(app) navigator.notification.alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.');
 					*/
-					if(app) navigator.notification.alert('Afin de vérifier votre compte vous allez recevoir vos identifiants par mail, nous vous remercions pour votre inscription.', alertDismissed, 'ChauffeursVTC', 'OK');
+					if(app) navigator.notification.alert('Afin de vérifier votre compte vous allez recevoir vos identifiants par mail, nous vous remercions pour votre inscription.', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert('Afin de vérifier votre compte vous allez recevoir vos identifiants par mail, nous vous remercions pour votre inscription.');					
 				}
 				else {
-					if(app) navigator.notification.alert("Pour une raison technique ou parce que votre numéro de téléphone a généré trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@chauffeursvtc.com", alertDismissed, 'ChauffeursVTC', 'OK');
-					else alert("Pour une raison technique ou parce que votre numéro de téléphone a généré trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@chauffeursvtc.com");
+					if(app) navigator.notification.alert("Pour une raison technique ou parce que votre numéro de téléphone a généré trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr", alertDismissed, 'Mon Appli Taxi', 'OK');
+					else alert("Pour une raison technique ou parce que votre numéro de téléphone a généré trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr");
 				}
 				$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
 				//display = '<p><b>' + data.civil + ' ' + data.nom + ' ' + data.prenom + ' Voici les informations d&rsquo;identification qui vous permettront d&rsquo;acc&egrave;der &agrave; votre compte :<br><span style="color:#09F;">Identifiant = ' + data.tel + '<br>Mot de passe = ' + data.pwd + '</span><br>Vous les recevrez dans quelques instants &agrave; cet email : <span style="color:#09F;">' + data.email + '</span>, merci.<br></b></p>';
@@ -526,7 +525,7 @@
 		email = $('#accMail').val();
 		pwd = $('#accPwd').val();
 		$("#accReturns").empty();
-		$.post("https://www.chauffeursvtc.com/taxioffsrv/modmy_app.php", { nom: nom, tel: tel, newtel: newtel, email: email, pwd: pwd, operator: operator}, function(data) {
+		$.post("https://www.mytaxiserver.com/taxioffsrv/modmy_app.php", { nom: nom, tel: tel, newtel: newtel, email: email, pwd: pwd, operator: operator}, function(data) {
 			if (data.modmy == '1')
 			{
 				$.localStorage.setItem('nom', data.nom);
@@ -539,12 +538,12 @@
 				display = '<p style="color:green;"><b>Vous avez bien modifi&eacute; votre compte.</b></p><br>';
 				if(data.check_again == 'YES') {
 					if(data.sms=='1') {
-						if(app) navigator.notification.alert('Vous avez bien modifié votre compte. Afin de re-vérifier votre numéro de mobile vous allez recevoir vos nouveaux identifiants par sms et devrez vous reconnectez avec, nous vous remercions pour votre inscription.', alertDismissed, 'ChauffeursVTC', 'OK');
+						if(app) navigator.notification.alert('Vous avez bien modifié votre compte. Afin de re-vérifier votre numéro de mobile vous allez recevoir vos nouveaux identifiants par sms et devrez vous reconnectez avec, nous vous remercions pour votre inscription.', alertDismissed, 'Mon Appli Taxi', 'OK');
 						else alert('Vous avez bien modifié votre compte. Afin de re-vérifier votre numéro de mobile vous allez recevoir vos nouveaux identifiants par sms et devrez vous reconnectez avec, nous vous remercions pour votre inscription.');
 					}
 					else {
-						if(app) navigator.notification.alert("Vous avez bien modifié votre compte. Mais pour une raison technique ou parce que votre nouveau numéro de téléphone a générer trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@chauffeursvtc.com", alertDismissed, 'ChauffeursVTC', 'OK');
-						else alert("Vous avez bien modifié votre compte. Mais pour une raison technique ou parce que votre nouveau numéro de téléphone a générer trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@chauffeursvtc.com");
+						if(app) navigator.notification.alert("Vous avez bien modifié votre compte. Mais pour une raison technique ou parce que votre nouveau numéro de téléphone a générer trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr", alertDismissed, 'Mon Appli Taxi', 'OK');
+						else alert("Vous avez bien modifié votre compte. Mais pour une raison technique ou parce que votre nouveau numéro de téléphone a générer trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr");
 					}
 					$.localStorage.setItem('registeredUser', 'KO');
 					$.localStorage.setItem('firstConnexionVar', 'YES');
@@ -568,7 +567,7 @@
 				}
 				if (data.verif==-1)
 				{
-					display += '<p style="color:red;"><b>Le t&eacute;l&eacute;phone renseign&eacute; est d&eacute;j&agrave; associ&eacute; &agrave; un autre compte. Veuillez nous contacter via contact@chauffeursvtc.com</b></p>';
+					display += '<p style="color:red;"><b>Le t&eacute;l&eacute;phone renseign&eacute; est d&eacute;j&agrave; associ&eacute; &agrave; un autre compte. Veuillez nous contacter via contact@taximedia.fr</b></p>';
 				}
 			}
 			$("#accReturns").empty().append(display);
@@ -578,30 +577,30 @@
 	}
 	function reSendText() {
 		$.mobile.loading( "show" );
-		$.post("https://www.chauffeursvtc.com/taxioffsrv/sendtext.php", { tel: $('#smsTel').val(), kinda: 'user'}, function(data) {
+		$.post("https://www.mytaxiserver.com/taxioffsrv/sendtext.php", { tel: $('#smsTel').val(), kinda: 'user'}, function(data) {
 			if (data.valid_check=='KO') {
 				if (data.sms=='1') {
-					if(app) navigator.notification.alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.', alertDismissed, 'ChauffeursVTC', 'OK');
+					if(app) navigator.notification.alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert('Afin de vérifier votre numéro de mobile vous allez recevoir vos identifiants par sms, nous vous remercions pour votre inscription.');
 				}
 				else {
-					//if(app) navigator.notification.alert("Pour une raison technique ou parce que votre numéro de téléphone a générer trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@chauffeursvtc.com", alertDismissed, 'ChauffeursVTC', 'OK');
-					//else alert("Pour une raison technique ou parce que votre numéro de téléphone a générer trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@chauffeursvtc.com");
-					if(app) navigator.notification.alert("Pour une raison technique nous ne pouvons valider votre compte. Veuillez nous contacter via contact@chauffeursvtc.com", alertDismissed, 'ChauffeursVTC', 'OK');
-					else alert("Pour une raison technique nous ne pouvons valider votre compte. Veuillez nous contacter via contact@chauffeursvtc.com");
+					//if(app) navigator.notification.alert("Pour une raison technique ou parce que votre numéro de téléphone a générer trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr", alertDismissed, 'Mon Appli Taxi', 'OK');
+					//else alert("Pour une raison technique ou parce que votre numéro de téléphone a générer trop d'envois de sms, nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr");
+					if(app) navigator.notification.alert("Pour une raison technique nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr", alertDismissed, 'Mon Appli Taxi', 'OK');
+					else alert("Pour une raison technique nous ne pouvons valider votre compte. Veuillez nous contacter via contact@taximedia.fr");
 				}
 			}
 			else if (data.valid_check=='OK') {
-				if(app) navigator.notification.alert('Ce numéro de téléphone a déjà été validé, vous devriez pouvoir vous connecter.', alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert('Ce numéro de téléphone a déjà été validé, vous devriez pouvoir vous connecter.', alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert('Ce numéro de téléphone a déjà été validé, vous devriez pouvoir vous connecter.');
 			}
 			else {
-				if(app) navigator.notification.alert("Ce numéro de téléphone n'est probablement associé à aucun compte !!", alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert("Ce numéro de téléphone n'est probablement associé à aucun compte !!", alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert("Ce numéro de téléphone n'est probablement associé à aucun compte !!");
 			}
 			if (data.telvalid === false)
 			{
-				if(app) navigator.notification.alert("Ce numéro de téléphone fourni n'est pas valide: nous attendons 10 chiffres sans espaces et commençant par 06 ou 07.", alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert("Ce numéro de téléphone fourni n'est pas valide: nous attendons 10 chiffres sans espaces et commençant par 06 ou 07.", alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert("Ce numéro de téléphone fourni n'est pas valide: nous attendons 10 chiffres sans espaces et commençant par 06 ou 07.");
 			}
 		}, "json").always(function(data) {
@@ -613,7 +612,7 @@
 		$.mobile.loading( "show" );
 		var login = $('#forgotTel').val();
 		var mail = $('#forgotMail').val();
-		$.post("https://www.chauffeursvtc.com/taxioffsrv/forget_app.php", { login: login, mail: mail}, function(data) {
+		$.post("https://www.mytaxiserver.com/taxioffsrv/forget_app.php", { login: login, mail: mail}, function(data) {
 			var display = '';
 			if (data.sent)
 			{
@@ -637,7 +636,7 @@
 	}
 	function openSomeUrl(url)
 	{
-		//window.plugins.childBrowser.showWebPage('https://www.chauffeursvtc.com/redir.php', { showLocationBar: true });
+		//window.plugins.childBrowser.showWebPage('https://www.taximedia.fr/redir.php', { showLocationBar: true });
 		window.open(url,'_blank','location=false,enableViewportScale=yes,scrollbars=yes,closebuttoncaption=Fermer');
 	}
 	$(document).on( 'pagecreate', function() {
@@ -684,10 +683,10 @@
 	}
 	function refreshHist() {
 		$.mobile.loading( "show" );
-		$.post("https://www.chauffeursvtc.com/taxioffsrv/history_v2.php", { tel: tel, pass: 1, dep: dep, operator: operator, hist: 1}, function(data){
+		$.post("https://www.mytaxiserver.com/taxioffsrv/history_v2.php", { tel: tel, pass: 1, dep: dep, operator: operator, hist: 1}, function(data){
 			$("#hist_cont").empty().append(data);
 		}).always(function() {
-			$.post("https://www.chauffeursvtc.com/taxioffsrv/history_v2.php", { tel: tel, pass: 1, dep: dep, operator: operator, hist: 0}, function(data){
+			$.post("https://www.mytaxiserver.com/taxioffsrv/history_v2.php", { tel: tel, pass: 1, dep: dep, operator: operator, hist: 0}, function(data){
 				$("#book_cont").empty().append(data);
 			}).always(function() { $.mobile.loading( "hide" ); });
 		});
@@ -702,18 +701,17 @@
 	}
 	$( '#history' ).live( 'pagecreate',function(event){
 		$.mobile.loading( "show" );
-		$.post("https://www.chauffeursvtc.com/taxioffsrv/history_v2.php", { tel: tel, pass: 1, dep: dep, operator: operator, hist: 1}, function(data){
+		$.post("https://www.mytaxiserver.com/taxioffsrv/history_v2.php", { tel: tel, pass: 1, dep: dep, operator: operator, hist: 1}, function(data){
 			$("#hist_cont").empty().append(data);
 		}).always(function() {
-			$.post("https://www.chauffeursvtc.com/taxioffsrv/history_v2.php", { tel: tel, pass: 1, dep: dep, operator: operator, hist: 0}, function(data){
+			$.post("https://www.mytaxiserver.com/taxioffsrv/history_v2.php", { tel: tel, pass: 1, dep: dep, operator: operator, hist: 0}, function(data){
 				$("#book_cont").empty().append(data);
 			}).always(function() { $.mobile.loading( "hide" ); });
 		});
 	});
-	/*
 	$( '#assos' ).live( 'pagecreate',function(event){
 		$.mobile.loading( "show" );
-		$.post("https://www.chauffeursvtc.com/appclient/in_app_calls.php", { assos: 'true', pass: 1 }, function(data){
+		$.post("https://www.mytaxiserver.com/appclient/in_app_calls.php", { assos: 'true', pass: 1 }, function(data){
 			$("#assos_cont").empty().append(data);
 		}).always(function() { 
 			$.mobile.loading( "hide" );
@@ -723,7 +721,6 @@
 			});
 		});
 	});
-	*/
 	function rateCab(rtaxi, ridcourse, rdep, rtel)
 	{
 		$.sessionStorage.setItem('rtaxi', rtaxi);
@@ -748,8 +745,8 @@
 	}
 	$( '#rate_page' ).live( 'pagecreate',function(event){
 		var noted = $.sessionStorage.getItem('rtaxi');
-		$('#urate').empty().append('Vous notez le VTC '+noted);
-		$('#urate2').empty().append('Vous notez le VTC '+noted);
+		$('#urate').empty().append('Vous notez le taxi '+noted);
+		$('#urate2').empty().append('Vous notez le taxi '+noted);
 		$(".rating").starRating({
 			minus: false // step minus button
 		});
@@ -786,7 +783,7 @@
 		var conduite = $(".rating4").data("val");
 		var comRate = $(".comRate").val();
 		//navigator.notification.alert(rtaxi+' - '+ridcourse+' - '+rdep+' - '+rtel+' - '+accueil+' - '+tarif+' - '+vehicule+' - '+conduite);
-		$.post("https://www.chauffeursvtc.com/mytaxisrv/rate.php", { taxi: rtaxi, idcourse: ridcourse, dep: rdep, tel: rtel, accueil: accueil, tarif: tarif, vehicule: vehicule, conduite: conduite, comments: comRate, judge: 1}, function(data){ $('#rateBack').empty().append('Vos notes ont &eacute;t&eacute; prises en compte, Merci.');});
+		$.post("https://www.mytaxiserver.com/mytaxisrv/rate.php", { taxi: rtaxi, idcourse: ridcourse, dep: rdep, tel: rtel, accueil: accueil, tarif: tarif, vehicule: vehicule, conduite: conduite, comments: comRate, judge: 1}, function(data){ $('#rateBack').empty().append('Vos notes ont &eacute;t&eacute; prises en compte, Merci.');});
 	}
 	function ratingOpen()
 	{
@@ -799,119 +796,117 @@
 		var giveNote = $(".rating5").data("val");
 		var comRate = $("#leComRate").val();
 		//navigator.notification.alert(rtaxi+' - '+ridcourse+' - '+rdep+' - '+rtel+' - '+accueil+' - '+tarif+' - '+vehicule+' - '+conduite);
-		$.post("https://www.chauffeursvtc.com/appclient/open_rate.php", { taxi: rtaxi, idcourse: ridcourse, dep: rdep, tel: rtel, hail_id: rhail_id, giveNote: giveNote, comments: comRate, cell: tel, operator: operator, rdv: rrdv, judge: 1}, function(data){ $('#leRateBack').empty().append('Vos note et commentaire ont &eacute;t&eacute; pris en compte, Merci.');});
+		$.post("https://www.mytaxiserver.com/appclient/open_rate.php", { taxi: rtaxi, idcourse: ridcourse, dep: rdep, tel: rtel, hail_id: rhail_id, giveNote: giveNote, comments: comRate, cell: tel, operator: operator, rdv: rrdv, judge: 1}, function(data){ $('#leRateBack').empty().append('Vos note et commentaire ont &eacute;t&eacute; pris en compte, Merci.');});
 	}
 	function booking()
 	{
 		dep = $.sessionStorage.getItem('dep');
 		//navigator.notification.alert(dep);
-		//if ((isPlaceChanged || zipChecked) && ((dep != '') || (zip != ''))) {
-		$('#booking').prop('disabled', true).addClass('ui-disabled'); // If ok disable btn to prevent multiple tap
-		var myDate = new Date();
-		idcourse = myDate.getTime();
-		//$('#dblinks').append($('<input id="idcourse" type="hidden" value="' + idcourse + '"/>'));
-		//var radius = document.getElementById('radiusSelect').value;
-		var rdvpoint = document.getElementById("addressInput").value;
-		var room = document.getElementById("Accurate").value;
-		operator = $.localStorage.getItem('operator');
-		var hostname = document.getElementById("hostname").value;
-		var howMany = document.getElementById("howMany").value;
-		var typecar = document.getElementById("CarType").value;
-		var cb = document.getElementById("Pay").value;
-		var group = document.getElementById("group").value;
-		switch (cb) {
-			case '0':
-				var payment = "Non";
-				cb = 0;
-			  break;
-			case '1':
-				var payment = "Oui";
-				cb = 1;
-			  break;
-			case '2':
-				var payment = "Oui (AMEX)";
-				cb = 1;
-			  break;
-			default:
-				var payment = "Non";
-				cb = 0;
-		}
-		var coms = document.getElementById("coms").value.replace(/'/g, "&rsquo;");
-		var comments1 = '<ul><li>Nom du client : ' + room + '</li><li>Paiement CB : ' + payment + '</li><li>Nombre de passagers : ' + howMany + '</li><li>Type de vehicule : ' + typecar + '</li>';
-		if (coms != '') {
-			var comments2 = '<li>' + coms + '</li></ul>';
-		}
-		else {
-			var comments2 = '</ul>';
-		}
-		var comments = comments1+comments2;
-		var dest = document.getElementById("DestAddress").value.replace(/'/g, "&rsquo;");
-		var cell = document.getElementById("cellular").value;
-		var when = document.getElementById("when").value;
-		var date = document.getElementById("date").value;
-		//var medic = document.getElementById("medic").value;
-		if (!dontReg) {
-			for(n=1;n<4;n++) {
-				if(($.localStorage.getItem('regName'+n) == null) && ($.localStorage.getItem('regCell'+n) == null)) {
-					var regName = $.localStorage.setItem('regName'+n, $('#Accurate').val());
-					var regCell = $.localStorage.setItem('regCell'+n, cell);
-					var regLast = $.localStorage.setItem('regLast', n);
-					var writen = true;
-					break;
-				}
+		//if (isPlaceChanged || (dep != '') || (zip != '')) { // Old line changed because we need the zip to be tipped if user tipped the address... To be sure
+		if ((isPlaceChanged || zipChecked) && ((dep != '') || (zip != ''))) {
+			$('#booking').prop('disabled', true).addClass('ui-disabled'); // If ok disable btn to prevent multiple tap
+			var myDate = new Date();
+			idcourse = myDate.getTime();
+			//$('#dblinks').append($('<input id="idcourse" type="hidden" value="' + idcourse + '"/>'));
+			//var radius = document.getElementById('radiusSelect').value;
+			var rdvpoint = document.getElementById("addressInput").value;
+			var room = document.getElementById("Accurate").value;
+			operator = $.localStorage.getItem('operator');
+			var hostname = document.getElementById("hostname").value;
+			var howMany = document.getElementById("howMany").value;
+			var typecar = document.getElementById("CarType").value;
+			var cb = document.getElementById("Pay").value;
+			var group = document.getElementById("group").value;
+			switch (cb) {
+				case '0':
+					var payment = "Non";
+					cb = 0;
+				  break;
+				case '1':
+					var payment = "Oui";
+					cb = 1;
+				  break;
+				case '2':
+					var payment = "Oui (AMEX)";
+					cb = 1;
+				  break;
+				default:
+					var payment = "Non";
+					cb = 0;
 			}
-			if(!writen) {
-				var regLast = $.localStorage.getItem('regLast');
-				switch (regLast) {
-					case '1':
-						var entry = 2;
-					  break;
-					case '2':
-						var entry = 3;
-					  break;
-					case '3':
-						var entry = 1;
-					  break;
-					default:
-				}
-				var regName = $.localStorage.setItem('regName'+entry, $('#Accurate').val());
-				var regCell = $.localStorage.setItem('regCell'+entry, cell);
-			}
-		}
-		var rdvlat = '';
-		var rdvlng = '';
-		url = '';
-		num_req = idcourse;
-		dep = $.sessionStorage.getItem('dep');
-		url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + encodeURIComponent(cell) + '&when=' + when + '&date=' + date + '&operator=' + operator + '&howmany=' + howMany + '&dep=' + dep + '&zip=' + zip+'&group=1&ack=0&db=1';
-		//url = url.replace(/'/g, "&rsquo;"); // if we escape with &rsquo; it will break the url adding a new var &...
-		url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
-		//alert(url);
-		$.post("https://www.chauffeursvtc.com/appserver/bookings_app_share.php", url, function(data) {
-			if(!data.ok) {
-				//navigator.notification.alert('Vous ne pouvez reserver un taxi que si le RDV est dans plus de 60 minutes !!');
-				//Sending as direct job
-				if(data.past) {
-					if(app) navigator.notification.alert('LA DATE DU RDV EST PASSEE !!', alertDismissed, 'ChauffeursVTC', 'OK');
-					else alert('LA DATE DU RDV EST PASSEE !!');
-				}
-				else {
-					//checkZip('#map_page_open');
-					checkZip('#map_page');
-				}
+			var coms = document.getElementById("coms").value.replace(/'/g, "&rsquo;");
+			var comments1 = '<ul><li>Nom du client : ' + room + '</li><li>Paiement CB : ' + payment + '</li><li>Nombre de passagers : ' + howMany + '</li><li>Type de vehicule : ' + typecar + '</li>';
+			if (coms != '') {
+				var comments2 = '<li>' + coms + '</li></ul>';
 			}
 			else {
-				$.mobile.pageContainer.pagecontainer("change", "#book_page", { transition: "slide"} );
+				var comments2 = '</ul>';
 			}
-			$('#booking').prop('disabled', false).removeClass('ui-disabled');
-		}, "json");
-		/*
+			var comments = comments1+comments2;
+			var dest = document.getElementById("DestAddress").value.replace(/'/g, "&rsquo;");
+			var cell = document.getElementById("cellular").value;
+			var when = document.getElementById("when").value;
+			var date = document.getElementById("date").value;
+			//var medic = document.getElementById("medic").value;
+			if (!dontReg) {
+				for(n=1;n<4;n++) {
+					if(($.localStorage.getItem('regName'+n) == null) && ($.localStorage.getItem('regCell'+n) == null)) {
+						var regName = $.localStorage.setItem('regName'+n, $('#Accurate').val());
+						var regCell = $.localStorage.setItem('regCell'+n, cell);
+						var regLast = $.localStorage.setItem('regLast', n);
+						var writen = true;
+						break;
+					}
+				}
+				if(!writen) {
+					var regLast = $.localStorage.getItem('regLast');
+					switch (regLast) {
+						case '1':
+							var entry = 2;
+						  break;
+						case '2':
+							var entry = 3;
+						  break;
+						case '3':
+							var entry = 1;
+						  break;
+						default:
+					}
+					var regName = $.localStorage.setItem('regName'+entry, $('#Accurate').val());
+					var regCell = $.localStorage.setItem('regCell'+entry, cell);
+				}
+			}
+			var rdvlat = '';
+			var rdvlng = '';
+			url = '';
+			num_req = idcourse;
+			dep = $.sessionStorage.getItem('dep');
+			url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + encodeURIComponent(cell) + '&when=' + when + '&date=' + date + '&operator=' + operator + '&howmany=' + howMany + '&dep=' + dep + '&zip=' + zip+'&group=1&ack=0&db=1';
+			//url = url.replace(/'/g, "&rsquo;"); // if we escape with &rsquo; it will break the url adding a new var &...
+			url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
+			//alert(url);
+			$.post("https://www.mytaxiserver.com/appserver/bookings_app_share.php", url, function(data) {
+				if(!data.ok) {
+					//navigator.notification.alert('Vous ne pouvez reserver un taxi que si le RDV est dans plus de 60 minutes !!');
+					//Sending as direct job
+					if(data.past) {
+						if(app) navigator.notification.alert('LA DATE DU RDV EST PASSEE !!', alertDismissed, 'Mon Appli Taxi', 'OK');
+						else alert('LA DATE DU RDV EST PASSEE !!');
+					}
+					else {
+						checkZip('#map_page_open');
+					}
+				}
+				else {
+					$.mobile.pageContainer.pagecontainer("change", "#book_page", { transition: "slide"} );
+				}
+				$('#booking').prop('disabled', false).removeClass('ui-disabled');
+			}, "json");
 		}
 		else {
 			//navigator.notification.alert('No Zip Code Here !!');
 			$( "#setZip" ).popup( "open", { positionTo: "window" } );
 		}
-		*/
 	}
 	$( '#book_page' ).live( 'pagecreate',function(event){
 		// NYC-WIFI Animations
@@ -980,10 +975,10 @@
 		url = url.replace(/'/g, "&rsquo;");
 		url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
 		if(newWhen!='') {
-			$.post("https://www.chauffeursvtc.com/appserver/bookings_app_mod.php", url, function(data) {
+			$.post("https://www.mytaxiserver.com/appserver/bookings_app_mod.php", url, function(data) {
 				//$('#resmod').append(data.req);
 				if(!data.ok) {
-					if(app) navigator.notification.alert('Vous ne pouvez modifier la réservation !!', alertDismissed, 'ChauffeursVTC', 'OK');
+					if(app) navigator.notification.alert('Vous ne pouvez modifier la réservation !!', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert('Vous ne pouvez modifier la réservation !!');
 				}
 				else {
@@ -992,19 +987,19 @@
 			}, "json");
 		}
 		else {
-			if(app) navigator.notification.alert('Afin de modifier la réservation, vous devez renseigner une date de RDV !!', alertDismissed, 'ChauffeursVTC', 'OK');
+			if(app) navigator.notification.alert('Afin de modifier la réservation, vous devez renseigner une date de RDV !!', alertDismissed, 'Mon Appli Taxi', 'OK');
 			else alert('Afin de modifier la réservation, vous devez renseigner une date de RDV !!');
 		}
 	}
 	function delCmd(id, deldep)
 	{
-		$.post("https://www.chauffeursvtc.com/appserver/bookings_app_mod.php", {idcourse: id, dep: deldep, del: 1, db: 1}, function(data) {
+		$.post("https://www.mytaxiserver.com/appserver/bookings_app_mod.php", {idcourse: id, dep: deldep, del: 1, db: 1}, function(data) {
 			if(!data.ok) {
-				if(app) navigator.notification.alert('Vous ne pouvez pas annuler cette réservation !!', alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert('Vous ne pouvez pas annuler cette réservation !!', alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert('Vous ne pouvez modifier la réservation !!');
 			}
 			else {
-				if(app) navigator.notification.alert('La réservation à bien été annulée !!', alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert('La réservation à bien été annulée !!', alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert('La réservation à bien été annulée !!');
 				refreshHist();
 			}
@@ -1066,11 +1061,11 @@
 				$.mobile.pageContainer.pagecontainer("change", "#connect", { transition: "slide"} );
 			}
 			else {
-				$.post("https://www.chauffeursvtc.com/taxioffsrv/blacklist.php", { userid: operator, tel: tel}, function(data) {
+				$.post("https://www.mytaxiserver.com/taxioffsrv/blacklist.php", { userid: operator, tel: tel}, function(data) {
 					if (data.banned == 1)
 					{
 						$.mobile.pageContainer.pagecontainer("change", "#subscription", { transition: "slide"} );
-						var displayThis = '<p style="color:red;"><b>Votre compte &agrave; &eacute;t&eacute; banni pour cause d&rsquo;utilisation abusive, d&eacute;sol&eacute;.<br>Vous pouvez nous contacter pour toute r&eacute;clamation: </b></p><center><a href="mailto:contact@chauffeursvtc.com" class="ui-btn ui-btn-icon-left ui-icon-mail ui-btn-inline">Courriel</a><a href="tel:0491034263" class="ui-btn ui-btn-icon-left ui-icon-phone ui-btn-inline">T&eacute;l&eacute;phone</a></center>';
+						var displayThis = '<p style="color:red;"><b>Votre compte &agrave; &eacute;t&eacute; banni pour cause d&rsquo;utilisation abusive, d&eacute;sol&eacute;.<br>Vous pouvez nous contacter pour toute r&eacute;clamation: </b></p><center><a href="mailto:info@taximedia.fr" class="ui-btn ui-btn-icon-left ui-icon-mail ui-btn-inline">Courriel</a><a href="tel:0491034263" class="ui-btn ui-btn-icon-left ui-icon-phone ui-btn-inline">T&eacute;l&eacute;phone</a></center>';
 						$("#subReturns").empty().append(displayThis);
 					}
 					if(data.phone_ok != 'OK') {
@@ -1148,8 +1143,8 @@
 			// special_need_vehicle needs the opendata...
 			if ($(this).val()=='special_need_vehicle') {
 				$('#tm-box').hide();
-				if(app) navigator.notification.alert('Afin d\'obtenir un transport pour personne à mobilité réduite (TPMR), vous devez "choisir un VTC" (la "Proposition automatique" est donc désactivée).', alertDismissed, 'ChauffeursVTC', 'OK');
-				else alert('Afin d\'obtenir un transport pour personne à mobilité réduite (TPMR), vous devez "choisir un VTC" (la "Proposition automatique" est donc désactivée).');
+				if(app) navigator.notification.alert('Afin d\'obtenir un transport pour personne à mobilité réduite (TPMR), vous devez "choisir un taxi" (la "Proposition automatique" est donc désactivée).', alertDismissed, 'Mon Appli Taxi', 'OK');
+				else alert('Afin d\'obtenir un transport pour personne à mobilité réduite (TPMR), vous devez "choisir un taxi" (la "Proposition automatique" est donc désactivée).');
 			}
 			else	$('#tm-box').show();
 		});
@@ -1157,8 +1152,8 @@
 			// pet_accepted needs the opendata...
 			if ($(this).val()=='pet_accepted') {
 				$('#tm-box').hide();
-				if(app) navigator.notification.alert('Si vous désirez embarquer un animal, vous devez "choisir un VTC" (la "Proposition automatique" est donc désactivée).', alertDismissed, 'ChauffeursVTC', 'OK');
-				else alert('Si vous désirez embarquer un animal, vous devez "choisir un VTC" (la "Proposition automatique" est donc désactivée).');
+				if(app) navigator.notification.alert('Si vous désirez embarquer un animal, vous devez "choisir un taxi" (la "Proposition automatique" est donc désactivée).', alertDismissed, 'Mon Appli Taxi', 'OK');
+				else alert('Si vous désirez embarquer un animal, vous devez "choisir un taxi" (la "Proposition automatique" est donc désactivée).');
 			}
 			else	$('#tm-box').show();
 		});
@@ -1238,7 +1233,7 @@
 			}
 		}
 		else {
-			if(app) navigator.notification.alert("Localisation impossible, veuillez v&eacute;rifier l'&eacute;tat de votre connection ainsi que la disponibilit&eacute; des services de localisation dans les réglages de votre appareil.", alertDismissed, 'ChauffeursVTC', 'OK');
+			if(app) navigator.notification.alert("Localisation impossible, veuillez v&eacute;rifier l'&eacute;tat de votre connection ainsi que la disponibilit&eacute; des services de localisation dans les réglages de votre appareil.", alertDismissed, 'Mon Appli Taxi', 'OK');
 			else alert("Localisation impossible, veuillez v&eacute;rifier l'&eacute;tat de votre connection ainsi que la disponibilit&eacute; des services de localisation dans les réglages de votre appareil.");
 		}
 	}
@@ -1260,13 +1255,13 @@
 				$.sessionStorage.setItem('dep', dep);
 			}
 			else {
-				if(app) navigator.notification.alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.', alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.', alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.');
 			}
 		}, "json").done(function() { 
 			/*
 			// OpenData Areas Only... (#openDep-box)
-			$.post("https://www.chauffeursvtc.com/appclient/open_areas.php", { insee: insee, zip: zip, dep: dep}, function(data) {
+			$.post("https://www.mytaxiserver.com/appclient/open_areas.php", { insee: insee, zip: zip, dep: dep}, function(data) {
 				if (data.go == "ok")
 				{
 					$("#openDep-box").show();
@@ -1309,12 +1304,12 @@
 					}
 				}
 				else {
-					if(app) navigator.notification.alert('Adresse inconnue !!', alertDismissed, 'ChauffeursVTC', 'OK');
+					if(app) navigator.notification.alert('Adresse inconnue !!', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert('Adresse inconnue !!');
 				}
 			}
 			else {
-				if(app) navigator.notification.alert('Geocoder failed due to: ' + status, alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert('Geocoder failed due to: ' + status, alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert(geoAlert);
 			}
 		});
@@ -1349,13 +1344,13 @@
 			// Fall back to low accuracy and any cached position available...
 			navigator.geolocation.getCurrentPosition(codeLatLng, function(){
 				//$( "#errorPop" ).popup( "open", { positionTo: "window" } );
-				if(app) navigator.notification.alert(geoAlert, alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert(geoAlert, alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert(geoAlert);
 			},{enableHighAccuracy:false, maximumAge:Infinity, timeout: 6000});
 		}
 		else {
 			//$( "#errorPop" ).popup( "open", { positionTo: "window" } );
-			if(app) navigator.notification.alert(geoAlert, alertDismissed, 'ChauffeursVTC', 'OK');
+			if(app) navigator.notification.alert(geoAlert, alertDismissed, 'Mon Appli Taxi', 'OK');
 			else alert(geoAlert);
 		}
 	}
@@ -1370,12 +1365,10 @@
 	}
 	function checkZip(pageToGo) {
 		$('#search').prop('disabled', true).addClass('ui-disabled'); // Prevents from multitap
-		//$('#searchOpen').prop('disabled', true).addClass('ui-disabled'); // Prevents from multitap
+		$('#searchOpen').prop('disabled', true).addClass('ui-disabled'); // Prevents from multitap
 		dep = $.sessionStorage.getItem('dep');
 		var isAddr = document.getElementById("addressInput").value;
 		if(isAddr!='') {
-			$.mobile.pageContainer.pagecontainer("change", pageToGo, { transition: "slide", reverse: true} );
-			/*
 			if (isPlaceChanged || (dep != '') || (zip != '')) {
 				$.mobile.pageContainer.pagecontainer("change", pageToGo, { transition: "slide", reverse: true} );
 			}
@@ -1384,14 +1377,13 @@
 				$("#setZipBtn").attr("title", pageToGo); // Remembering pageToGo for setZip function, changing onClick attr is bad practice.
 				$( "#setZip" ).popup( "open", { positionTo: "window" } );
 			}
-			*/
 		}
 		else {
-			if(app) navigator.notification.alert('Veuillez renseigner une adresse ou attendre la fin de la géolocalisation SVP...', alertDismissed, 'ChauffeursVTC', 'OK');
+			if(app) navigator.notification.alert('Veuillez renseigner une adresse ou attendre la fin de la géolocalisation SVP...', alertDismissed, 'Mon Appli Taxi', 'OK');
 			else alert('Veuillez renseigner une adresse ou attendre la fin de la géolocalisation SVP...');
 		}
 		$('#search').prop('disabled', false).removeClass('ui-disabled'); // Button is back
-		//$('#searchOpen').prop('disabled', false).removeClass('ui-disabled'); // Button is back
+		$('#searchOpen').prop('disabled', false).removeClass('ui-disabled'); // Button is back
 	}
 	function setZip() {
 		zip = $('#zipDep').val();
@@ -1484,8 +1476,8 @@
 				badgeNumber = 1;
 				cordova.plugins.notification.local.schedule({
 					id: 1,
-					title: "ChauffeursVTC",
-					text: "Aucun VTC n'a pris la course, veuillez réessayer SVP.",
+					title: "Mon Appli Taxi",
+					text: "Aucun taxi n'a pris la course, veuillez réessayer SVP.",
 					led: "E7B242",
 					badge: badgeNumber
 				});
@@ -1528,7 +1520,7 @@
 				searchLocationsNearNoMap(data.features[0].geometry.coordinates[1], data.features[0].geometry.coordinates[0]);
 			}
 			else {
-				if(app) navigator.notification.alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.', alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.', alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert('Adresse inconnue !! Veuillez la saisir manuellement SVP.');
 			}
 		}).always(function(data) { 
@@ -1584,7 +1576,7 @@
 					
 					//searchLocationsNear(myPlace, self);
 				} else {
-					if(app) navigator.notification.alert(address + ' NON TROUVEE ', alertDismissed, 'ChauffeursVTC', 'OK');
+					if(app) navigator.notification.alert(address + ' NON TROUVEE ', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert(address + ' NON TROUVEE ');
 					$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide", reverse: true} );
 				}
@@ -1601,12 +1593,12 @@
 			time = setInterval( function () {
 				var stoper = document.getElementById('stop').value;
 				if (stoper != 1) {$('#dblinks #' + index).trigger('click');}
-				if ((index > 10) || (stoper == 1) || stopCheckAnswer) {
+				if ((index > 5) || (stoper == 1) || stopCheckAnswer) {
 					// THIS ONE IS THE 0000 CAB AND LAST ONE SO...
 					clearInterval(time); // Clears the current Interval
 					clearInterval(refreshOpenMarkers); // Clears the current Interval
                     //clearTimeout(endcourse);
-					//navigator.notification.alert('Aucun VTC ne prend la course !!');
+					//navigator.notification.alert('Aucun taxi ne prend la course !!');
 					//return false;
 				}
 				index++;
@@ -1680,43 +1672,43 @@
 					else alert('ADRESSE RDV : '+address+' NON TROUVEE ');
 				}
 			});
-			//$.post('https://www.chauffeursvtc.com/appserver/open_follow.php', { hail_id: hail_id }, function(data){
-			$.post('https://www.chauffeursvtc.com/appserver/open_follow.php', { hail_id: hail_id }, function(data){
+			//$.post('https://www.mytaxiserver.com/appserver/open_follow.php', { hail_id: hail_id }, function(data){
+			$.post('https://www.mytaxiserver.com/appserver/open_follow.php', { hail_id: hail_id }, function(data){
 				if(data.ok) {
 					var latlng = new google.maps.LatLng(data.lat, data.lng);
-					var display_name = 'VTC ' + data.name;
+					var display_name = 'Taxi ' + data.name;
 					var cabIcon = 'visuels/taxi_loc_icon.png';
 					self.addMarker({ id: 'cab', 'position': latlng, 'bounds': true, 'icon': cabIcon }).click(function() {
-						//infoCont = '<p style="color:#333;"><b>Votre VTC joignable au: <a data-ajax="false" href="tel:' + data.address + '" class="ui-btn ui-btn-c ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">' + data.address + '</a><span style="font-size: x-small;">(aclualis&eacute; &agrave; ' + data.timestamp+ ')</span></b></p>';
-						infoCont = '<p style="color:#333;"><b>Votre VTC joignable au: <a data-ajax="false" href="tel:' + data.address + '" class="ui-btn ui-btn-c ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">' + data.address + '</a>'+data.incident+'<span style="font-size: x-small;">(aclualis&eacute; &agrave; ' + data.timestamp+ ')</span></b></p>';
+						//infoCont = '<p style="color:#333;"><b>Votre taxi joignable au: <a data-ajax="false" href="tel:' + data.address + '" class="ui-btn ui-btn-c ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">' + data.address + '</a><span style="font-size: x-small;">(aclualis&eacute; &agrave; ' + data.timestamp+ ')</span></b></p>';
+						infoCont = '<p style="color:#333;"><b>Votre taxi joignable au: <a data-ajax="false" href="tel:' + data.address + '" class="ui-btn ui-btn-c ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">' + data.address + '</a>'+data.incident+'<span style="font-size: x-small;">(aclualis&eacute; &agrave; ' + data.timestamp+ ')</span></b></p>';
 						self.openInfoWindow({ 'content':  infoCont}, this);
 					});
 				}
 				else {
-					if(app) navigator.notification.alert('Vous ne pouvez suivre un VTC que 30 minutes avant le RDV !!', alertDismissed, 'ChauffeursVTC', 'OK');
-					else alert('Vous ne pouvez suivre un VTC que 30 minutes avant le RDV !!');
+					if(app) navigator.notification.alert('Vous ne pouvez suivre un taxi que 30 minutes avant le RDV !!', alertDismissed, 'Mon Appli Taxi', 'OK');
+					else alert('Vous ne pouvez suivre un taxi que 30 minutes avant le RDV !!');
 					//document.location.href='index.html';
 					$.mobile.pageContainer.pagecontainer("change", "#history", { transition: "slide"} );
 				}
 				if(data.status=='incident_taxi') {
-					if(app) navigator.notification.alert('Le chauffeur à déclaré un incident l\'empêchant de venir vous chercher !', alertDismissed, 'ChauffeursVTC', 'OK');
+					if(app) navigator.notification.alert('Le chauffeur à déclaré un incident l\'empêchant de venir vous chercher !', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert('Le chauffeur à déclaré un incident l\'empêchant de venir vous chercher !');
 					$.mobile.pageContainer.pagecontainer("change", "#history", { transition: "slide"} );
 				}
 			}, "json").fail(function (jqXHR, textStatus, errorThrown) {
-				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'ChauffeursVTC Erreur', 'OK');
+				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'Mon Appli Taxi Erreur', 'OK');
 			});
 			track = setInterval( function () {
-				//$.post('https://www.chauffeursvtc.com/appserver/open_follow.php', {  hail_id: hail_id }, function(data){
-				$.post('https://www.chauffeursvtc.com/appserver/open_follow.php', {  hail_id: hail_id }, function(data){
+				//$.post('https://www.mytaxiserver.com/appserver/open_follow.php', {  hail_id: hail_id }, function(data){
+				$.post('https://www.mytaxiserver.com/appserver/open_follow.php', {  hail_id: hail_id }, function(data){
 					if(data.ok) {
 						markerCab = self.get('markers')['cab'];
 						markerCab.setVisible(false);
 						var latlng = new google.maps.LatLng(data.lat, data.lng);
-						var display_name = 'VTC ' + data.name;
+						var display_name = 'Taxi ' + data.name;
 						var cabIcon = 'visuels/taxi_loc_icon.png';
 						self.addMarker({ id: 'cab', 'position': latlng, 'bounds': true, 'icon': cabIcon }).click(function() {
-							infoCont = '<p style="color:#333;"><b>Votre VTC joignable au: <a data-ajax="false" href="tel:' + data.address + '" class="ui-btn ui-btn-c ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">' + data.address + '</a>'+data.incident+'<span style="font-size: x-small;">(aclualis&eacute; &agrave; ' + data.timestamp+ ')</span></b></p>';
+							infoCont = '<p style="color:#333;"><b>Votre taxi joignable au: <a data-ajax="false" href="tel:' + data.address + '" class="ui-btn ui-btn-c ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">' + data.address + '</a>'+data.incident+'<span style="font-size: x-small;">(aclualis&eacute; &agrave; ' + data.timestamp+ ')</span></b></p>';
 							self.openInfoWindow({ 'content':  infoCont}, this);
 						});
 						var markerYou = self.get('markers')['you'];
@@ -1734,13 +1726,13 @@
 					}
 					else {
 						clearInterval(track);
-						if(app) navigator.notification.alert('Vous ne pouvez suivre un VTC que 30 minutes avant le RDV !!', alertDismissed, 'ChauffeursVTC', 'OK');
-						else alert('Vous ne pouvez suivre un VTC que 30 minutes avant le RDV !!');
+						if(app) navigator.notification.alert('Vous ne pouvez suivre un taxi que 30 minutes avant le RDV !!', alertDismissed, 'Mon Appli Taxi', 'OK');
+						else alert('Vous ne pouvez suivre un taxi que 30 minutes avant le RDV !!');
 						$.mobile.pageContainer.pagecontainer("change", "#history", { transition: "slide"} );
 					}
 					if(data.status=='incident_taxi') {
 						clearInterval(track);
-						if(app) navigator.notification.alert('Le chauffeur à déclaré un incident l\'empêchant de venir vous chercher !', alertDismissed, 'ChauffeursVTC', 'OK');
+						if(app) navigator.notification.alert('Le chauffeur à déclaré un incident l\'empêchant de venir vous chercher !', alertDismissed, 'Mon Appli Taxi', 'OK');
 						else alert('Le chauffeur à déclaré un incident l\'empêchant de venir vous chercher !');
 						$.mobile.pageContainer.pagecontainer("change", "#history", { transition: "slide"} );
 					}
@@ -1805,42 +1797,42 @@
 						'clickable': true 
 					});
 				} else {
-					if(app) navigator.notification.alert('ADRESSE RDV : '+address+' NON TROUVEE ', alertDismissed, 'ChauffeursVTC', 'OK');
+					if(app) navigator.notification.alert('ADRESSE RDV : '+address+' NON TROUVEE ', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert('ADRESSE RDV : '+address+' NON TROUVEE ');
 				}
 			});
-			//$.post('https://www.chauffeursvtc.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
-			$.post('https://www.chauffeursvtc.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+			//$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+			$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
 				if(data.ok) {
 					var latlng = new google.maps.LatLng(data.lat, data.lng);
-					var display_name = 'VTC ' + data.name;
+					var display_name = 'Taxi ' + data.name;
 					var cabIcon = 'visuels/taxi_loc_icon.png';
-					self.addMarker({ id: 'cab', 'position': latlng, 'bounds': true, 'icon': cabIcon }).click(function() {
-						infoCont = '<p style="color:#333;"><b>Votre VTC joignable au: <a data-ajax="false" href="tel:' + data.address + '" class="ui-btn ui-btn-c ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">' + data.address + '</a><span style="font-size: x-small;">(aclualis&eacute; &agrave; ' + data.timestamp+ ')</span></b></p>';
+					self.addMarker({ id: 'cab', 'position': latlng, 'bounds': true, 'title': display_name, 'icon': cabIcon }).click(function() {
+						infoCont = '<p style="color:#333;"><b>taxi n&deg; ' + data.name + ' - ' + data.address+ ' &agrave; ' + data.timestamp+ '</b></p>';
 						self.openInfoWindow({ 'content':  infoCont}, this);
 					});
 				}
 				else {
 					clearInterval(track);
-					if(app) navigator.notification.alert('Vous ne pouvez suivre un VTC que 30 minutes avant le RDV !!', alertDismissed, 'ChauffeursVTC', 'OK');
-					else alert('Vous ne pouvez suivre un VTC que 30 minutes avant le RDV !!');
+					if(app) navigator.notification.alert('Vous ne pouvez suivre un taxi que 30 minutes avant le RDV !!', alertDismissed, 'Mon Appli Taxi', 'OK');
+					else alert('Vous ne pouvez suivre un taxi que 30 minutes avant le RDV !!');
 					//document.location.href='index.html';
 					$.mobile.pageContainer.pagecontainer("change", "#history", { transition: "slide"} );
 				}
 			}, "json").fail(function (jqXHR, textStatus, errorThrown) {
-				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'ChauffeursVTC Erreur', 'OK');
+				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'Mon Appli Taxi Erreur', 'OK');
 			});
 			track = setInterval( function () {
-				//$.post('https://www.chauffeursvtc.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
-				$.post('https://www.chauffeursvtc.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+				//$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
+				$.post('https://www.mytaxiserver.com/appserver/follow.php', { taxi: ftaxi, idcourse: fidcourse, dep: fdep, tel: ftel, table: ftable }, function(data){
 					if(data.ok) {
 						markerCab = self.get('markers')['cab'];
 						markerCab.setVisible(false);
 						var latlng = new google.maps.LatLng(data.lat, data.lng);
-						var display_name = 'VTC ' + data.name;
+						var display_name = 'Taxi ' + data.name;
 						var cabIcon = 'visuels/taxi_loc_icon.png';
-						self.addMarker({ id: 'cab', 'position': latlng, 'bounds': true, 'icon': cabIcon }).click(function() {
-							infoCont = '<p style="color:#333;"><b>Votre VTC joignable au: <a data-ajax="false" href="tel:' + data.address + '" class="ui-btn ui-btn-c ui-corner-all ui-shadow ui-icon-phone ui-btn-icon-left">' + data.address + '</a><span style="font-size: x-small;">(aclualis&eacute; &agrave; ' + data.timestamp+ ')</span></b></p>';
+						self.addMarker({ id: 'cab', 'position': latlng, 'bounds': true, 'title': display_name, 'icon': cabIcon }).click(function() {
+							infoCont = '<p style="color:#333;"><b>taxi n&deg; ' + data.name + ' - ' + data.address+ ' &agrave; ' + data.timestamp+ '</b></p>';
 							self.openInfoWindow({ 'content':  infoCont}, this);
 						});
 						var markerYou = self.get('markers')['you'];
@@ -1856,8 +1848,8 @@
 					}
 					else {
 						clearInterval(track);
-						if(app) navigator.notification.alert('Vous ne pouvez suivre un VTC que 30 minutes avant le RDV !!', alertDismissed, 'ChauffeursVTC', 'OK');
-						else alert('Vous ne pouvez suivre un VTC que 30 minutes avant le RDV !!');
+						if(app) navigator.notification.alert('Vous ne pouvez suivre un taxi que 30 minutes avant le RDV !!', alertDismissed, 'Mon Appli Taxi', 'OK');
+						else alert('Vous ne pouvez suivre un taxi que 30 minutes avant le RDV !!');
 						$.mobile.pageContainer.pagecontainer("change", "#history", { transition: "slide"} );
 					}
 				}, "json");
@@ -1884,7 +1876,7 @@
 		var howMany = document.getElementById("howMany").value;
 		var typecar = document.getElementById("CarType").value;
 		var cb = document.getElementById("Pay").value;
-		//var pmr = document.getElementById("Pmr").value;
+		var pmr = document.getElementById("Pmr").value;
 		var pet = document.getElementById("Pet").value;
 		var group = document.getElementById("group").value;
 		var payment = "Non";
@@ -1941,8 +1933,8 @@
 		//i = 0; // We need to make any numreq unique on that one !!
 		var openAvail = false;
 		var once = true; // we only trigger the first marker
-		//$.post('https://www.chauffeursvtc.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, pmr: pmr, pet: pet, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
-		$.post('https://www.chauffeursvtc.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, pet: pet, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
+		//$.post('https://www.mytaxiserver.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
+		$.post('https://www.mytaxiserver.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, pmr: pmr, pet: pet, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
 			//navigator.notification.alert('IN');
 			$(xml).find('marker').each(function(){
 				var cabid = $(this).attr('cabid');
@@ -1963,7 +1955,7 @@
 				var i = $(this).attr('count');
 				//num_req = num_req+1;
 				var latlng = new google.maps.LatLng(lat2, lng2);
-				var display_name = 'VTC ' + name;
+				var display_name = 'Taxi ' + name;
 				var cabIcon = 'visuels/taxi_loc_icon.png';
 				var otherCabIcon = 'visuels/not_taxi_loc_icon.png';
 				var url = 'taxi=' + name + '&tel=' + address + '&cabid=' + cabid + '&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + encodeURIComponent(cell) + '&when=' + when + '&date=' + date + '&operator=' + operator + '&appname=' + appname + '&dep='+dep+'&group=1&ack=0&db=1';
@@ -1994,7 +1986,7 @@
 				openAvail = true; // There is at least one available cab here
 				countMarkerCab = i;
 				//mapEvent.addBounds(latlng);
-				//$.post("https://www.chauffeursvtc.com/appserver/diary_app_share.php", url, function(data) {});
+				//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
 				//$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJobOpen(\''+ url +'\')" />'));
 				//$('#dblinks').append($('<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-check cabs" id="' + i + '" onClick="sendJobOpen(\''+ url +'\')">Choisir</button>'));
 				//$('#infoCont').append($('<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-check cabs" id="' + i + '" onClick="sendJobOpen(\''+ url +'\')">Choisir</button>'));
@@ -2002,13 +1994,13 @@
 			if(!openAvail) {
 				// special_need_vehicle needs the opendata...
 				if ($('#Pmr').val()=='special_need_vehicle') {
-					if(app) navigator.notification.alert('Vous ne pouvez obtenir de transport pour personne à mobilité réduite (TPMR)car, il semblerait qu\'aucun vehicule de ce type ne se trouve dans cette zone, désolé.', alertDismissed, 'ChauffeursVTC', 'OK');
+					if(app) navigator.notification.alert('Vous ne pouvez obtenir de transport pour personne à mobilité réduite (TPMR)car, il semblerait qu\'aucun vehicule de ce type ne se trouve dans cette zone, désolé.', alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert('Vous ne pouvez obtenir de transport pour personne à mobilité réduite (TPMR)car, il semblerait qu\'aucun vehicule de ce type ne se trouve dans cette zone, désolé.');
 					$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 				}
 				else {
-					if(app) navigator.notification.alert("Aucun VTC trouvé dans la zone réglementée sans frais d'approche.\nVous allez être redirigé.", alertDismissed, 'ChauffeursVTC', 'OK');
-					else alert("Aucun VTC trouvé dans la zone réglementée sans frais d'approche.\nVous allez être redirigé.");
+					if(app) navigator.notification.alert("Aucun taxi trouvé dans la zone réglementée sans frais d'approche.\nVous allez être redirigé.", alertDismissed, 'Mon Appli Taxi', 'OK');
+					else alert("Aucun taxi trouvé dans la zone réglementée sans frais d'approche.\nVous allez être redirigé.");
 					idcourse=''; // reset idcourse
 					$('#map_open').gmap('destroy');
 					setTimeout( function () {
@@ -2044,8 +2036,7 @@
 				'clickable': true 
 			});
 			*/
-			//$.post('https://www.chauffeursvtc.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, pmr: pmr, pet: pet, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
-			$.post('https://www.chauffeursvtc.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, pet: pet, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
+			$.post('https://www.mytaxiserver.com/appserver/open_app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, pmr: pmr, pet: pet, group: group, dep: dep, zip: zip, pass: 'true'}, function(xml){
 				//navigator.notification.alert('IN');
 				$(xml).find('marker').each(function(){
 					var cabid = $(this).attr('cabid');
@@ -2066,7 +2057,7 @@
 					var i = $(this).attr('count');
 					//num_req = num_req+1;
 					var latlng = new google.maps.LatLng(lat2, lng2);
-					var display_name = 'VTC ' + name;
+					var display_name = 'Taxi ' + name;
 					var cabIcon = 'visuels/taxi_loc_icon.png';
 					var otherCabIcon = 'visuels/not_taxi_loc_icon.png';
 					var url = 'taxi=' + name + '&tel=' + address + '&cabid=' + cabid + '&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + encodeURIComponent(cell) + '&when=' + when + '&date=' + date + '&operator=' + operator + '&appname=' + appname + '&dep='+dep+'&group=1&ack=0&db=1';
@@ -2075,7 +2066,7 @@
 					url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
 					if(appname=="montaxi") {
 						var mymarker = mapEvent.addMarker({ id: i ,'position': latlng, 'bounds': true, 'title': name, 'icon': cabIcon }).click(function() {
-							infoCont = '<div id="infoCont"><ul style="color:#333;"><b><li>VTC Num&eacute;ro : '+licence+'</li><li>Distance : '+parseFloat(distance).toFixed(1) + ' Km de vous</li><li>Marque : '+brand+'</li><li>Mod&egrave;le : '+model+'</li><li>Couleur : '+color+'</li><li>Places : '+seats+'</li><li>Note : '+rating+' / 5</li><li>Imatriculation : '+licence_plate+'</li></b></ul></div>';
+							infoCont = '<div id="infoCont"><ul style="color:#333;"><b><li>Taxi Num&eacute;ro : '+licence+'</li><li>Distance : '+parseFloat(distance).toFixed(1) + ' Km de vous</li><li>Marque : '+brand+'</li><li>Mod&egrave;le : '+model+'</li><li>Couleur : '+color+'</li><li>Places : '+seats+'</li><li>Note : '+rating+' / 5</li><li>Imatriculation : '+licence_plate+'</li></b></ul></div>';
 							callBtn='<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-check cabs" id="' + i + '" onClick="sendJobOpen(\''+ url +'\')">Choisir</button>';
 							//mapEvent.openInfoWindow({ 'content':  infoCont}, this);
 							mapEvent.openInfoWindow({ 'content':  infoCont+callBtn}, this);
@@ -2096,7 +2087,7 @@
 					openAvail = true; // There is at least one available cab here
 					countMarkerCab = i;
 					//mapEvent.addBounds(latlng);
-					//$.post("https://www.chauffeursvtc.com/appserver/diary_app_share.php", url, function(data) {});
+					//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
 					//$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJobOpen(\''+ url +'\')" />'));
 					//$('#dblinks').append($('<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-check cabs" id="' + i + '" onClick="sendJobOpen(\''+ url +'\')">Choisir</button>'));
 					//$('#infoCont').append($('<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-check cabs" id="' + i + '" onClick="sendJobOpen(\''+ url +'\')">Choisir</button>'));
@@ -2104,13 +2095,13 @@
 				if(!openAvail) {
 					// special_need_vehicle needs the opendata...
 					if ($('#Pmr').val()=='special_need_vehicle') {
-						if(app) navigator.notification.alert('Vous ne pouvez obtenir de transport pour personne à mobilité réduite (TPMR)car, il semblerait qu\'aucun vehicule de ce type ne se trouve dans cette zone, désolé.', alertDismissed, 'ChauffeursVTC', 'OK');
+						if(app) navigator.notification.alert('Vous ne pouvez obtenir de transport pour personne à mobilité réduite (TPMR)car, il semblerait qu\'aucun vehicule de ce type ne se trouve dans cette zone, désolé.', alertDismissed, 'Mon Appli Taxi', 'OK');
 						else alert('Vous ne pouvez obtenir de transport pour personne à mobilité réduite (TPMR)car, il semblerait qu\'aucun vehicule de ce type ne se trouve dans cette zone, désolé.');
 						$.mobile.pageContainer.pagecontainer("change", "#infos", { transition: "slide"} );
 					}
 					else {
-						if(app) navigator.notification.alert("Aucun VTC trouvé dans la zone réglementée sans frais d'approche.\nVous allez être redirigé.", alertDismissed, 'ChauffeursVTC', 'OK');
-						else alert("Aucun VTC trouvé dans la zone réglementée sans frais d'approche.\nVous allez être redirigé.");
+						if(app) navigator.notification.alert("Aucun taxi trouvé dans la zone réglementée sans frais d'approche.\nVous allez être redirigé.", alertDismissed, 'Mon Appli Taxi', 'OK');
+						else alert("Aucun taxi trouvé dans la zone réglementée sans frais d'approche.\nVous allez être redirigé.");
 						idcourse=''; // reset idcourse
 						$('#map_open').gmap('destroy');
 						setTimeout( function () {
@@ -2129,7 +2120,7 @@
 		}
 		//$.mobile.loading( "hide" );
 		if(i==0) {
-			if(app) navigator.notification.alert('Aucun VTC touvé', alertDismissed, 'ChauffeursVTC', 'OK');
+			if(app) navigator.notification.alert('Aucun taxis touvé', alertDismissed, 'Mon Appli Taxi', 'OK');
 			else alert('AUCUN TAXI TROUVE !!');
 			document.location.href='index.html';
 		}*/
@@ -2149,7 +2140,8 @@
 		var cb = document.getElementById("Pay").value;
 		var group = document.getElementById("group").value;
 		var pet = document.getElementById("Pet").value;
-		var pets = (pet) ? 'Oui' : 'Non';
+		var pets = 'Non';
+		if(pet=='pet_accepted') pets = 'Oui';
 		switch (cb) {
 			case '0':
 				var payment = "Non";
@@ -2215,8 +2207,8 @@
 		num_req = idcourse;
 		dep = $.sessionStorage.getItem('dep');
 		i = 0; // We need to make any numreq unique on that one !!
-		//$.post("https://www.chauffeursvtc.com/appserver/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
-		$.post('https://www.chauffeursvtc.com/appserver/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, pet: pet, pass: 'true'}, function(xml){
+		//$.post("https://www.mytaxiserver.com/appserver/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
+		$.post('https://www.mytaxiserver.com/appserver/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, insee: insee, pass: 'true'}, function(xml){
 			$(xml).find('marker').each(function(){
 				var name = $(this).attr('name');
 				var address = $(this).attr('address');
@@ -2229,7 +2221,7 @@
 				url = 'taxi=' + name + '&tel=' + address + '&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + encodeURIComponent(cell) + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep='+dep+'&group=1&ack=0&db=1';
 				url = url.replace(/'/g, "&rsquo;");
 				url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
-				//$.post("https://www.chauffeursvtc.com/appserver/diary_app_share.php", url, function(data) {});
+				//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
 				$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
 			});
 			num_req = num_req+1;
@@ -2238,11 +2230,11 @@
 			//navigator.notification.alert(url);
 			url = url.replace(/'/g, "&rsquo;");
 			url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
-			// Sends Auction Request to ChauffeursVTC.com appserver
+			// Sends Auction Request to TaxiMedia appserver
 			$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
-			//$.post("https://www.chauffeursvtc.com/appserver/diary_app_share.php", url, function(data) {});
+			//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
 		}, "xml").fail(function (jqXHR, textStatus, errorThrown) {
-				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'ChauffeursVTC Erreur', 'OK');
+				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'Mon Appli Taxi Erreur', 'OK');
 		});
 		$.mobile.loading( "hide" );
 		$('#dblinks').append($('<input id="stop" type="hidden" value="0" />'));
@@ -2264,6 +2256,7 @@
 		var howMany = document.getElementById("howMany").value;
 		var typecar = document.getElementById("CarType").value;
 		var cb = document.getElementById("Pay").value;
+		var group = document.getElementById("group").value;
 		switch (cb) {
 			case '0':
 				var payment = "Non";
@@ -2281,9 +2274,6 @@
 				var payment = "Non";
 				cb = 0;
 		}
-		var group = document.getElementById("group").value;
-		var pet = document.getElementById("Pet").value;
-		var pets = (pet) ? 'Oui' : 'Non';
 		var coms = document.getElementById("coms").value.replace(/'/g, "&rsquo;");
 		var comments1 = '<ul><li>Nom du client : ' + room + '</li><li>Paiement CB : ' + payment + '</li><li>Nombre de passagers : ' + howMany + '</li><li>Type de vehicule : ' + typecar + '</li>';
 		if (coms != '') {
@@ -2331,64 +2321,47 @@
 		url = '';
 		num_req = idcourse;
 		dep = $.sessionStorage.getItem('dep');
-		var once = true; // we only trigger the first marker
 		i = 0; // We need to make any numreq unique on that one !!
-		//$.post("https://www.chauffeursvtc.com/appserver/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
-		$.post('https://www.chauffeursvtc.com/appserver/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, insee: insee, pass: 'true'}, function(xml){
+		//$.post("https://www.mytaxiserver.com/appserver/app_dcvp_xml.php", { lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: '1', dep: '', pass: 'true'}, function(xml){
+		$.post('https://www.mytaxiserver.com/appserver/app_dcvp_xml.php', {lat: rdvlat, lng: rdvlng, type: typecar, howmany: howMany, cb: cb, group: group, dep: dep, zip: zip, insee: insee, pass: 'true'}, function(xml){
 			$(xml).find('marker').each(function(){
 				var name = $(this).attr('name');
 				var address = $(this).attr('address');
 				var lat2 = $(this).attr('lat');
 				var lng2 = $(this).attr('lng');
 				var timestamp = $(this).attr('timestamp');
-				var passengers = $(this).attr('passengers');
-				var color = $(this).attr('color');
-				var imat = $(this).attr('imat');
-				var constructor = $(this).attr('constructor');
-				var model = $(this).attr('model');
 				var distance = $(this).attr('distance');
 				i = $(this).attr('count');
 				num_req = num_req+1;
 				var latlng = new google.maps.LatLng(lat2, lng2);
-				var display_name = 'VTC ' + name;
+				var display_name = 'Taxi ' + name;
 				var cabIcon = 'visuels/taxi_loc_icon.png';
+				mapEvent.addMarker({ id: i ,'position': latlng, 'bounds': true, 'title': display_name, 'icon': cabIcon }).click(function() {
+					infoCont = '<p style="color:#333;"><b>taxi n&deg; ' + name + ' est &agrave; ' + parseFloat(distance).toFixed(1) + ' Km de vous tel: ' + address+ '</b></p>';
+					mapEvent.openInfoWindow({ 'content':  infoCont}, this);
+				});
+				//mapEvent.addBounds(latlng);
 				url = 'taxi=' + name + '&tel=' + address + '&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + encodeURIComponent(cell) + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep='+dep+'&group=1&ack=0&db=1';
 				url = url.replace(/'/g, "&rsquo;");
 				url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
-				var mymarker = mapEvent.addMarker({ id: i ,'position': latlng, 'bounds': true, 'title': name, 'icon': cabIcon }).click(function() {
-					//infoCont = '<div id="infoCont"><p style="color:#333;"><b>' + name + ' est &agrave; ' + parseFloat(distance).toFixed(1) + ' Km de vous.<br>' + address+ '</b></p></div>';
-					infoCont = '<div id="infoCont"><ul style="color:#333;"><b><li>VTC Num&eacute;ro : '+name+'</li><li>Distance : '+parseFloat(distance).toFixed(1) + ' Km de vous</li><li>tel : '+address+'</li><li>Marque : '+constructor+'</li><li>Mod&egrave;le : '+model+'</li><li>Couleur : '+color+'</li><li>Imatriculation : '+imat+'</li><li>Places : '+passengers+'</li></b></ul></div>';
-					//callBtn='<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-check cabs" id="' + i + '" onClick="sendJobOpen(\''+ url +'\')">Choisir</button>';
-					//mapEvent.openInfoWindow({ 'content':  infoCont+callBtn}, this);
-					mapEvent.openInfoWindow({ 'content':  infoCont}, this);
-				});
-				if(once) {
-					new google.maps.event.trigger(mymarker[0],'click');
-					once = false; // we only trigger the first
-				}
-				//mapEvent.addBounds(latlng);
+				//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
 				$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
 			});
-			// NO Auctions...
-			/*
 			num_req = num_req+1;
 			i = parseInt(i,10)+1;
 			url = 'taxi=0000&tel=0000000000&idcourse=' + idcourse + '&num_req=' + num_req + '&rdvpoint=' + rdvpoint + '&lat=' + rdvlat + '&lng=' + rdvlng + '&comments=' + comments + '&cell=' + encodeURIComponent(cell) + '&when=' + when + '&date=' + date + '&operator=' + operator + '&dep='+dep+'&group=1&ack=0&db=1';
 			//navigator.notification.alert(url);
 			url = url.replace(/'/g, "&rsquo;");
 			url = url.replace(/(?:\r\n|\r|\n)/g, '<br/>'); // Replaces line breaks by <br/>
-			// Sends Auction Request to ChauffeursVTC.com appserver
+			// Sends Auction Request to TaxiMedia appserver
 			$('#dblinks').append($('<input class="cabs" id="' + i + '" type="hidden" onclick="sendJob(\''+ url +'\')" />'));
-			*/
-			//$.post("https://www.chauffeursvtc.com/appserver/diary_app_share.php", url, function(data) {});
+			//$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
 		}, "xml").fail(function (jqXHR, textStatus, errorThrown) {
-			navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'ChauffeursVTC Erreur', 'OK');
-		}).done(function () {
-			$('#dblinks').append($('<input id="stop" type="hidden" value="0" />'));
-			deliver();
-		}).always(function () {
-			$.mobile.loading( "hide" );
+				navigator.notification.alert('Erreur inconnue, le serveur ou la connexion internet sont indisponibles. ' + textStatus+', '+ errorThrown, alertDismissed, 'Mon Appli Taxi Erreur', 'OK');
 		});
+		$.mobile.loading( "hide" );
+		$('#dblinks').append($('<input id="stop" type="hidden" value="0" />'));
+		deliver();
 	}// ENDS FUNCTION
 
 
@@ -2407,7 +2380,7 @@
 		$('.confButtons').hide('fast');
 		$('.whatNext').hide('fast');
 		$('#answerOpen').empty().append('<p><b>Veuillez patienter pendant que nous traitons votre demande aupr&egrave;s du chauffeur ...<button type="button" class="cancel ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete" id="cancel" onClick="stopCallOpen()" value=""> Retour / Annulation </button></b></p>');
-		$.post("https://www.chauffeursvtc.com/appserver/open_diary_app_share.php", url, function(data) {
+		$.post("https://www.mytaxiserver.com/appserver/open_diary_app_share.php", url, function(data) {
 			if(data.reponse_code == '201') {
 				hail_id = data.hail_id;
 				clearInterval(refreshOpenMarkers);
@@ -2416,22 +2389,22 @@
 				//check_answer_open();
 			}
 			else if (data.message == 'banned') {
-				if(app) navigator.notification.alert("Erreur: La demande n'a pas été envoyée, votre compte a été temporairement exclu par l'état du dispositif le.taxi, veuillez nous pardonner ce contretemps.", alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert("Erreur: La demande n'a pas été envoyée, votre compte a été temporairement exclu par l'état du dispositif le.taxi, veuillez nous pardonner ce contretemps.", alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert("Erreur: La demande n'a pas été envoyée, votre compte a été temporairement exclu par l'état du dispositif le.taxi, veuillez nous pardonner ce contretemps.");
 				document.location.href='index.html';
 			}
 			else if (data.message == 'available') {
-				if(app) navigator.notification.alert("Erreur: Ce taxi n'est plus disponible ! Veuillez nous pardonner ce contretemps.", alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert("Erreur: Ce taxi n'est plus disponible ! Veuillez nous pardonner ce contretemps.", alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert("Erreur: Ce taxi n'est plus disponible ! Veuillez nous pardonner ce contretemps.");
 			}
 			else {
-				if(app) navigator.notification.alert("Erreur: La demande n'a pas été envoyée, vous allez devoir recommencer, veuillez nous pardonner ce contretemps.", alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert("Erreur: La demande n'a pas été envoyée, vous allez devoir recommencer, veuillez nous pardonner ce contretemps.", alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert("Erreur: La demande n'a pas été envoyée, vous allez devoir recommencer, veuillez nous pardonner ce contretemps.");
 			}
 		}, "json").always(function(data) {
 			$.mobile.loading( "hide" );
 		}).fail(function() { 
-			if(app) navigator.notification.alert("Erreur: La demande n'a pas été envoyée, vous allez devoir recommencer, veuillez nous pardonner ce contretemps.", alertDismissed, 'ChauffeursVTC', 'OK');
+			if(app) navigator.notification.alert("Erreur: La demande n'a pas été envoyée, vous allez devoir recommencer, veuillez nous pardonner ce contretemps.", alertDismissed, 'Mon Appli Taxi', 'OK');
 			else alert("Erreur: La demande n'a pas été envoyée, vous allez devoir recommencer, veuillez nous pardonner ce contretemps.");
 			document.location.href='index.html';
 		});
@@ -2447,7 +2420,7 @@
 		if(!stopCheckAnswer) {
 			$.ajax({
 				type: "GET",
-				url: "https://www.chauffeursvtc.com/appserver/open_status_json_lp.php?hail_id=" + hail_id + "&dep=" + dep + "&check=1",
+				url: "https://www.mytaxiserver.com/appserver/open_status_json_lp.php?hail_id=" + hail_id + "&dep=" + dep + "&check=1",
 				data: { hail_id: hail_id, dep: dep, check: 1 },
 				dataType: "json",
 				cache: false,
@@ -2479,7 +2452,7 @@
 						toNotify = data.display;
 						cordova.plugins.notification.local.schedule({
 							id: 1,
-							title: "ChauffeursVTC",
+							title: "Mon Appli Taxi",
 							text: toNotify,
 							led: "E7B242",
 							badge: badgeNumber,
@@ -2504,7 +2477,7 @@
 		//navigator.notification.alert(idcourse);
 		dep = $.sessionStorage.getItem('dep');
 		if(hail_id!='') {
-			$.post("https://www.chauffeursvtc.com/appserver/open_diary.php?hail_id=" + hail_id + "&ack=1&db=1&cab_wont=1&del=1&status=declined_by_customer"); 
+			$.post("https://www.mytaxiserver.com/appserver/open_diary.php?hail_id=" + hail_id + "&ack=1&db=1&cab_wont=1&del=1&status=declined_by_customer"); 
 		}
     }        
 	function stopCallOpen()
@@ -2525,7 +2498,7 @@
 	}
     function sendJob(url)
     {
-		$.post("https://www.chauffeursvtc.com/appserver/diary_app_share.php", url, function(data) {});
+		$.post("https://www.mytaxiserver.com/appserver/diary_app_share.php", url, function(data) {});
     }
 	
     function check_answer()
@@ -2535,7 +2508,7 @@
 		if(!stopCheckAnswer) {
 			$.ajax({
 				type: "GET",
-				url: "https://www.chauffeursvtc.com/appserver/status_lp.php?idcourse=" + idcourse + "&dep=" + dep + "&check=1",
+				url: "https://www.mytaxiserver.com/appserver/status_lp.php?hail_id=" + hail_id + "&dep=" + dep + "&check=1",
 				data: { idcourse: idcourse, dep: dep, check: 1 },
 				dataType: "html",
 				cache: false,
@@ -2558,7 +2531,7 @@
 						toNotify = data.split("<", 1);
 						cordova.plugins.notification.local.schedule({
 							id: 1,
-							title: "ChauffeursVTC",
+							title: "Mon Appli Taxi",
 							text: toNotify,
 							led: "E7B242",
 							badge: badgeNumber,
@@ -2573,7 +2546,7 @@
 					notifyOnce = true;
 				}
 			}).always(function(data) {
-				setTimeout('check_answer()', 1000);
+				setTimeout('check_answer()', 2000);
 			});
 		}
     }
@@ -2581,7 +2554,7 @@
     {
 		//navigator.notification.alert(idcourse);
 		dep = $.sessionStorage.getItem('dep');
-        $.post("https://www.chauffeursvtc.com/appserver/diary.php?idcourse=" + idcourse + "&dep=" + dep +"&ack=1&db=1&cab_wont=1&del=1"); 
+        $.post("https://www.mytaxiserver.com/appserver/diary.php?idcourse=" + idcourse + "&dep=" + dep +"&ack=1&db=1&cab_wont=1&del=1"); 
     }        
 	function stopCall()
 	{
@@ -2621,8 +2594,8 @@
 		$('.confButtons').hide('fast');
 		if(action==1) {
 			// Client Agrees...
-			//$.post("https://www.chauffeursvtc.com/appserver/open_diary.php?hail_id=" + hail_id + "&lat=" + lat + "&lng=" + lng + "&ack=1&db=1&cab_wont=0&del=0&status=accepted_by_customer").done(function(data) {
-			$.post("https://www.chauffeursvtc.com/appserver/open_diary.php?hail_id=" + hail_id + "&lat=" + lat + "&lng=" + lng + "&cell=" + encodeURIComponent(tel) + "&operator=" + operator + "&dep=" + dep + "&ack=1&db=1&cab_wont=0&del=0&status=accepted_by_customer").done(function(data) {
+			//$.post("https://www.mytaxiserver.com/appserver/open_diary.php?hail_id=" + hail_id + "&lat=" + lat + "&lng=" + lng + "&ack=1&db=1&cab_wont=0&del=0&status=accepted_by_customer").done(function(data) {
+			$.post("https://www.mytaxiserver.com/appserver/open_diary.php?hail_id=" + hail_id + "&lat=" + lat + "&lng=" + lng + "&cell=" + encodeURIComponent(tel) + "&operator=" + operator + "&dep=" + dep + "&ack=1&db=1&cab_wont=0&del=0&status=accepted_by_customer").done(function(data) {
 				//$('.whatNext').empty().append('<p><b>Vous avez accept&eacute; la course, le chauffeur se rend sur place, un mail vous a &eacute;t&eacute; envoy&eacute; et vous allez &ecirc;tre redirig&eacute; vers l&rsquo;accueil.</b></p>');
 				$('#answerOpen').empty().append('<p><b>Le chauffeur va maintenant vous rejoindre, voici les actions disponibles:</b></p>');
 				$('.whatNext').empty().append(data);
@@ -2637,8 +2610,8 @@
 		}
 		else {
 			// Client Abort...
-			//$.post("https://www.chauffeursvtc.com/appserver/open_diary.php?hail_id=" + hail_id + "&lat=" + lat + "&lng=" + lng + "&ack=1&db=1&cab_wont=1&del=1&status=declined_by_customer").done(function(data) {
-			$.post("https://www.chauffeursvtc.com/appserver/open_diary.php?hail_id=" + hail_id + "&lat=" + lat + "&lng=" + lng + "&cell=" + encodeURIComponent(tel) + "&operator=" + operator + "&dep=" + dep + "&ack=1&db=1&cab_wont=1&del=1&status=declined_by_customer").done(function(data) {
+			//$.post("https://www.mytaxiserver.com/appserver/open_diary.php?hail_id=" + hail_id + "&lat=" + lat + "&lng=" + lng + "&ack=1&db=1&cab_wont=1&del=1&status=declined_by_customer").done(function(data) {
+			$.post("https://www.mytaxiserver.com/appserver/open_diary.php?hail_id=" + hail_id + "&lat=" + lat + "&lng=" + lng + "&cell=" + encodeURIComponent(tel) + "&operator=" + operator + "&dep=" + dep + "&ack=1&db=1&cab_wont=1&del=1&status=declined_by_customer").done(function(data) {
 				$('#answerOpen').empty();
 				$('.whatNext').empty().append('<p><b>Vous avez refus&eacute; la course et allez &ecirc;tre redirig&eacute; vers l&rsquo;accueil.</b></p>');
 				$('.whatNext').show('fast');
@@ -2651,7 +2624,7 @@
     }
 	function callIncident(irdv, ihail, iop, icell, istatus)
 	{ // callIncident(\''.$rdv.'\', \''.$hail_id.'\', \''.$operator.'\', \''.$cell.'\', \''.$status.'\')
-		$.post("https://www.chauffeursvtc.com/appserver/open_incident.php" , { rdvpoint: irdv, hail_id: ihail, operator: iop, cell: icell, status: istatus, db: 'true', dep: dep}, function(data){ 
+		$.post("https://www.mytaxiserver.com/appserver/open_incident.php" , { rdvpoint: irdv, hail_id: ihail, operator: iop, cell: icell, status: istatus, db: 'true', dep: dep}, function(data){ 
 			if (data.ok)
 			{
 				var number = data.taxi_phone_number;
@@ -2666,7 +2639,7 @@
 				var success = function () {
 				};
 				var error = function (e) {
-					if(app) navigator.notification.alert("L'incident a été déclaré toutefois, votre appareil semble ne pas gérer les sms, veuillez contacter le chauffeur pour l'avertir SVP.", alertDismissed, 'ChauffeursVTC', 'OK');
+					if(app) navigator.notification.alert("L'incident a été déclaré toutefois, votre appareil semble ne pas gérer les sms, veuillez contacter le chauffeur pour l'avertir SVP.", alertDismissed, 'Mon Appli Taxi', 'OK');
 					else alert("L'incident a été déclaré toutefois, votre appareil semble ne pas gérer les sms, veuillez contacter le chauffeur pour l'avertir SVP.");
 				};
 				sms.send(number, message, options, success, error);
@@ -2674,7 +2647,7 @@
 				//return false;
 			}
 			else {
-				if(app) navigator.notification.alert("Erreur: L'incident n'a pas été déclaré.", alertDismissed, 'ChauffeursVTC', 'OK');
+				if(app) navigator.notification.alert("Erreur: L'incident n'a pas été déclaré.", alertDismissed, 'Mon Appli Taxi', 'OK');
 				else alert("Erreur: L'incident n'a pas été déclaré.");
 			}
 		}, "json");
@@ -2705,9 +2678,8 @@
 				}, "json").done(function(data) { 
 					var devUrl = 'lat=' + rdvPricesLat + '&lng=' + rdvPricesLng + '&lat2=' + destPricesLat + '&lng2=' + destPricesLng + '&rdv=' + rdvPrices + '&dest=' + destPrices + '&dep=' + depPrices+ '&app=1';
 					//alert(devUrl);
-					$.post("https://www.chauffeursvtc.com/appserver/calcdev.php", devUrl, function(data) { 
-						//$('#pricesCont').empty().append(data+'<button onClick="checkZip(\'#map_page_open\')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Commander maintenant</button>');
-						$('#pricesCont').empty().append(data+'<button onClick="checkZip(\'#map_page\')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Commander maintenant</button>');
+					$.post("https://www.mytaxiserver.com/appserver/calcdev.php", devUrl, function(data) { 
+						$('#pricesCont').empty().append(data+'<button onClick="checkZip(\'#map_page_open\')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Commander maintenant</button>');
 						//$('#pricesPopCont').empty().append(data);
 						//$( "#pricesPop" ).popup( "open", { positionTo: "window" } );
 					});
@@ -2715,7 +2687,7 @@
 			});
 		}
 		else {
-			if(app) navigator.notification.alert("Vous devez rensigner les adresses de départ et d'arrivée.", alertDismissed, 'ChauffeursVTC', 'OK');
+			if(app) navigator.notification.alert("Vous devez rensigner les adresses de départ et d'arrivée.", alertDismissed, 'Mon Appli Taxi', 'OK');
 			else alert("Vous devez rensigner les adresses de départ et d'arrivée.");
 		}
 	}
@@ -2759,12 +2731,12 @@
           <li><a href="#prices" class="ui-btn ui-btn-icon-left ui-icon-info" data-transition="slide"><b>Tarification</b></a></li>
           <li><a href="#history" class="ui-btn ui-btn-icon-left ui-icon-bars" data-transition="slide"><b>Historique</b></a></li>
           <li><a href="#account" class="ui-btn ui-btn-icon-left ui-icon-user" data-transition="slide"><b>Mon compte</b></a></li>
-          <!-- 
           <li><a href="#assos" class="ui-btn ui-btn-icon-left ui-icon-heart" data-transition="slide"><b>Nous soutenons</b></a></li>
+          <!-- 
 		  <li><a href="#" onClick="Share()" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
-		  <li><a href="#" onclick="window.plugins.socialsharing.share('Téléchargez ChauffeursVTC sur chauffeursvtc.com', null, 'https://www.chauffeursvtc.com/icon_300.png', 'https://www.chauffeursvtc.com/stores.php?app=cvclient')" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
+		  <li><a href="#" onclick="window.plugins.socialsharing.share('Téléchargez Mon Appli Taxi sur taximedia.fr', null, 'https://www.taximedia.fr/icon_300.png', 'https://www.taximedia.fr/stores.php?app=taxioff')" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
 		   -->
- 		  <li><a href="#" onclick="window.plugins.socialsharing.share('Téléchargez ChauffeursVTC sur chauffeursvtc.com', null, null, 'https://www.chauffeursvtc.com/stores.php?app=cvclient')" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
+ 		  <li><a href="#" onclick="window.plugins.socialsharing.share('Téléchargez Mon Appli Taxi sur taximedia.fr', null, null, 'https://www.taximedia.fr/stores.php?app=taxioff')" class="ui-btn ui-btn-icon-left ui-icon-mail noAppHide"><b>Partager l&rsquo;app</b></a></li>
          <li><a href="#" onClick="goScan()" data-transition="slide" class="ui-btn ui-btn-icon-left ui-icon-camera noAppHide"><b>Scanner un code</b></a></li>
         </ul>
         <button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-power" onClick="dc()">D&eacute;connexion</button>
@@ -2795,7 +2767,7 @@
                 <input type="hidden" id="group" size="16" value="1"/>
                 <input type="hidden" id="exclu" size="1" value="0"/>
                 <input type="hidden" id="goFavs" size="1" value="0"/>
-                <table width="100%" border="0" summary="Informations relatives à la commande du VTC">
+                <table width="100%" border="0" summary="Informations relatives à la commande du taxi">
                 	<thead><tr><th width="90%"></th><th width="10%"></th></tr></thead>
                     <tbody>
                 	<tr><td>
@@ -2844,17 +2816,15 @@
                         <option value="1">CB</option>
                         <option value="2">AMEX</option>
                     </select>
-					<!--
-					<select id="Pmr"> 
+				   <select id="Pmr"> 
 						<option value="" selected>TPMR</option>
 						<option value="special_need_vehicle">OUI</option>
 						<option value="">NON</option>
 					</select>
-					-->
 					<select id="Pet"> 
 						<option value="" selected>Animaux</option>
-						<option value="1">OUI</option>
-						<option value="0">NON</option>
+						<option value="pet_accepted">OUI</option>
+						<option value="">NON</option>
 					</select>
                     <textarea id="coms" placeholder="Commentaires"></textarea>
                 </div>
@@ -2872,17 +2842,17 @@
                 <p>&nbsp;</p>
                 <div id="next-box"><button id="next" class="ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-next">* Champs obligatoires</button></div>
                 <div id="search-box">
-					<!-- 
 					<div id="openDep-box">
-						<button onClick="checkZip('#map_page_open')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search" id="searchOpen">Choisir un VTC</button>
+						<button onClick="checkZip('#map_page_open')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search" id="searchOpen">Choisir un taxi</button>
 						<p><a href="#" onClick="openSomeUrl('https://le.taxi/')">La maraude &eacute;lectronique avec Le.Taxi &ccedil;a change quoi ?</a></p>
 					</div>
-					-->
+					<!-- 
 					<div id="tm-box">
-						<button onClick="checkZip('#map_page')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Commander un VTC</button>
+						<button onClick="checkZip('#map_page')" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-action" id="search">Commander un taxi</button>
 					</div>
+					-->
 				</div>
-                <div id="book-box"><button onClick="booking()" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-clock" id="booking">R&eacute;server un VTC</button></div>
+                <div id="book-box"><button onClick="booking()" class="ui-btn ui-btn-c ui-shadow ui-corner-all ui-btn-icon-left ui-icon-clock" id="booking">R&eacute;server un taxi</button></div>
                 <div data-role="popup" data-theme="c" id="errorPop" data-dismissible="true">
 					<a href="#infos" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-btn-right">Fermer</a>
                     <div data-theme="c" data-role="header">
@@ -2931,7 +2901,7 @@
                     	<p>
                             Si cela ne vous ennuie pas, pourquoi ne pas prendre un instant pour partager l&rsquo;app avec des amis.
                         </p>
-                        <a href="#" onclick="window.plugins.socialsharing.share('Téléchargez ChauffeursVTC sur chauffeursvtc.com', null, null, 'https://www.chauffeursvtc.com/stores.php?app=cvclient')" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-mail noAppHide">Oui je partage</a>
+                        <a href="#" onclick="window.plugins.socialsharing.share('Téléchargez Mon Appli Taxi sur taximedia.fr', null, null, 'https://www.taximedia.fr/stores.php?app=taxioff')" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-mail noAppHide">Oui je partage</a>
 						<a href="#infos" data-rel="back" class="ui-btn ui-btn-icon-left ui-corner-all ui-shadow ui-btn-b ui-icon-delete">Non, merci</a>
                     </div>
                 </div>
@@ -2965,13 +2935,13 @@
 				<div class="ui-content" role="main">
 					<p><strong>
 						Vous avez annul&eacute; votre demande ou 
-						aucun VTC n&rsquo;a r&eacute;pondu dans le temps imparti, vous devriez rechercher de nouveau.
+						aucun taxis n&rsquo;a r&eacute;pondu dans le temps imparti, vous devriez rechercher de nouveau.
 					</strong></p>
 				</div>
 			</div>
         </div>
         <div data-role="footer" id="footer_map_open" data-position="fixed" data-fullscreen="true">
-			<p>Veuillez S&eacute;lectionner un des VTC ci-dessus pour le choisir
+			<p>Veuillez S&eacute;lectionner un des taxis ci-dessus pour le choisir
 			<button type="button" class="cancel ui-btn ui-btn-b ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete" id="cancel" onClick="stopCallOpen()" value=""> Retour / Annulation </button>
 			</p>
         </div>
@@ -2983,7 +2953,7 @@
 			<div id="animSearch" class="nyc">
 				<p><b>
 				<br><br>
-				Nous recherchons le VTC disponible le plus proche de vous! Des frais d&rsquo;approches peuvent s&rsquo;appliquer, n&rsquo;h&eacute;sitez pas &agrave; les v&eacute;rifier avec le chauffeur.
+				Nous recherchons le taxi disponible le plus proche de vous! Des frais d&rsquo;approches peuvent s&rsquo;appliquer, n&rsquo;h&eacute;sitez pas &agrave; les v&eacute;rifier avec le chauffeur.
 				<br>
 				Veuillez patienter pendant la recherche: <span class="elapsed" style="color:#FC0;"></span> Secondes restantes.
 				<br><br><br>
@@ -3012,7 +2982,7 @@
 				<div class="ui-content" role="main">
 					<p><strong>
 						Vous avez annul&eacute; votre demande ou 
-						aucun VTC n&rsquo;a r&eacute;pondu dans le temps imparti, vous devriez rechercher de nouveau.
+						aucun taxis n&rsquo;a r&eacute;pondu dans le temps imparti, vous devriez rechercher de nouveau.
 						<br>
 						Vous serez redirig&eacute; vers la recherche dans un instant.
 					</strong></p>
@@ -3048,7 +3018,6 @@
                     <button class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-mail" onClick="forgottenPwd()">Envoyer</button>
                 </div>
 				<p>&nbsp;</p>
-				<!-- 
                 <p><a href="#" id="displayReSendText" class="expends">V&eacute;rifier mon num&eacute;ro de t&eacute;l&eacute;phone</a></p>
                 <div id="reSendTextForm" style="display:none;">
 					<p style="font-size:small;">Veuillez renseigner ci-dessous le num&eacute;ro de t&eacute;l&eacute;phone associ&eacute; &agrave; votre compte.</p>
@@ -3056,10 +3025,9 @@
                     <button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-mail" onClick="reSendText()">Envoyer</button>
                 </div>
                 <p><a href="#" onClick="openSomeUrl('https://goo.gl/Bz4yK0')">Le.Taxi &ccedil;a marche comment? &Ccedil;a change quoi ?</a></p>
-				-->
-                <p><a href="#" onClick="openPdf('http://chauffeursvtc.com/client/docs/privacy.policy.pdf', successOpenPdf, errorOpenPdf)">Politique de confidentialit&eacute;</a></p>
+                <p><a href="#" onClick="openPdf('http://taximedia.fr/client/docs/privacy.policy.pdf', successOpenPdf, errorOpenPdf)">Politique de confidentialit&eacute;</a></p>
                 <div id="fogotReturns"></div>
-				<a href="mailto:contact@chauffeursvtc.com" class="ui-btn ui-btn-icon-left ui-icon-mail  ui-shadow-icon ui-corner-all">Nous contacter</a>
+				<a href="mailto:info@taximedia.fr" class="ui-btn ui-btn-icon-left ui-icon-mail  ui-shadow-icon ui-corner-all">Nous contacter</a>
 			</div>
             </center>
         </div>
@@ -3080,12 +3048,12 @@
                 <input type="email" id="subMail" data-clear-btn="true" size="40" placeholder="Email"/>
                 <input type="tel" id="subTel" data-clear-btn="true" size="40" placeholder="Tel (Sans espace SVP)"/>
                 <button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-check" onClick="subscribe()">Inscription</button>
+                </center>
                 <div id="data"></div>
                 <div id="subReturns"></div>
 				<p>&nbsp;</p>
-                <!-- <p><a href="#" onClick="openSomeUrl('https://goo.gl/Bz4yK0')">Le.Taxi &ccedil;a marche comment? &Ccedil;a change quoi ?</a></p> -->
-                <p><a href="#" onClick="openPdf('http://chauffeursvtc.com/client/docs/privacy.policy.pdf', successOpenPdf, errorOpenPdf)">Politique de confidentialit&eacute;</a></p>
-                </center>
+                <p><a href="#" onClick="openSomeUrl('https://goo.gl/Bz4yK0')">Le.Taxi &ccedil;a marche comment? &Ccedil;a change quoi ?</a></p>
+                <p><a href="#" onClick="openPdf('http://taximedia.fr/client/docs/privacy.policy.pdf', successOpenPdf, errorOpenPdf)">Politique de confidentialit&eacute;</a></p>
             </div>
         </div>
         <div data-role="footer" class="footer" style="background:none;" data-position="fixed" id="footer_sub">
@@ -3118,7 +3086,7 @@
                 <input type="password" id="accPwd" data-clear-btn="true" size="40" placeholder="Mot de passe"/>
                 <button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-edit" onClick="accountMod()">Modifier</button>
                 <div id="accReturns"></div>
-				<p><a href="#" onClick="openPdf('http://chauffeursvtc.com/client/docs/privacy.policy.pdf', successOpenPdf, errorOpenPdf)">Politique de confidentialit&eacute;</a></p>
+				<p><a href="#" onClick="openPdf('http://taximedia.fr/client/docs/privacy.policy.pdf', successOpenPdf, errorOpenPdf)">Politique de confidentialit&eacute;</a></p>
                 </center>
            </div>
         </div>
@@ -3184,7 +3152,7 @@
 			</table>
 			<div id="animBook" class="nyc">
 				<p class="bottomText"><b>
-					<br><br>Votre demande a &eacute;t&eacute; prise en compte, votre VTC prendra contact avec vous par t&eacute;l&eacute;phone ou sms.<br><br>Toute l&rsquo;&eacute;quipe ChauffeursVTC vous remercie.
+					<br><br>Votre demande a &eacute;t&eacute; prise en compte, votre taxi prendra contact avec vous par t&eacute;l&eacute;phone ou sms.<br><br>Toute l&rsquo;&eacute;quipe Mon Appli Taxi vous remercie.
 					<button class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left ui-icon-back" onClick="goback('index.html')">Retour</button>
 				</b></p>
 				<img src="visuels/wifi-1.png" width="64%" id="wifiSteps" class="wifiSteps"/>
@@ -3211,7 +3179,7 @@
         </div>
         <div data-role="footer" id="footer_map" data-position="fixed" data-fullscreen="true">
             <center><p>
-            	Vous ne pouvez suivre un VTC que 30 minutes avant le RDV.<br>
+            	Vous ne pouvez suivre un taxi que 30 minutes avant le RDV.<br>
                 Les positions sont actualis&eacute;es toutes les 30 secondes.
 				<button onClick="goback('index.html')" class="ui-btn ui-btn-icon-left ui-corner-all ui-shadow ui-icon-power"><p style="font-size:16px"><b>Arr&ecirc;ter</b></p></button>
             </p></center>
@@ -3293,7 +3261,7 @@
         <div class="ui-content" role="main">
             <center>
             <div style="padding:1em; margin-top:1em; display:block;">
-                <!-- <h1 class="hostname">Commander un VTC</h1> -->
+                <!-- <h1 class="hostname">Commander un taxi</h1> -->
                 <table width="100%" border="0">
                 	<thead><tr><th width="90%"></th><th width="10%"></th></tr></thead>
                     <tbody>
@@ -3403,7 +3371,6 @@
             </center>
         </div>
     </div>
-	<!--
     <div data-role="page" data-theme="c" id="assos">
         <div data-role="header" data-position="fixed" class="header">
 			<table width="100%" border="0" class="header_cont">
@@ -3430,7 +3397,6 @@
             </div>
         </div>
     </div>
-	-->
     <script src="facebook-js-sdk.js"></script>
 	</body>
 </html>
