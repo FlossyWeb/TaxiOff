@@ -47,7 +47,7 @@
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="phonegap.js"></script>
     <script src="barcodescanner.js"></script>
-    <script src="sms.js"></script>
+    <!-- <script src="sms.js"></script> -->
     <!-- <script src="PowerManagement.js"></script> -->
     <script src="cdv-plugin-fb-connect.js"></script>
     <script type="text/javascript" src="js/jquery.html5storage.min.js"></script>
@@ -1022,6 +1022,8 @@
 		  componentRestrictions: {country: 'fr'}
 		};
 		var autocomplete = new google.maps.places.Autocomplete(input, options);
+		// We may not need more than this...
+		autocomplete.setFields(['address_components']);
 		// fired when an autocomplete option is selected or the input is submitted
 		google.maps.event.addListener(autocomplete, 'place_changed', function() {
 			//navigator.notification.alert('Fired');
@@ -1175,6 +1177,8 @@
 		  componentRestrictions: {country: 'fr'}
 		};
 		var autocomplete = new google.maps.places.Autocomplete(input, options);
+		// We may not need more than this...
+		autocomplete.setFields(['address_components']);
 		// fired when an autocomplete option is selected or the input is submitted
 		google.maps.event.addListener(autocomplete, 'place_changed', function() {
 			//navigator.notification.alert('Fired');
@@ -1201,19 +1205,6 @@
 			}
 		});
 		var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
-		// fired when an autocomplete option is selected or the input is submitted
-		google.maps.event.addListener(autocomplete2, 'place_changed', function() {
-			//navigator.notification.alert('Fired');
-			var place = autocomplete.getPlace();
-			var address = '';
-			if (place.address_components) {
-				address = [
-					(place.address_components[0] && place.address_components[0].short_name || ''),
-					(place.address_components[1] && place.address_components[1].short_name || ''),
-					(place.address_components[2] && place.address_components[2].short_name || '')
-				].join(' ');
-			}
-		});
 	});
 	function getRandomInt(min, max) {
 		/*
@@ -2532,7 +2523,7 @@
 						cordova.plugins.notification.local.schedule({
 							id: 1,
 							title: "Mon Appli Taxi",
-							text: toNotify,
+							text: "Un Taxi a pris la course, il va passer vous prendre...",
 							led: "E7B242",
 							badge: badgeNumber,
 							data: { data:toNotify }
